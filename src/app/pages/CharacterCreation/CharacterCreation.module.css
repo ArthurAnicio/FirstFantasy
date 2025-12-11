@@ -1,0 +1,168 @@
+.container{
+    min-height: 100vh;
+    width: 100%;
+    background: var(--gray-p);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#div{
+    width: 900px;
+    height: 80vh;
+    margin: 20px 0;
+    padding: 10px 30px;
+    background: var(--gray-t);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+}
+
+#div h1{
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+.basicInfo{
+    position: relative;
+}
+
+.info{
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+}
+
+.info label{
+    margin-right: 10px;
+}
+
+.info input{
+    width: 250px;
+    min-height: 40px;
+    padding: 0 10px;
+    font-family: var(--font-jacquard-24);
+    font-size: 30px;
+    background: var(--white);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.info input:focus{
+    outline: none;
+    box-shadow: 0 0 10px var(--black);
+}
+
+.info div{
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.maleGender{
+    color: var(--blue-t);
+}
+
+.femaleGender{
+    color: var(--red-p);
+}
+
+.info div:hover{
+    scale: 1.05;
+    box-shadow: 5px 5px 0px var(--black);
+}
+
+#selected{
+    scale: 1.05;
+    box-shadow: 5px 5px 0px var(--black);
+}
+
+.info p{
+    font-size: 60px;
+}
+
+.imageChar{
+    position: absolute;
+    background: var(--gray-p);
+    width: 400px;
+    height: 400px;
+    top: 50;
+    right: 30;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1rem;
+}
+
+.outPages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paginator{
+    margin: 25px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.paginator button{
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.5rem;
+    background: var(--gray-s);
+    font-family: var(--font-jacquard-24);
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+.paginator button:hover{
+    scale: 0.95;
+    background: var(--gray-t);
+}
+
+.paginator p {
+    width: 70px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+    border: solid 5px var(--light-blue-t);
+    border-radius: 0.5rem;
+    font-size: 40px;
+}
+
+.create{
+    width: 300px;
+    margin: 10px 0;
+    padding: 10px;
+    background: var(--blue-t);
+    border: none;
+    border-radius: 1rem;
+    font-family: var(--font-jacquard-24);
+    font-size: 40px;
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.create:hover{
+    scale: 1.05;
+    background: var(--light-blue-p);
+}

@@ -1,0 +1,47 @@
+.modal{
+    z-index: 99999999;
+    top: 150;
+    position: absolute;
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    filter: opacity(0.99);
+}
+
+.modal p{
+    font-size: 35px;
+}
+
+.buttons{
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+.buttons button{
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 1rem;
+    font-family: var(--font-jacquard-24);
+    font-size: 40px;
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.buttons button:hover{
+    scale: 0.95;
+    filter: saturate(2);
+}
+
+.back{
+    background: var(--gray-p);
+}
+
+.confirm{
+    background: var(--blue-t);
+}
