@@ -2,9 +2,14 @@
 import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { useGame } from '@/contexts/GameContext'
+import { use, useEffect, useState } from 'react'
+import { useGame, Atribute} from '@/contexts/GameContext'
 import Image from 'next/image'
+import { before } from 'node:test'
+import { ACTION_BEFORE_REFRESH } from 'next/dist/next-devtools/dev-overlay/shared'
+import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHandFist, faWind, faDumbbell, faBrain, faCommentDots, faShield, faHeart, faBolt } from '@fortawesome/free-solid-svg-icons'
 
 export default function CharacterCreation(){
 
@@ -35,22 +40,28 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(1)
+    const [page,setPage] = useState(2)
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
     const [pImage, setPImage] = useState("")
     const [pGender, setPGender] = useState("M")
 
+    const [statsPoints, setStatsPoints] = useState(4)
     const [pStrength, setPStrength] = useState(1)
     const [pDexterity, setPDexterity] = useState(1)
     const [pConstitution, setPConstitution] = useState(1)
     const [pPresence, setPPresence] = useState(1)
     const [pMind, setPMind] = useState(1)
 
-    const [pBonusDefence, setPBonusDefence] = useState(1)
-    const [pBonusHealth, setPBonusHealth] = useState(1)
-    const [pBonusStamina, setPBonusStamina] = useState(1)
+
+    const [pBonusDefence, setPBonusDefence] = useState(0)
+    const [pBonusHealth, setPBonusHealth] = useState(0)
+    const [pBonusStamina, setPBonusStamina] = useState(0)
+
+    const [pDefense, setPDefense] = useState(calcDefense(pDexterity,pBonusDefence))
+    const [pMaxHealth,setPMaxHealth] = useState(calcHealth(level,pConstitution,pBonusHealth))
+    const [pMaxStamina, setPMaxStamina] = useState(calcStamina(level,pPresence,pConstitution,pBonusStamina))
 
     const [pAttacks, setPAttacks] = useState(attacks)
     const [pResistences, setPResistences] = useState(resistences)
@@ -71,6 +82,86 @@ export default function CharacterCreation(){
         }
     },[page])
 
+    useEffect(()=>{
+        setPDefense(calcDefense(pDexterity,pBonusDefence))
+        setPMaxHealth(calcHealth(level,pConstitution,pBonusHealth))
+        setPMaxStamina(calcStamina(level,pPresence,pConstitution,pBonusStamina))
+    },[pConstitution,pPresence,pDexterity,pBonusDefence,pBonusHealth,pBonusStamina])
+
+    function useStatsPoints(atribute:Atribute,amount:number){
+        if(amount==1){
+            if(statsPoints!=0){
+                switch(atribute){
+                    case Atribute.strength:
+                        if(pStrength<3){
+                            setPStrength(pStrength+1)
+                            setStatsPoints(statsPoints-1)
+                        }
+                        break
+                    case Atribute.dexterity:
+                        if(pDexterity<3){
+                            setPDexterity(pDexterity+1)
+                            setStatsPoints(statsPoints-1)
+                        }
+                        break
+                    case Atribute.constitution:
+                        if(pConstitution<3){
+                            setPConstitution(pConstitution+1)
+                            setStatsPoints(statsPoints-1)
+                        }
+                        break
+                    case Atribute.mind:
+                        if(pMind<3){
+                            setPMind(pMind+1)
+                            setStatsPoints(statsPoints-1)
+                        }
+                        break
+                    case Atribute.presence:
+                        if(pPresence<3){
+                            setPPresence(pPresence+1)
+                            setStatsPoints(statsPoints-1)
+                        }
+                        break
+                }
+            }
+        }else{
+            if(statsPoints<=4){
+               switch(atribute){
+                    case Atribute.strength:
+                        if(pStrength>0){
+                            setPStrength(pStrength-1)
+                            setStatsPoints(statsPoints+1)
+                        }
+                        break
+                    case Atribute.dexterity:
+                        if(pDexterity>0){
+                            setPDexterity(pDexterity-1)
+                            setStatsPoints(statsPoints+1)
+                        }
+                        break
+                    case Atribute.constitution:
+                        if(pConstitution>0){
+                            setPConstitution(pConstitution-1)
+                            setStatsPoints(statsPoints+1)
+                        }
+                        break
+                    case Atribute.mind:
+                        if(pMind>0){
+                            setPMind(pMind-1)
+                            setStatsPoints(statsPoints+1)
+                        }
+                        break
+                    case Atribute.presence:
+                        if(pPresence>0){
+                            setPPresence(pPresence-1)
+                            setStatsPoints(statsPoints+1)
+                        }
+                        break
+                } 
+            }
+        }
+    }
+
     function setElements() {
         changeName?.(pName)
         changeCash?.(pCash)
@@ -90,7 +181,7 @@ export default function CharacterCreation(){
 
     function createChar(){
         setElements()
-        Cookies.set("criado","sim")
+        Cookies.set("carregado","sim")
         Cookies.set("criando","")
         router.push("/pages/PlayerArea")
     }
@@ -137,8 +228,113 @@ export default function CharacterCreation(){
                 )
             case 2:
                 return(
-                    <div id={styles.div}>
+                    <div className={styles.statsPage} id={styles.div}>
                         <h1>Atributos</h1>
+                        <div className={styles.statsContent}>
+                            <div className={styles.atributes}>
+                                <p className={styles.labelPoints}>Pontos: {statsPoints}</p>
+                                <nav>
+                                    
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faHandFist} />
+                                        Força:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <button onClick={()=>useStatsPoints(Atribute.strength,0)}>
+                                            -
+                                        </button>
+                                        <p>{pStrength}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.strength,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faWind} />
+                                        Destreza:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <button onClick={()=>useStatsPoints(Atribute.dexterity,0)}>
+                                            -
+                                        </button>
+                                        <p>{pDexterity}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.dexterity,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faDumbbell} />
+                                        Constituição:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <button onClick={()=>useStatsPoints(Atribute.constitution,0)}>
+                                            -
+                                        </button>
+                                        <p>{pConstitution}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.constitution,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faBrain} />
+                                        Mente:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <button onClick={()=>useStatsPoints(Atribute.mind,0)}>
+                                            -
+                                        </button>
+                                        <p>{pMind}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.mind,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon}  icon={faCommentDots} />
+                                        Presença:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <button onClick={()=>useStatsPoints(Atribute.presence,0)}>
+                                            -
+                                        </button>
+                                        <p>{pPresence}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.presence,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div className={styles.statsInfo}>
+                                <p>Status:</p>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+                                        Vida:
+                                    </label>
+                                    <p>{pMaxHealth}</p>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faBolt} />
+                                        Stamina:
+                                    </label>
+                                    <p>{pMaxStamina}</p>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <FontAwesomeIcon className={styles.icon} icon={faShield} />
+                                        Defesa:
+                                    </label>
+                                    <p>{pDefense}</p>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 )
             case 3:
