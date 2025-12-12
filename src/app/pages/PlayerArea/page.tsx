@@ -8,7 +8,7 @@ export default function Player(){
     const router = useRouter()
 
     useEffect(()=>{
-        const auth = Cookies.get("criado")
+        const auth = Cookies.get("carregado")
         if(auth!="sim"){
             router.push('/')
         }
