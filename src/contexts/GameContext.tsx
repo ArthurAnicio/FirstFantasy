@@ -16,6 +16,14 @@ import {
   calcStamina,
 } from "../functions/calcStats"
 
+export enum Atribute{
+  strength,
+  dexterity,
+  constitution,
+  mind,
+  presence
+}
+
 export interface TestResult {
   damage?: number
   result: number

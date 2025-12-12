@@ -20,7 +20,7 @@ export default function Home() {
   },[])
 
   useEffect(()=>{
-    Cookies.set("criado","")
+    Cookies.set("carregado","")
     Cookies.set("criando","")
   })
 

@@ -30,6 +30,7 @@
   --pink-p: #8d0c5c;
 
   font-size: 48px;
+  color: var(--black);
 }
 
 *{
