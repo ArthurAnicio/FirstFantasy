@@ -10,6 +10,7 @@ export default function CharacterCreation(){
 
     const { 
         name,
+        gender,
         level,
         cash,
         image,
@@ -24,6 +25,7 @@ export default function CharacterCreation(){
         attacks,
         resistences,
         changeName,
+        changeGender,
         changeCash,
         changeImage,
         changeStat,
@@ -38,6 +40,7 @@ export default function CharacterCreation(){
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
     const [pImage, setPImage] = useState("")
+    const [pGender, setPGender] = useState("M")
 
     const [pStrength, setPStrength] = useState(1)
     const [pDexterity, setPDexterity] = useState(1)
@@ -72,6 +75,7 @@ export default function CharacterCreation(){
         changeName?.(pName)
         changeCash?.(pCash)
         changeImage?.(pImage)
+        changeGender?.(pGender)
 
         changeStat?.("strength", pStrength)
         changeStat?.("dexterity", pDexterity)
@@ -104,8 +108,20 @@ export default function CharacterCreation(){
                             </nav>
                             <nav className={styles.info}>
                                 <label>Gênero:</label>
-                                <div className={styles.maleGender}>M</div>
-                                <div className={styles.femaleGender}>F</div>
+                                <div 
+                                    className={styles.maleGender}
+                                    id={pGender=="M"?styles.selected:""}
+                                    onClick={()=>setPGender("M")}
+                                >
+                                    M
+                                </div>
+                                <div 
+                                    className={styles.femaleGender}
+                                    id={pGender=="F"?styles.selected:""}
+                                    onClick={()=>setPGender("F")}
+                                >
+                                    F
+                                </div>
                             </nav>
                             <nav className={styles.info}>
                                 <label>Imagem:</label>
@@ -115,7 +131,7 @@ export default function CharacterCreation(){
                                 <label>Level:</label>
                                 <p>{level}</p>
                             </nav>
-                            <Image className={styles.imageChar} src={pImage} alt='Foto do personagem' width={400} height={400}/>
+                            <Image className={styles.imageChar} src={pImage!=""?pImage:'/images/profileDefault.png'} alt='Foto do personagem' width={400} height={400}/>
                         </div>
                     </div>
                 )
