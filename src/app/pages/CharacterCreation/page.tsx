@@ -3,13 +3,25 @@ import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
-import { useGame, Atribute} from '@/contexts/GameContext'
+import { useGame } from '@/contexts/GameContext'
 import Image from 'next/image'
-import { before } from 'node:test'
-import { ACTION_BEFORE_REFRESH } from 'next/dist/next-devtools/dev-overlay/shared'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHandFist, faWind, faDumbbell, faBrain, faCommentDots, faShield, faHeart, faBolt } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faHandFist, 
+    faWind, 
+    faDumbbell, 
+    faBrain, 
+    faCommentDots, 
+    faShield, 
+    faHeart, 
+    faBolt,
+    faArrowLeft,
+    faArrowRight
+} from '@fortawesome/free-solid-svg-icons'
+import { Atribute } from '@/enums/atribute'
+import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
+import { AttackChoice } from '@/components/AttackChoice'
 
 export default function CharacterCreation(){
 
@@ -40,7 +52,7 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(2)
+    const [page,setPage] = useState(3)
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
@@ -168,11 +180,11 @@ export default function CharacterCreation(){
         changeImage?.(pImage)
         changeGender?.(pGender)
 
-        changeStat?.("strength", pStrength)
-        changeStat?.("dexterity", pDexterity)
-        changeStat?.("constitution", pConstitution)
-        changeStat?.("mind", pMind)
-        changeStat?.("presence", pPresence)
+        changeStat?.(Atribute.strength, pStrength)
+        changeStat?.(Atribute.dexterity, pDexterity)
+        changeStat?.(Atribute.constitution, pConstitution)
+        changeStat?.(Atribute.mind, pMind)
+        changeStat?.(Atribute.presence, pPresence)
 
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
@@ -312,21 +324,33 @@ export default function CharacterCreation(){
                             </div>
                             <div className={styles.statsInfo}>
                                 <p>Status:</p>
-                                <nav>
-                                    <label>
+                                <nav
+                                        style={{
+                                            color: "var(--green-s)"
+                                        }}
+                                >
+                                    <label >
                                         <FontAwesomeIcon className={styles.icon} icon={faHeart} />
                                         Vida:
                                     </label>
                                     <p>{pMaxHealth}</p>
                                 </nav>
-                                <nav>
+                                <nav
+                                    style={{
+                                            color: "var(--orange-s)"
+                                        }}
+                                >
                                     <label>
                                         <FontAwesomeIcon className={styles.icon} icon={faBolt} />
                                         Stamina:
                                     </label>
                                     <p>{pMaxStamina}</p>
                                 </nav>
-                                <nav>
+                                <nav
+                                    style={{
+                                            color: "var(--gray-s)"
+                                        }}
+                                >
                                     <label>
                                         <FontAwesomeIcon className={styles.icon} icon={faShield} />
                                         Defesa:
@@ -340,7 +364,8 @@ export default function CharacterCreation(){
             case 3:
                 return(
                     <div id={styles.div}>
-                        <h1>Ataques & Resistencias</h1>
+                        <h1>Ataques & Habilidades</h1>
+                        <AttackChoice attack={defaultAttacks[0]} price={30}/>
                     </div>
                 )
             default:
@@ -360,11 +385,11 @@ export default function CharacterCreation(){
             <div className={styles.outPages}>
                 <div className={styles.paginator}>
                     <button onClick={()=>setPage(page-1)}>
-                        -
+                        <FontAwesomeIcon icon={faArrowLeft}/>
                     </button>
                     <p>{page}</p>
                     <button onClick={()=>setPage(page+1)}>
-                        +
+                        <FontAwesomeIcon icon={faArrowRight}/>
                     </button>
                 </div>
                 <button className={styles.create} onClick={createChar}>Criar Personagem</button>

@@ -1,4 +1,4 @@
-import { TestResult } from "@/contexts/GameContext";
+import { TestResult } from "@/interfaces/testResult";
 import { rollDice } from "./rollDice";
 
 export function testCall(amountDices:number,bonus:number,criticalRatio:number,defense:number):TestResult{
@@ -12,12 +12,12 @@ export function testCall(amountDices:number,bonus:number,criticalRatio:number,de
         i++
     }
     const result = biggestResult+bonus
-    if(result>=defense){
-        if(biggestResult>=criticalRatio){
+
+    if(biggestResult>=criticalRatio){
             return {result, critical: true, failure:false}
-        }else{
-            return {result, critical: false, failure:false}
-        }
+    }else if(result>=defense){
+       return {result, critical: false, failure:false}
+        
     }else{
         return {result, critical: false, failure:true}
     }

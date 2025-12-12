@@ -1,0 +1,39 @@
+.card{
+    width: 150px;
+    padding: 15px;    
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.3rem;
+    background: linear-gradient(to bottom, var(--blue-p),var(--purple-p));
+    color: var(--white);
+    font-size: 32px;
+    position: relative;
+    cursor: pointer;
+}
+
+.card label{
+    margin-left: 10px;
+}
+
+.stamina {
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: var(--orange-s);
+  border: solid 5px var(--white);
+  top: -10px;
+  right: -10px;
+  transform: rotate(45deg);
+}
+
+.buy{
+    margin: 5px 0;
+    padding: 5px 0;
+    border-radius: 0.3rem;
+    text-align: center;
+    background: var(--gray-s);
+}

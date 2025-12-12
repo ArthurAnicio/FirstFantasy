@@ -1,4 +1,4 @@
-import { DamageTypes } from "@/contexts/GameContext";
+import { DamageTypes } from "@/enums/damageTypes";
 
 export function getDamageColor(type:DamageTypes){
     switch(type){
