@@ -1,6 +1,7 @@
-import { Attack, TestResult } from "@/contexts/GameContext";
 import { testCall } from "./testCall";
 import { rollDice } from "./rollDice";
+import { Attack } from "@/interfaces/attack";
+import { TestResult } from "@/interfaces/testResult";
 
 export function attackCall(stat:number,bonusAttack:number,targetDefense:number,attack:Attack):TestResult{
     

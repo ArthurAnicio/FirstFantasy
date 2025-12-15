@@ -7,6 +7,7 @@
   --purple-p: #170336;
   --purple-s: #320b6d;
   --purple-t: #5116a8;
+  --purple-f: #6b1fd1;
   --blue-p: #120a5e;
   --blue-s: #281c94;
   --blue-t: #2d18e4;
@@ -15,19 +16,19 @@
   --light-blue-t: #81c0eb;
   --green-p: #1bda24;
   --green-s: #16c02d;
-  --green-s: #119122;
+  --green-t: #119122;
   --yellow-p: #f7f73a;
   --yellow-s: #dada21;
-  --yellow-s: #bebe21;
+  --yellow-t: #bebe21;
   --orange-p: #eba210;
   --orange-s: #d8940d;
-  --orange-s: #b17908;
+  --orange-t: #b17908;
   --red-p: #f00a1d;
   --red-s: #d40c1d;
   --red-t: #910612;
   --pink-p: #e647a9;
   --pink-s: #c90d81;
-  --pink-p: #8d0c5c;
+  --pink-t: #8d0c5c;
 
   font-size: 48px;
   color: var(--black);

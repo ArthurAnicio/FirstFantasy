@@ -3,13 +3,18 @@ import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useState } from 'react'
-import { useGame, Atribute} from '@/contexts/GameContext'
+import { useGame } from '@/contexts/GameContext'
 import Image from 'next/image'
-import { before } from 'node:test'
-import { ACTION_BEFORE_REFRESH } from 'next/dist/next-devtools/dev-overlay/shared'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHandFist, faWind, faDumbbell, faBrain, faCommentDots, faShield, faHeart, faBolt } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faArrowLeft,
+    faArrowRight
+} from '@fortawesome/free-solid-svg-icons'
+import { Atribute } from '@/enums/atribute'
+import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
+import { FirstAttackChoice } from '@/components/FirstAttackChoice'
+import { IconAtribute } from '@/components/IconAtribute'
 
 export default function CharacterCreation(){
 
@@ -27,8 +32,11 @@ export default function CharacterCreation(){
         bonusDefence,
         bonusHealth,
         bonusStamina,
+        equipedAttacks,
         attacks,
         resistences,
+        vulnerabilites,
+        imunites,
         changeName,
         changeGender,
         changeCash,
@@ -40,7 +48,7 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(2)
+    const [page,setPage] = useState(3)
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
@@ -63,8 +71,11 @@ export default function CharacterCreation(){
     const [pMaxHealth,setPMaxHealth] = useState(calcHealth(level,pConstitution,pBonusHealth))
     const [pMaxStamina, setPMaxStamina] = useState(calcStamina(level,pPresence,pConstitution,pBonusStamina))
 
+    const [pEquipedAttacks, setPEquippedAttacks] = useState(equipedAttacks)
     const [pAttacks, setPAttacks] = useState(attacks)
     const [pResistences, setPResistences] = useState(resistences)
+    const [pVulnerabilites, setPVulnerabilites] = useState(vulnerabilites)
+    const [pImunites, setPImunites] = useState(imunites)
 
     useEffect(()=>{
         const creating = Cookies.get("criando")
@@ -168,11 +179,11 @@ export default function CharacterCreation(){
         changeImage?.(pImage)
         changeGender?.(pGender)
 
-        changeStat?.("strength", pStrength)
-        changeStat?.("dexterity", pDexterity)
-        changeStat?.("constitution", pConstitution)
-        changeStat?.("mind", pMind)
-        changeStat?.("presence", pPresence)
+        changeStat?.(Atribute.strength, pStrength)
+        changeStat?.(Atribute.dexterity, pDexterity)
+        changeStat?.(Atribute.constitution, pConstitution)
+        changeStat?.(Atribute.mind, pMind)
+        changeStat?.(Atribute.presence, pPresence)
 
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
@@ -236,7 +247,7 @@ export default function CharacterCreation(){
                                 <nav>
                                     
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faHandFist} />
+                                        <IconAtribute atribute={Atribute.strength}/>
                                         Força:
                                     </label>
                                     <div className={styles.atribute}>
@@ -251,7 +262,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faWind} />
+                                        <IconAtribute atribute={Atribute.dexterity}/>
                                         Destreza:
                                     </label>
                                     <div className={styles.atribute}>
@@ -266,7 +277,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faDumbbell} />
+                                        <IconAtribute atribute={Atribute.constitution}/>
                                         Constituição:
                                     </label>
                                     <div className={styles.atribute}>
@@ -281,7 +292,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faBrain} />
+                                        <IconAtribute atribute={Atribute.mind}/>
                                         Mente:
                                     </label>
                                     <div className={styles.atribute}>
@@ -296,7 +307,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon}  icon={faCommentDots} />
+                                        <IconAtribute atribute={Atribute.presence}/>
                                         Presença:
                                     </label>
                                     <div className={styles.atribute}>
@@ -312,23 +323,35 @@ export default function CharacterCreation(){
                             </div>
                             <div className={styles.statsInfo}>
                                 <p>Status:</p>
-                                <nav>
-                                    <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+                                <nav
+                                        style={{
+                                            color: "var(--green-s)"
+                                        }}
+                                >
+                                    <label >
+                                        <IconAtribute atribute={Atribute.health}/>
                                         Vida:
                                     </label>
                                     <p>{pMaxHealth}</p>
                                 </nav>
-                                <nav>
+                                <nav
+                                    style={{
+                                            color: "var(--orange-s)"
+                                        }}
+                                >
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faBolt} />
+                                        <IconAtribute atribute={Atribute.stamina}/>
                                         Stamina:
                                     </label>
                                     <p>{pMaxStamina}</p>
                                 </nav>
-                                <nav>
+                                <nav
+                                    style={{
+                                            color: "var(--gray-s)"
+                                        }}
+                                >
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faShield} />
+                                        <IconAtribute atribute={Atribute.defense}/>
                                         Defesa:
                                     </label>
                                     <p>{pDefense}</p>
@@ -340,7 +363,19 @@ export default function CharacterCreation(){
             case 3:
                 return(
                     <div id={styles.div}>
-                        <h1>Ataques & Resistencias</h1>
+                        <h1>Ataques & Habilidades</h1>
+                        <div className={styles.defaultAttacks}>
+                            {defaultAttacks
+                            .filter(atk=>atk.id!=0)
+                            .map((attack)=>(
+                                <FirstAttackChoice 
+                                    key={attack.id} 
+                                    attack={attack} 
+                                    price={0}
+                                />
+                            ))} 
+                        </div>
+                                           
                     </div>
                 )
             default:
@@ -360,11 +395,11 @@ export default function CharacterCreation(){
             <div className={styles.outPages}>
                 <div className={styles.paginator}>
                     <button onClick={()=>setPage(page-1)}>
-                        -
+                        <FontAwesomeIcon icon={faArrowLeft}/>
                     </button>
                     <p>{page}</p>
                     <button onClick={()=>setPage(page+1)}>
-                        +
+                        <FontAwesomeIcon icon={faArrowRight}/>
                     </button>
                 </div>
                 <button className={styles.create} onClick={createChar}>Criar Personagem</button>
