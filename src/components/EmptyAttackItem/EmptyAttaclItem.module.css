@@ -1,0 +1,12 @@
+.card{
+    border: 2px dashed var(--gray-t);
+    border-radius: 8px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-s);
+    opacity: 0.5;
+    cursor: pointer;
+}

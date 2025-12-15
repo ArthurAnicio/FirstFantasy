@@ -3,11 +3,11 @@ import { DamageTypes } from "@/enums/damageTypes";
 import { EffectTypes } from "@/enums/effectTypes";
 import { Attack } from "@/interfaces/attack";
 
-export const defaultAttacks:Attack[] = [
+export const defaultAttacks: Attack[] = [
     {
-        id:0,
-        name: "Golpe Comum",
-        image: "/images/attacks/default.png",
+        id: 1,
+        name: "Golpe Forte",
+        image: "/images/attacks/defaults/default.png",
         atribute: Atribute.strength,
         damageType: DamageTypes.physical,
         damageQuant: 1,
@@ -18,68 +18,55 @@ export const defaultAttacks:Attack[] = [
         costStamina: 0
     },
     {
-        id:1,
-        name:"Corte Flamejante",
-        image:"/images/attacks/pre.png",
-        atribute: Atribute.presence,
-        damageType: DamageTypes.fire,
-        damageQuant: 2,
+        id: 2,
+        name: "Golpe Rápido",
+        image: "/images/attacks/defaults/default.png",
+        atribute: Atribute.dexterity,
+        damageType: DamageTypes.physical,
+        damageQuant: 1,
         damageDice: 6,
         criticalRatio: 20,
         criticalBonus: 2,
         effect: EffectTypes.none,
-        costStamina: 1
+        costStamina: 0
     },
     {
-        id:2,
-        name:"Tormento",
-        image:"/images/attacks/min.png",
+        id: 3,
+        name: "Golpe Preciso",
+        image: "/images/attacks/defaults/default.png",
         atribute: Atribute.mind,
-        damageType: DamageTypes.psychic,
+        damageType: DamageTypes.physical,
         damageQuant: 1,
-        damageDice: 10,
-        criticalRatio: 19,
+        damageDice: 6,
+        criticalRatio: 20,
         criticalBonus: 2,
         effect: EffectTypes.none,
-        costStamina: 1
+        costStamina: 0
     },
     {
-        id:3,
-        name:"Pressão Latente",
-        image:"/images/attacks/cons.png",
+        id: 4,
+        name: "Golpe Resistente",
+        image: "/images/attacks/defaults/default.png",
         atribute: Atribute.constitution,
         damageType: DamageTypes.physical,
-        damageQuant: 2,
-        damageDice: 8,
+        damageQuant: 1,
+        damageDice: 6,
         criticalRatio: 20,
-        criticalBonus: 3,
-        effect: EffectTypes.none,
-        costStamina: 2
-    },
-    {
-        id:4,
-        name:"Golpe Relâmpago",
-        image:"/images/attacks/dex.png",
-        atribute: Atribute.dexterity,
-        damageType: DamageTypes.thunder,
-        damageQuant: 3,
-        damageDice: 4,
-        criticalRatio: 19,
         criticalBonus: 2,
         effect: EffectTypes.none,
-        costStamina: 1
+        costStamina: 0
     },
     {
-        id:5,
-        name:"Impacto Forte",
-        image:"/images/attacks/str.png",
-        atribute: Atribute.strength,
+        id: 5,
+        name: "Golpe Impactante",
+        image: "/images/attacks/defaults/default.png",
+        atribute: Atribute.presence,
         damageType: DamageTypes.physical,
         damageQuant: 1,
-        damageDice: 8,
+        damageDice: 6,
         criticalRatio: 20,
         criticalBonus: 2,
         effect: EffectTypes.none,
-        costStamina: 1
+        costStamina: 0
     }
 ]

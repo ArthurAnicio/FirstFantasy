@@ -203,7 +203,26 @@
     border: solid 5px var(--gray-p);
 }
 
-.defaultAttacks{
+.equipedAttacksArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
+}
+
+.equipedAttacks{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.starterAttaks{
     display: flex;
     gap: 20px;
     flex-wrap: wrap;

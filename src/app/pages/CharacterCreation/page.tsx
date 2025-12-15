@@ -12,9 +12,13 @@ import {
     faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
-import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
+import { starterAttacks } from '../../../../public/itens/attacks/starterAttacks'
 import { FirstAttackChoice } from '@/components/FirstAttackChoice'
-import { IconAtribute } from '@/components/IconAtribute'
+import { IconAtribute } from '@/functions/IconAtribute'
+import { AttackItem } from '@/components/AttackItem'
+import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
+import { getBiggestAtribute } from '@/functions/getBiggestAtribute'
+import { EmptyAttackItem } from '@/components/EmptyAttackItem'
 
 export default function CharacterCreation(){
 
@@ -48,7 +52,7 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(3)
+    const [page,setPage] = useState(1)
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
@@ -92,6 +96,35 @@ export default function CharacterCreation(){
             setPage(1)
         }
     },[page])
+
+    useEffect(() => {
+        const bestAttr = getBiggestAtribute(
+            pStrength,
+            pDexterity,
+            pConstitution,
+            pMind,
+            pPresence
+        )
+
+        const atk = defaultAttacks.find(atk => atk.atribute === bestAttr)
+        if (!atk) return
+
+        setPAttacks(prev => {
+            const withoutDefaults = prev.filter(a =>
+            !defaultAttacks.some(d => d.id === a.id)
+            );
+            if (withoutDefaults.some(a => a.id === atk.id)) return prev
+            return [...withoutDefaults, atk]
+        });
+
+        setPEquippedAttacks(prev => {
+            const withoutDefaults = prev.filter(a =>
+            !defaultAttacks.some(d => d.id === a.id)
+            );
+            if (withoutDefaults.some(a => a.id === atk.id)) return prev
+            return [...withoutDefaults, atk]
+        })
+    }, [pStrength, pDexterity, pConstitution, pMind, pPresence])
 
     useEffect(()=>{
         setPDefense(calcDefense(pDexterity,pBonusDefence))
@@ -364,14 +397,23 @@ export default function CharacterCreation(){
                 return(
                     <div id={styles.div}>
                         <h1>Ataques & Habilidades</h1>
-                        <div className={styles.defaultAttacks}>
-                            {defaultAttacks
+                        <div className={styles.equipedAttacksArea}>
+                            <p>Ataques Equipados</p>
+                            <div className={styles.equipedAttacks}>
+                                {pEquipedAttacks.map((attack)=>(
+                                    <AttackItem attack={attack} inBattle={false} />
+                                ))}
+                                <EmptyAttackItem />
+                            </div>
+                                
+                        </div>
+                        <div className={styles.starterAttaks}>
+                            {starterAttacks
                             .filter(atk=>atk.id!=0)
                             .map((attack)=>(
                                 <FirstAttackChoice 
                                     key={attack.id} 
-                                    attack={attack} 
-                                    price={0}
+                                    attack={attack}
                                 />
                             ))} 
                         </div>

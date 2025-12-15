@@ -31,6 +31,7 @@ export interface Character {
 
   cash?: number
   techniquePoints?: number
+  atributePoints?: number
 
   defense: number
   maxHealth: number
@@ -61,6 +62,7 @@ export interface Character {
   changeImage?: (url: string) => void
   changeCash?: (quant: number) => void
   changeTechniquePoints?: (amount: number) => void
+  changeAtributePoints?: (amount: number) => void
 
   addXp?: (amount: number) => void
   setXp?: (amount: number) => void
@@ -69,7 +71,7 @@ export interface Character {
   takeDamage?: (damage: number, type: DamageTypes) => void
   useStamina?: (amount: number) => void
 
-  levelUp?: () => void // opcional/manual se quiser forçar
+  levelUp?: () => void
 
   bonusAttackUp?: (amount: number) => void
   defenseBonusUp?: (amount: number) => void
@@ -97,6 +99,7 @@ const defaultPlayer: Character = {
   level: 1,
   cash: 20,
   techniquePoints: 10,
+  atributePoints: 0,
   defense: 0,
   maxHealth: 1,
   actualHealth: 1,
@@ -144,6 +147,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [cash, setCash] = useState(player.cash)
   const [techniquePoints, setTechniquePoints] = useState(
     player.techniquePoints
+  )
+  const [atributePoints, setAtributePoints] = useState(
+    player.atributePoints ?? 0
   )
 
   const [strength, setStrength] = useState(player.strength)
@@ -274,6 +280,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setTechniquePoints(amount)
   }, [])
 
+  const changeAtributePoints = useCallback((amount: number) => {
+    setAtributePoints(amount)
+  }, [])
+
   const setXp = useCallback((amount: number) => {
     setXpState(amount)
   }, [])
@@ -401,6 +411,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     level,
     cash,
     techniquePoints,
+    atributePoints,
     defense,
     maxHealth,
     actualHealth,
