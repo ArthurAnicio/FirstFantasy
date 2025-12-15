@@ -3,5 +3,8 @@ export enum Atribute{
   dexterity,
   constitution,
   mind,
-  presence
+  presence,
+  defense,
+  health,
+  stamina
 }

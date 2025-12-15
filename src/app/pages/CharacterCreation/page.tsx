@@ -8,20 +8,13 @@ import Image from 'next/image'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
-    faHandFist, 
-    faWind, 
-    faDumbbell, 
-    faBrain, 
-    faCommentDots, 
-    faShield, 
-    faHeart, 
-    faBolt,
     faArrowLeft,
     faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
 import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
-import { AttackChoice } from '@/components/AttackChoice'
+import { FirstAttackChoice } from '@/components/FirstAttackChoice'
+import { IconAtribute } from '@/components/IconAtribute'
 
 export default function CharacterCreation(){
 
@@ -39,8 +32,11 @@ export default function CharacterCreation(){
         bonusDefence,
         bonusHealth,
         bonusStamina,
+        equipedAttacks,
         attacks,
         resistences,
+        vulnerabilites,
+        imunites,
         changeName,
         changeGender,
         changeCash,
@@ -75,8 +71,11 @@ export default function CharacterCreation(){
     const [pMaxHealth,setPMaxHealth] = useState(calcHealth(level,pConstitution,pBonusHealth))
     const [pMaxStamina, setPMaxStamina] = useState(calcStamina(level,pPresence,pConstitution,pBonusStamina))
 
+    const [pEquipedAttacks, setPEquippedAttacks] = useState(equipedAttacks)
     const [pAttacks, setPAttacks] = useState(attacks)
     const [pResistences, setPResistences] = useState(resistences)
+    const [pVulnerabilites, setPVulnerabilites] = useState(vulnerabilites)
+    const [pImunites, setPImunites] = useState(imunites)
 
     useEffect(()=>{
         const creating = Cookies.get("criando")
@@ -248,7 +247,7 @@ export default function CharacterCreation(){
                                 <nav>
                                     
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faHandFist} />
+                                        <IconAtribute atribute={Atribute.strength}/>
                                         Força:
                                     </label>
                                     <div className={styles.atribute}>
@@ -263,7 +262,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faWind} />
+                                        <IconAtribute atribute={Atribute.dexterity}/>
                                         Destreza:
                                     </label>
                                     <div className={styles.atribute}>
@@ -278,7 +277,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faDumbbell} />
+                                        <IconAtribute atribute={Atribute.constitution}/>
                                         Constituição:
                                     </label>
                                     <div className={styles.atribute}>
@@ -293,7 +292,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faBrain} />
+                                        <IconAtribute atribute={Atribute.mind}/>
                                         Mente:
                                     </label>
                                     <div className={styles.atribute}>
@@ -308,7 +307,7 @@ export default function CharacterCreation(){
                                 </nav>
                                 <nav>
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon}  icon={faCommentDots} />
+                                        <IconAtribute atribute={Atribute.presence}/>
                                         Presença:
                                     </label>
                                     <div className={styles.atribute}>
@@ -330,7 +329,7 @@ export default function CharacterCreation(){
                                         }}
                                 >
                                     <label >
-                                        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+                                        <IconAtribute atribute={Atribute.health}/>
                                         Vida:
                                     </label>
                                     <p>{pMaxHealth}</p>
@@ -341,7 +340,7 @@ export default function CharacterCreation(){
                                         }}
                                 >
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faBolt} />
+                                        <IconAtribute atribute={Atribute.stamina}/>
                                         Stamina:
                                     </label>
                                     <p>{pMaxStamina}</p>
@@ -352,7 +351,7 @@ export default function CharacterCreation(){
                                         }}
                                 >
                                     <label>
-                                        <FontAwesomeIcon className={styles.icon} icon={faShield} />
+                                        <IconAtribute atribute={Atribute.defense}/>
                                         Defesa:
                                     </label>
                                     <p>{pDefense}</p>
@@ -365,7 +364,18 @@ export default function CharacterCreation(){
                 return(
                     <div id={styles.div}>
                         <h1>Ataques & Habilidades</h1>
-                        <AttackChoice attack={defaultAttacks[0]} price={30}/>
+                        <div className={styles.defaultAttacks}>
+                            {defaultAttacks
+                            .filter(atk=>atk.id!=0)
+                            .map((attack)=>(
+                                <FirstAttackChoice 
+                                    key={attack.id} 
+                                    attack={attack} 
+                                    price={0}
+                                />
+                            ))} 
+                        </div>
+                                           
                     </div>
                 )
             default:

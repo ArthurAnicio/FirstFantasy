@@ -1,12 +1,16 @@
+.wraper{
+    position: relative;
+}
 .card{
-    width: 150px;
+    width: 160px;
     padding: 15px;    
     display: flex;
     flex-direction: column;
+    align-items: center;
     border-radius: 0.3rem;
     background: linear-gradient(to bottom, var(--blue-p),var(--purple-p));
     color: var(--white);
-    font-size: 32px;
+    font-size: 20px;
     position: relative;
     cursor: pointer;
 }
@@ -28,6 +32,7 @@
   top: -10px;
   right: -10px;
   transform: rotate(45deg);
+  font-size: 32px;
 }
 
 .buy{
@@ -36,4 +41,34 @@
     border-radius: 0.3rem;
     text-align: center;
     background: var(--gray-s);
+}
+
+.info{
+    display: none;
+}
+
+.wraper:hover .info{
+    display: block;
+    position: absolute;
+    width: 250px;
+    padding: 15px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--purple-p);
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+    z-index: 1000;
+    font-size: 28px;
+    color: var(--white);
+}
+
+.info p{
+    display: flex;
+    align-items: end;
+    margin: 8px 0;
+}
+
+.info p label{
+    margin-left: 10px;
 }

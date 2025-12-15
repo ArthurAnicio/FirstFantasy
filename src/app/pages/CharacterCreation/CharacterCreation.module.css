@@ -8,8 +8,8 @@
 }
 
 #div{
-    width: 900px;
-    height: 80vh;
+    width: 940px;
+    min-height: 80vh;
     margin: 20px 0;
     padding: 10px 30px;
     background: var(--gray-t);
@@ -203,6 +203,12 @@
     border: solid 5px var(--gray-p);
 }
 
+.defaultAttacks{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .outPages{
     display: flex;
     flex-direction: column;
@@ -238,14 +244,15 @@
 
 .paginator p {
     width: 70px;
+    height: 70px;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     background: var(--white);
-    border: solid 5px var(--light-blue-t);
+    border: solid 5px var(--gray-s);
     border-radius: 0.5rem;
-    font-size: 40px;
+    font-size: 48px;
 }
 
 .create{

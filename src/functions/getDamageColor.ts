@@ -13,6 +13,6 @@ export function getDamageColor(type:DamageTypes){
         case DamageTypes.psychic:
             return "var(--pink-p)"
         case DamageTypes.thunder:
-            return "var(--purple-t)"
+            return "var(--purple-f)"
     }
 }
