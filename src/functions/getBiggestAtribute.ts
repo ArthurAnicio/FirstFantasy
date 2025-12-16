@@ -1,5 +1,5 @@
 import { Atribute } from "@/enums/atribute";
-import { defaultAttacks } from "../../public/itens/attacks/defaultAttacks";
+import { defaultAttacks } from "../../public/objects/attacks/defaultAttacks";
 
 interface AtributeValue{
     atribute:Atribute

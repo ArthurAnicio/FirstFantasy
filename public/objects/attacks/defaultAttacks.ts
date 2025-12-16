@@ -5,7 +5,7 @@ import { Attack } from "@/interfaces/attack";
 
 export const defaultAttacks: Attack[] = [
     {
-        id: 1,
+        id: 'def1',
         name: "Golpe Forte",
         image: "/images/attacks/defaults/default.png",
         atribute: Atribute.strength,
@@ -18,7 +18,7 @@ export const defaultAttacks: Attack[] = [
         costStamina: 0
     },
     {
-        id: 2,
+        id: 'def2',
         name: "Golpe Rápido",
         image: "/images/attacks/defaults/default.png",
         atribute: Atribute.dexterity,
@@ -31,7 +31,7 @@ export const defaultAttacks: Attack[] = [
         costStamina: 0
     },
     {
-        id: 3,
+        id: 'def3',
         name: "Golpe Preciso",
         image: "/images/attacks/defaults/default.png",
         atribute: Atribute.mind,
@@ -44,7 +44,7 @@ export const defaultAttacks: Attack[] = [
         costStamina: 0
     },
     {
-        id: 4,
+        id: 'def4',
         name: "Golpe Resistente",
         image: "/images/attacks/defaults/default.png",
         atribute: Atribute.constitution,
@@ -57,7 +57,7 @@ export const defaultAttacks: Attack[] = [
         costStamina: 0
     },
     {
-        id: 5,
+        id: 'def5',
         name: "Golpe Impactante",
         image: "/images/attacks/defaults/default.png",
         atribute: Atribute.presence,

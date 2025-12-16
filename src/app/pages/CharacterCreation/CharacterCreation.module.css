@@ -1,7 +1,14 @@
 .container{
     min-height: 100vh;
     width: 100%;
-    background: var(--gray-p);
+    background-image: 
+        linear-gradient(#000000cb, #000000cb),
+        url(https://i.pinimg.com/originals/14/7e/bc/147ebcb24cff03349a15afdbc500be2c.jpg);
+    backdrop-filter: blur(5px); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;   
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -203,13 +210,18 @@
     border: solid 5px var(--gray-p);
 }
 
-.equipedAttacksArea{
+.skillsPage{
+    width: 980px !important;
+}
+
+.attacksArea{
     width: 100%;
     margin: 20px 0;
     padding: 20px;
     color: var(--white);
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
     background: var(--gray-p);
     border-radius: 0.3rem;
@@ -222,10 +234,43 @@
     align-items: center;
 }
 
+.starterAttaksArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
+}
+
 .starterAttaks{
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+}
+
+.passivesArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
+}
+
+.passivesList{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .outPages{

@@ -10,6 +10,7 @@ import { getDamageIcon } from '@/functions/getDamageIcon'
 interface AttackChoiceProps{
     attack:Attack
     selected?:boolean
+    onClick:(id:string)=>void
 }
 
 export function FirstAttackChoice(props:AttackChoiceProps){
@@ -35,7 +36,11 @@ export function FirstAttackChoice(props:AttackChoiceProps){
 
     return(
         <div className={styles.wraper}>
-            <div className={styles.card} id={styles.selected}>
+            <div 
+                className={styles.card} 
+                id={props.selected ? styles.selected : ""}
+                onClick={()=> props.onClick(attack.id)}
+            >
                 <Image 
                     alt={attack.name} 
                     src={attack.image} 

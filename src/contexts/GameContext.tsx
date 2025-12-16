@@ -20,74 +20,8 @@ import { Atribute } from "@/enums/atribute"
 import { DamageTypes } from "@/enums/damageTypes"
 import { Attack } from "@/interfaces/attack"
 import { levelFromXp } from "@/functions/xpFormulas"
-
-export interface Character {
-  name: string
-  gender: string
-  image: string
-
-  xp: number
-  level: number
-
-  cash?: number
-  techniquePoints?: number
-  atributePoints?: number
-
-  defense: number
-  maxHealth: number
-  actualHealth: number
-  maxStamina: number
-  actualStamina: number
-
-  strength: number
-  dexterity: number
-  constitution: number
-  mind: number
-  presence: number
-
-  bonusAttack: number
-  bonusDefence: number
-  bonusHealth: number
-  bonusStamina: number
-
-  equipedAttacks: Attack[]
-  attacks: Attack[]
-
-  resistences: DamageTypes[]
-  vulnerabilites: DamageTypes[]
-  imunites: DamageTypes[]
-
-  changeName?: (text: string) => void
-  changeGender?: (gender: string) => void
-  changeImage?: (url: string) => void
-  changeCash?: (quant: number) => void
-  changeTechniquePoints?: (amount: number) => void
-  changeAtributePoints?: (amount: number) => void
-
-  addXp?: (amount: number) => void
-  setXp?: (amount: number) => void
-
-  recover?: (stat: string, amount: number, max?: boolean) => void
-  takeDamage?: (damage: number, type: DamageTypes) => void
-  useStamina?: (amount: number) => void
-
-  levelUp?: () => void
-
-  bonusAttackUp?: (amount: number) => void
-  defenseBonusUp?: (amount: number) => void
-  healthBonusUp?: (amount: number) => void
-  staminaBonusUp?: (amount: number) => void
-
-  addAttack?: (attack: Attack) => void
-  equipAttack?: (attack: Attack) => void
-  unequipAttack?: (attackName: string) => void
-
-  addResistence?: (resistence: DamageTypes) => void
-  addVulnerabilite?: (v: DamageTypes) => void
-  addImunite?: (v: DamageTypes) => void
-
-  changeStat?: (stat: Atribute, amount: number) => void
-}
+import { Character } from "@/interfaces/character"
+import { Passives } from "@/interfaces/passives"
 
 const GameContext = createContext<Character | undefined>(undefined)
 
@@ -116,6 +50,7 @@ const defaultPlayer: Character = {
   bonusStamina: 0,
   attacks: [],
   equipedAttacks: [],
+  passives: [],
   resistences: [],
   vulnerabilites: [],
   imunites: [],
@@ -177,6 +112,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [equipedAttacks, setEquipedAttacks] = useState<Attack[]>(
     player.equipedAttacks ?? []
   )
+  const [passives, setPassives] = useState<Passives[]>(player.passives ?? []) 
   const [resistences, setResistences] = useState<DamageTypes[]>(
     player.resistences ?? []
   )
@@ -366,6 +302,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const equipAttack = useCallback((attack: Attack) => {
     setEquipedAttacks(prev => [...prev, attack])
   }, [])
+  const addPassive = useCallback((passive: Passives) => {
+    setPassives(prev => [...prev, passive])
+  }, [])
 
   const unequipAttack = useCallback((attackName: string) => {
     setEquipedAttacks(prev => prev.filter(a => a.name !== attackName))
@@ -428,6 +367,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     bonusStamina,
     equipedAttacks,
     attacks,
+    passives,
     resistences,
     vulnerabilites,
     imunites,
@@ -436,6 +376,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     changeImage,
     changeCash,
     changeTechniquePoints,
+    changeAtributePoints,
     addXp,
     setXp,
     recover,
@@ -448,6 +389,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     staminaBonusUp,
     addAttack,
     equipAttack,
+    addPassive,
     unequipAttack,
     addResistence,
     addVulnerabilite,

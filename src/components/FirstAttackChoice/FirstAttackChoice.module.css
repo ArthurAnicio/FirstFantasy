@@ -11,6 +11,7 @@
     background: linear-gradient(to bottom, var(--blue-p),var(--purple-p));
     color: var(--white);
     font-size: 20px;
+    filter: saturate(0);
     position: relative;
     cursor: pointer;
 }
@@ -74,5 +75,5 @@
 }
 
 #selected{
-    box-shadow: 8px 8px 0 var(--light-blue-s);
+    filter: saturate(1);
 }

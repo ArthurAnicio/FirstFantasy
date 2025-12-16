@@ -2,42 +2,36 @@
 import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGame } from '@/contexts/GameContext'
 import Image from 'next/image'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     faArrowLeft,
-    faArrowRight
+    faArrowRight,
+    faMars,
+    faVenus,
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
-import { starterAttacks } from '../../../../public/itens/attacks/starterAttacks'
+import { starterAttacks } from '../../../../public/objects/attacks/starterAttacks'
 import { FirstAttackChoice } from '@/components/FirstAttackChoice'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { AttackItem } from '@/components/AttackItem'
-import { defaultAttacks } from '../../../../public/itens/attacks/defaultAttacks'
+import { defaultAttacks } from '../../../../public/objects/attacks/defaultAttacks'
 import { getBiggestAtribute } from '@/functions/getBiggestAtribute'
 import { EmptyAttackItem } from '@/components/EmptyAttackItem'
+import { passivesPlayer } from '../../../../public/objects/passives/passivesPlayer'
+import { PassiveItem } from '@/components/PassiveItem'
 
 export default function CharacterCreation(){
 
-    const { 
-        name,
-        gender,
-        level,
+    const {
         cash,
-        image,
-        strength,
-        dexterity,
-        constitution,
-        presence,
-        mind,
-        bonusDefence,
-        bonusHealth,
-        bonusStamina,
+        level,
         equipedAttacks,
         attacks,
+        passives,
         resistences,
         vulnerabilites,
         imunites,
@@ -52,7 +46,8 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(1)
+    const [page,setPage] = useState(3)
+    const [selectedAttackId,setSelectedAttackId] = useState('')
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
@@ -77,6 +72,7 @@ export default function CharacterCreation(){
 
     const [pEquipedAttacks, setPEquippedAttacks] = useState(equipedAttacks)
     const [pAttacks, setPAttacks] = useState(attacks)
+    const [pPassives, setPPassives] = useState(passives||[])
     const [pResistences, setPResistences] = useState(resistences)
     const [pVulnerabilites, setPVulnerabilites] = useState(vulnerabilites)
     const [pImunites, setPImunites] = useState(imunites)
@@ -96,6 +92,14 @@ export default function CharacterCreation(){
             setPage(1)
         }
     },[page])
+
+    useEffect(()=>{
+        if(pGender=="M"){
+            setPImage('/images/playerPic/playerMale.png')
+        }else{
+            setPImage('/images/playerPic/playerFemale.png')
+        }
+    },[pGender])
 
     useEffect(() => {
         const bestAttr = getBiggestAtribute(
@@ -130,7 +134,34 @@ export default function CharacterCreation(){
         setPDefense(calcDefense(pDexterity,pBonusDefence))
         setPMaxHealth(calcHealth(level,pConstitution,pBonusHealth))
         setPMaxStamina(calcStamina(level,pPresence,pConstitution,pBonusStamina))
-    },[pConstitution,pPresence,pDexterity,pBonusDefence,pBonusHealth,pBonusStamina])
+    },[pConstitution,pPresence,pDexterity,pBonusDefence,pBonusHealth,pBonusStamina,level])
+
+    useEffect(() => {
+        const attack = starterAttacks.find(atk => atk.id == selectedAttackId);
+        if (!attack) return;
+
+        setPEquippedAttacks(prev => {
+            const fixed = prev.filter(
+            atk => !starterAttacks.some(satk => satk.id == atk.id)
+            );
+
+            return [...fixed, attack];
+        });
+
+        setPAttacks(prev => {
+            const fixed = prev.filter(
+            atk => !starterAttacks.some(satk => satk.id == atk.id)
+            );
+            return [...fixed, attack];
+        });
+    }, [selectedAttackId]);
+
+    function buyPassive(passiveId:string,newCash:number){
+        const passive = passivesPlayer.find(pas=>pas.id==passiveId)
+        if(!passive)return
+        setPPassives(prev => [...prev,passive])
+        setPCash(newCash)
+    }
 
     function useStatsPoints(atribute:Atribute,amount:number){
         if(amount==1){
@@ -248,25 +279,21 @@ export default function CharacterCreation(){
                                     id={pGender=="M"?styles.selected:""}
                                     onClick={()=>setPGender("M")}
                                 >
-                                    M
+                                    <FontAwesomeIcon icon={faMars}/>
                                 </div>
                                 <div 
                                     className={styles.femaleGender}
                                     id={pGender=="F"?styles.selected:""}
                                     onClick={()=>setPGender("F")}
                                 >
-                                    F
+                                    <FontAwesomeIcon icon={faVenus}/>
                                 </div>
-                            </nav>
-                            <nav className={styles.info}>
-                                <label>Imagem:</label>
-                                <input type="url" placeholder='Url da imagem' value={pImage} onChange={(e)=>setPImage(e.target.value)}/>
                             </nav>
                             <nav className={styles.info}>
                                 <label>Level:</label>
                                 <p>{level}</p>
                             </nav>
-                            <Image className={styles.imageChar} src={pImage!=""?pImage:'/images/profileDefault.png'} alt='Foto do personagem' width={400} height={400}/>
+                            <Image className={styles.imageChar} src={pImage} alt='Foto do personagem' width={400} height={400}/>
                         </div>
                     </div>
                 )
@@ -395,29 +422,39 @@ export default function CharacterCreation(){
                 )
             case 3:
                 return(
-                    <div id={styles.div}>
+                    <div className={styles.skillsPage} id={styles.div}>
                         <h1>Ataques & Habilidades</h1>
-                        <div className={styles.equipedAttacksArea}>
+                        <div className={styles.attacksArea}>
                             <p>Ataques Equipados</p>
                             <div className={styles.equipedAttacks}>
                                 {pEquipedAttacks.map((attack)=>(
-                                    <AttackItem attack={attack} inBattle={false} />
+                                    <AttackItem key={attack.id} attack={attack} inBattle={false} />
                                 ))}
-                                <EmptyAttackItem />
+                                {Array.from({ length: Math.max(0, 6 - pEquipedAttacks.length) }).map((_, i) => (
+                                    <EmptyAttackItem key={`empty-${i}`} />
+                                ))}
                             </div>
-                                
+                            <p>Escolha um ataque inicial:</p>    
+                            <div className={styles.starterAttaks}>
+                                {starterAttacks
+                                .map((attack)=>(
+                                    <FirstAttackChoice 
+                                        key={attack.id}
+                                        attack={attack}
+                                        selected={selectedAttackId == attack.id} 
+                                        onClick={setSelectedAttackId}                                
+                                    />
+                                ))} 
+                            </div>    
                         </div>
-                        <div className={styles.starterAttaks}>
-                            {starterAttacks
-                            .filter(atk=>atk.id!=0)
-                            .map((attack)=>(
-                                <FirstAttackChoice 
-                                    key={attack.id} 
-                                    attack={attack}
-                                />
-                            ))} 
-                        </div>
-                                           
+                        <div className={styles.passivesArea}>
+                            <p>Habilidades Treinadas</p>
+                            <div className={styles.passivesList}>
+                                {passivesPlayer.map((passive)=>(
+                                    <PassiveItem key={passive.id} passive={passive}/>
+                                ))}
+                            </div>
+                        </div>                    
                     </div>
                 )
             default:

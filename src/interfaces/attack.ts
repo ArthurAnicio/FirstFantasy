@@ -3,7 +3,7 @@ import { EffectTypes } from "@/enums/effectTypes"
 import { Atribute } from "@/enums/atribute"
 
 export interface Attack {
-  id: number
+  id: string
   name: string
   image: string
   atribute: Atribute
