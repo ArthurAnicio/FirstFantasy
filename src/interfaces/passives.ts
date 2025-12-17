@@ -1,3 +1,4 @@
+import { Atribute } from "@/enums/atribute"
 import { BonusTypes } from "@/enums/bonusTypes"
 import { DamageTypes } from "@/enums/damageTypes"
 
@@ -7,7 +8,8 @@ export interface Passives{
   image:string
   description:string
   typeBonus: BonusTypes
-  bonusNum?:number
-  bonusDamageType?:DamageTypes
+  bonusNum:number
+  bonusDamageType:DamageTypes
+  bonusStat: Atribute
   price:number
 }

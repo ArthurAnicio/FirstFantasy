@@ -1,15 +1,61 @@
+.wraper{
+    position: relative;
+    color: var(--white);
+}
+
+.description{
+    display: none;
+}
+
 .passiveItem{
-    width: 200px;
+    width: 180px;
     border-radius: 0.3rem;
+    margin-top: 20px;
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: linear-gradient(var(--blue-p),var(--purple-p));
-    color: var(--white);
-    font-size: 24px;
+    font-size: 22px;
 }
 
 .passiveItem p{
     margin-top: 20px;
+}
+
+.wraper:hover .description{
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    padding: 15px;
+    background: var(--purple-p);
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+    z-index: 10;
+    font-size: 22px;
+}
+
+.passiveCost{
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-radius: 1rem;
+    font-family: var(--font-jacquard-24);
+    border: none;
+    text-align: center;
+    font-size: 32px;
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.passiveCost:hover{
+    scale: 0.95;
 }

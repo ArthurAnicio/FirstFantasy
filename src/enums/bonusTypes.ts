@@ -1,6 +1,7 @@
 export enum BonusTypes{
   bonusAttack,
   bonusCriticalRatio,
+  bonusCriticalDamage,
   bonusDefense,
   bonusHp,
   bonusStamina,

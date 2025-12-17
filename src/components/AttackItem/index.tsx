@@ -1,8 +1,6 @@
 import styles from "./AttackItem.module.css";
 import { Attack } from "@/interfaces/attack";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useGame } from "@/contexts/GameContext";
 import { IconAtribute } from "../../functions/IconAtribute";
 import { Atribute } from "@/enums/atribute";
@@ -15,7 +13,7 @@ interface AttackItemProps {
 }
 
 export function AttackItem(props: AttackItemProps) {
-    const { cash, strength, dexterity, constitution, mind, presence, bonusAttack } = useGame();
+    const { strength, dexterity, constitution, mind, presence, bonusAttack } = useGame();
     const attack = props.attack;
     const color = getDamageColor(attack.damageType);
 
@@ -59,7 +57,7 @@ export function AttackItem(props: AttackItemProps) {
                     Dano:  <label style={{color}}>{attack.damageQuant}d{attack.damageDice} {getDamageIcon(attack.damageType)}{attack.damageType}</label>
                 </p>
                 <p>
-                    Crítico: {attack.criticalRatio<20?attack.criticalRatio-20:20} / x{attack.criticalBonus}
+                    Crítico: {attack.criticalRatio<20?`${attack.criticalRatio}-20`:20} / x{attack.criticalBonus}
                 </p>
                 <p>
                     Stamina:   <label style={{color:"var(--light-blue-t)"}}>{attack.costStamina}</label>

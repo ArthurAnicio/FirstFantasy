@@ -8,10 +8,9 @@ import Image from 'next/image'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
-    faArrowLeft,
-    faArrowRight,
     faMars,
     faVenus,
+    faCoins
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
 import { starterAttacks } from '../../../../public/objects/attacks/starterAttacks'
@@ -23,6 +22,12 @@ import { getBiggestAtribute } from '@/functions/getBiggestAtribute'
 import { EmptyAttackItem } from '@/components/EmptyAttackItem'
 import { passivesPlayer } from '../../../../public/objects/passives/passivesPlayer'
 import { PassiveItem } from '@/components/PassiveItem'
+import { BonusTypes } from '@/enums/bonusTypes'
+import { DamageTypes } from '@/enums/damageTypes'
+import { getDamageIcon } from '@/functions/getDamageIcon'
+import { getDamageColor } from '@/functions/getDamageColor'
+import { Attack } from '@/interfaces/attack'
+import { Passives } from '@/interfaces/passives'
 
 export default function CharacterCreation(){
 
@@ -39,6 +44,7 @@ export default function CharacterCreation(){
         changeCash,
         changeImage,
         changeStat,
+        bonusAttackUp,
         defenseBonusUp,
         healthBonusUp,
         staminaBonusUp,
@@ -51,8 +57,9 @@ export default function CharacterCreation(){
     } = useGame()
 
     const router = useRouter()
-    const [page,setPage] = useState(3)
+    const [page,setPage] = useState(1)
     const [selectedAttackId,setSelectedAttackId] = useState('')
+    const [canCreate,setCanCreate] = useState(false)
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
@@ -66,7 +73,7 @@ export default function CharacterCreation(){
     const [pPresence, setPPresence] = useState(1)
     const [pMind, setPMind] = useState(1)
 
-
+    const [pBonusAttack, setPBonusAttack] = useState(0)
     const [pBonusDefence, setPBonusDefence] = useState(0)
     const [pBonusHealth, setPBonusHealth] = useState(0)
     const [pBonusStamina, setPBonusStamina] = useState(0)
@@ -75,28 +82,37 @@ export default function CharacterCreation(){
     const [pMaxHealth,setPMaxHealth] = useState(calcHealth(level,pConstitution,pBonusHealth))
     const [pMaxStamina, setPMaxStamina] = useState(calcStamina(level,pPresence,pConstitution,pBonusStamina))
 
-    const [pEquipedAttacks, setPEquippedAttacks] = useState(equipedAttacks)
-    const [pAttacks, setPAttacks] = useState(attacks)
-    const [pPassives, setPPassives] = useState(passives||[])
-    const [pResistences, setPResistences] = useState(resistences)
-    const [pVulnerabilites, setPVulnerabilites] = useState(vulnerabilites)
-    const [pImunites, setPImunites] = useState(imunites)
+    const [pEquipedAttacks, setPEquippedAttacks] = useState<Attack[]>([])
+    const [pAttacks, setPAttacks] = useState<Attack[]>([])
+    const [pPassives, setPPassives] = useState<Passives[]>([])
+    const [pResistences, setPResistences] = useState<DamageTypes[]>([])
+    const [pVulnerabilites, setPVulnerabilites] = useState<DamageTypes[]>([])
+    const [pImunites, setPImunites] = useState<DamageTypes[]>([])
+
+    useEffect(()=>{
+        Cookies.set("carregado","")
+    },[])
 
     useEffect(()=>{
         const creating = Cookies.get("criando")
         if(creating!="sim"){
             router.push('/')
         }
-    })
+    },[])
 
     useEffect(()=>{
-        if(page<1){
-            setPage(3)
+
+        if(pName!="" && statsPoints==0 && selectedAttackId){
+            setCanCreate(true)
+        }else{
+            setCanCreate(false)
         }
-        if(page>3){
-            setPage(1)
-        }
-    },[page])
+    },[
+        pName,
+        statsPoints,
+        selectedAttackId
+    ])
+
 
     useEffect(()=>{
         if(pGender=="M"){
@@ -166,6 +182,63 @@ export default function CharacterCreation(){
         if(!passive)return
         setPPassives(prev => [...prev,passive])
         setPCash(newCash)
+        aplicatePassive(passiveId)
+    }
+
+    function aplicatePassive(id:string){
+        const passive = passivesPlayer.find(pas=>pas.id==id)
+        if(!passive)return
+        switch(passive.typeBonus){
+            case BonusTypes.bonusAttack:
+                setPBonusAttack(passive.bonusNum)
+                break
+            case BonusTypes.bonusCriticalDamage:
+                pAttacks.forEach(atk => {
+                    atk.criticalBonus += passive.bonusNum
+                });
+                break            
+            case BonusTypes.bonusCriticalRatio:
+                pAttacks.forEach(atk => {
+                    atk.criticalRatio -= passive.bonusNum
+                });
+                break
+            case BonusTypes.bonusDefense:
+                setPBonusDefence(passive.bonusNum)
+                break
+            case BonusTypes.bonusHp:
+                setPBonusHealth(passive.bonusNum)
+                break
+            case BonusTypes.bonusStamina:
+               setPBonusStamina(passive.bonusNum)
+               break
+            case BonusTypes.resistence:
+               setPResistences([...pResistences,passive.bonusDamageType])
+               break
+            case BonusTypes.vulnerabilite:
+               setPVulnerabilites([...pVulnerabilites,passive.bonusDamageType])
+               break
+            case BonusTypes.imunite:
+               setPImunites([...pImunites,passive.bonusDamageType])
+               break
+            case BonusTypes.bonusStat:
+               switch(passive.bonusStat){
+                case Atribute.constitution:
+                    setPConstitution(pConstitution+1)
+                    break
+                case Atribute.strength:
+                    setPStrength(pStrength+1)
+                    break
+                case Atribute.dexterity:
+                    setPDexterity(pDexterity+1)
+                    break
+                case Atribute.mind:
+                    setPMind(pMind+1)
+                    break
+                case Atribute.presence:
+                    setPPresence(pPresence+1)
+                    break
+               }
+        }
     }
 
     function useStatsPoints(atribute:Atribute,amount:number){
@@ -254,6 +327,7 @@ export default function CharacterCreation(){
         changeStat?.(Atribute.mind, pMind)
         changeStat?.(Atribute.presence, pPresence)
 
+        bonusAttackUp?.(pBonusAttack)
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
@@ -279,10 +353,12 @@ export default function CharacterCreation(){
     }
 
     function createChar(){
-        setElements()
-        Cookies.set("carregado","sim")
-        Cookies.set("criando","")
-        router.push("/pages/PlayerArea")
+        if(canCreate){
+            setElements()
+            Cookies.set("carregado","sim")
+            Cookies.set("criando","")
+            router.push("/pages/PlayerArea")
+        }
     }
 
     function renderPages(p:number){
@@ -442,6 +518,80 @@ export default function CharacterCreation(){
                                 </nav>
                             </div>
                         </div>
+                        <div className={styles.defencesContent}>
+                            <div>
+                                Resistencias:
+                                {pResistences.length>0?
+                                    pResistences.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"35px",
+                                                borderRadius:"50%",
+                                                width:"50px",
+                                                height:"50px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                 : <p>Nenhuma</p>
+                                }
+                            </div>
+                            <div>
+                                Vulnerabilidades:
+                                {pVulnerabilites.length>0?
+                                    pVulnerabilites.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"35px",
+                                                borderRadius:"50%",
+                                                width:"50px",
+                                                height:"50px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                 : <p>Nenhuma</p>
+                                }
+                            </div>
+                            <div>
+                                Imunidades:
+                                {pImunites.length>0?
+                                    pImunites.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"35px",
+                                                borderRadius:"50%",
+                                                width:"50px",
+                                                height:"50px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                 : <p>Nenhuma</p>
+                                }
+                            </div>
+                        </div>
                     </div>
                 )
             case 3:
@@ -474,9 +624,32 @@ export default function CharacterCreation(){
                         <div className={styles.passivesArea}>
                             <p>Habilidades Treinadas</p>
                             <div className={styles.passivesList}>
-                                {passivesPlayer.map((passive)=>(
-                                    <PassiveItem key={passive.id} passive={passive}/>
-                                ))}
+                                {pPassives.length > 0 ? 
+                                    pPassives.map((passive)=>(
+                                        <PassiveItem key={passive.id} passive={passive} buy={buyPassive}/>
+                                    ))
+                                    : <p>Nenhuma habilidade treinada.</p>
+                                }
+                            </div>
+                            <div className={styles.passivesShop}>
+                                <h3>
+                                    Loja de Habilidades
+                                    <div>
+                                        <FontAwesomeIcon icon={faCoins}/>
+                                        <span>{pCash}</span>
+                                    </div>
+                                </h3>
+                                <div className={styles.passivesToBuy}>
+                                    {passivesPlayer.filter(pas => !(pPassives.includes(pas))).map((passive)=>(
+                                        <PassiveItem 
+                                            key={passive.id} 
+                                            passive={passive}
+                                            buy={buyPassive}
+                                            shop={true}
+                                            actualCash={pCash}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>                    
                     </div>
@@ -518,7 +691,13 @@ export default function CharacterCreation(){
                 </div>
             {renderPages(page)}
             </div>
-            <button className={styles.create} onClick={createChar}>Criar Personagem</button>
+            <button 
+                className={styles.create}
+                id={canCreate?"":styles.createDesabled}
+                onClick={createChar}
+            >
+                Criar Personagem
+            </button>
         </div>
     )
 }
