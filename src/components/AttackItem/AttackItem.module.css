@@ -1,0 +1,51 @@
+.wraper{
+    position: relative;
+}
+.info {
+    display: none;
+}
+
+.card{
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(var(--blue-p),var(--blue-p));
+    border-radius: 0.2rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.stamina {
+  z-index: 9999;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: var(--orange-s);
+  border: solid 4px var(--white);
+  color: var(--white);
+  top: -8px;
+  right: -8px;
+  transform: rotate(45deg);
+  font-size: 28px;
+}
+
+.wraper:hover .info{
+    display: block;
+    position: absolute;
+    width: 220px;
+    padding: 10px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--purple-p);
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+    z-index: 8888;
+    font-size: 22px;
+    color: var(--white);
+}

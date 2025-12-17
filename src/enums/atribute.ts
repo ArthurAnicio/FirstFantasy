@@ -6,5 +6,6 @@ export enum Atribute{
   presence,
   defense,
   health,
-  stamina
+  stamina,
+  none
 }

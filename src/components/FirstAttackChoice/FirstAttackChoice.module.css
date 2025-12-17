@@ -11,12 +11,19 @@
     background: linear-gradient(to bottom, var(--blue-p),var(--purple-p));
     color: var(--white);
     font-size: 20px;
+    filter: saturate(0);
     position: relative;
     cursor: pointer;
+    transition: .2s;
 }
 
 .card label{
     margin-left: 10px;
+}
+
+.card:hover{
+    filter: saturate(1);
+    box-shadow: 0 0 10px var(--blue-p);
 }
 
 .stamina {
@@ -33,14 +40,6 @@
   right: -10px;
   transform: rotate(45deg);
   font-size: 32px;
-}
-
-.buy{
-    margin: 5px 0;
-    padding: 5px 0;
-    border-radius: 0.3rem;
-    text-align: center;
-    background: var(--gray-s);
 }
 
 .info{
@@ -71,4 +70,8 @@
 
 .info p label{
     margin-left: 10px;
+}
+
+#selected{
+    filter: saturate(1);
 }

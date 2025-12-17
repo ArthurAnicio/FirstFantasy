@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useGame } from '@/contexts/GameContext';
 import styles from './page.module.css'
 import { ModalConfirm } from '@/components/ModalConfirm';
@@ -7,6 +8,7 @@ import Cookies from 'js-cookie';
 
 export default function Home() {
 
+  const router = useRouter()
   const {name} = useGame()
   const [canContinue,setCanContinue] = useState(true)
   const [modalOn, setModalOn] = useState(false)
@@ -14,15 +16,23 @@ export default function Home() {
   useEffect(()=>{
     if(name!=""){
       setCanContinue(true)
+      Cookies.set("carregado","sim")
     }else{
       setCanContinue(false)
+      Cookies.set("carregado","")
     }
   },[])
 
   useEffect(()=>{
-    Cookies.set("carregado","")
     Cookies.set("criando","")
   })
+
+  function continueNavi(){
+    if(canContinue){
+      Cookies.set("carregado","sim")
+      router.push('/pages/PlayerArea')
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -32,6 +42,7 @@ export default function Home() {
       <button 
         className={styles.btn}
         id={canContinue?"":styles.disable}
+        onClick={continueNavi}
       >
         Continuar
       </button>

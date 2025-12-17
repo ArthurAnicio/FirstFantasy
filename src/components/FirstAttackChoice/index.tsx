@@ -2,20 +2,20 @@ import { getDamageColor } from '@/functions/getDamageColor'
 import styles from './FirstAttackChoice.module.css'
 import { Attack } from '@/interfaces/attack'
 import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoins } from '@fortawesome/free-solid-svg-icons'
 import { useGame } from '@/contexts/GameContext'
-import { IconAtribute } from '../IconAtribute'
+import { IconAtribute } from '@/functions/IconAtribute'
 import { Atribute } from '@/enums/atribute'
+import { getDamageIcon } from '@/functions/getDamageIcon'
 
 interface AttackChoiceProps{
     attack:Attack
-    price:number
+    selected?:boolean
+    onClick:(id:string)=>void
 }
 
 export function FirstAttackChoice(props:AttackChoiceProps){
 
-    const {cash,strength,dexterity,constitution,mind,presence,bonusAttack} = useGame()
+    const {strength,dexterity,constitution,mind,presence,bonusAttack} = useGame()
     const attack = props.attack
     const color = getDamageColor(attack.damageType)
 
@@ -36,7 +36,11 @@ export function FirstAttackChoice(props:AttackChoiceProps){
 
     return(
         <div className={styles.wraper}>
-            <div className={styles.card}>
+            <div 
+                className={styles.card} 
+                id={props.selected ? styles.selected : ""}
+                onClick={()=> props.onClick(attack.id)}
+            >
                 <Image 
                     alt={attack.name} 
                     src={attack.image} 
@@ -61,7 +65,7 @@ export function FirstAttackChoice(props:AttackChoiceProps){
                 <p>
                     Dano: 
                     <label style={{color}}>
-                        {attack.damageQuant}d{attack.damageDice} {attack.damageType}
+                        {attack.damageQuant}d{attack.damageDice} {getDamageIcon(attack.damageType)}{attack.damageType}
                     </label>
                 </p>
                 <p>

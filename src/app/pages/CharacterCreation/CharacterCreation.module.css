@@ -1,19 +1,66 @@
 .container{
     min-height: 100vh;
     width: 100%;
-    background: var(--gray-p);
+    background-image: 
+        linear-gradient(#000000cb, #000000cb),
+        url(https://i.pinimg.com/originals/14/7e/bc/147ebcb24cff03349a15afdbc500be2c.jpg);
+    backdrop-filter: blur(5px); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;   
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.pages{
+    margin: 80px 0;
+    position: relative;
+}
+
+.options{
+    position: absolute;
+    top: -50px;
+    right: 20;
+    display: flex;
+    gap: 20px;
+}
+
+.option {
+    width: 150px;
+    height: 70px;
+    padding: 10px;
+    text-align: center;
+    background: var(--gray-s);
+    border: none;
+    border-radius: 0.5rem;
+    font-family: var(--font-jacquard-24);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple-p);
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 0;
+}
+
+#optionSelected{
+    scale: 1.05;
+    background: var(--gray-t);
+    box-shadow: 0 0 10px var(--white);
+}
+
+.option:hover{
+    scale: 1.05;
+    background: var(--gray-t);
+}
+
 #div{
     width: 940px;
     min-height: 80vh;
-    margin: 20px 0;
     padding: 10px 30px;
-    background: var(--gray-t);
     border-radius: 0.5rem;
+    background: var(--gray-t);
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -203,61 +250,138 @@
     border: solid 5px var(--gray-p);
 }
 
-.defaultAttacks{
+.defencesContent{
+    border-top: solid 5px var(--black);
+    width: 100%;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.defencesContent div{
+    width: 100%;
+    padding: 10px;
+    border: solid 5px var(--white);
+    border-radius: 1rem;
+    background: var(--black);
+    color: var(--white);
+    box-shadow: 0 0 10px var(--black);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.skillsPage{
+    width: 980px !important;
+}
+
+.attacksArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
+}
+
+.equipedAttacks{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.starterAttaksArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
+}
+
+.starterAttaks{
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
 }
 
-.outPages{
+.passivesArea{
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    color: var(--white);
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px;
+    background: var(--gray-p);
+    border-radius: 0.3rem;
 }
 
-.paginator{
-    margin: 25px;
-    display: flex;
+.passivesList{
     width: 100%;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.paginator button{
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 0.5rem;
-    background: var(--gray-s);
-    font-family: var(--font-jacquard-24);
-    font-size: 40px;
-    cursor: pointer;
-    transition: 0.1s;
-}
-.paginator button:hover{
-    scale: 0.95;
-    background: var(--gray-t);
-}
-
-.paginator p {
-    width: 70px;
-    height: 70px;
+    border: solid 5px var(--white);
+    border-radius: 0.3rem;
+    min-height: 30vh;
     padding: 10px;
     display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
     justify-content: center;
+}
+
+.passivesShop{
+    width: 100%;
+    color: var(--black);
+    background: var(--gray-t);
+    border-radius: 0.3rem;
+    padding: 20px;
+    margin-bottom: 10px;
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+}
+
+.passivesShop h3{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    background: var(--white);
-    border: solid 5px var(--gray-s);
-    border-radius: 0.5rem;
-    font-size: 48px;
+}
+
+.passivesShop h3 div{
+    background: var(--gray-p);
+    padding: 5px 10px;
+    border: solid 5px var(--orange-p);
+    border-radius: 0.3rem;
+    width: 130px;
+    color: var(--orange-p);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.passivesToBuy{
+    width: 100%;
+    min-height: 20vh;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .create{
     width: 300px;
-    margin: 10px 0;
+    margin-bottom: 20px;
     padding: 10px;
     background: var(--blue-t);
     border: none;
@@ -267,6 +391,12 @@
     color: var(--white);
     cursor: pointer;
     transition: 0.2s;
+}
+
+#createDesabled{
+    background: var(--gray-s);
+    scale: 0.95;
+    cursor: not-allowed;
 }
 
 .create:hover{
