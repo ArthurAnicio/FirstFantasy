@@ -27,7 +27,6 @@ import { PassiveItem } from '@/components/PassiveItem'
 export default function CharacterCreation(){
 
     const {
-        cash,
         level,
         equipedAttacks,
         attacks,
@@ -43,6 +42,12 @@ export default function CharacterCreation(){
         defenseBonusUp,
         healthBonusUp,
         staminaBonusUp,
+        addAttack,
+        equipAttack,
+        addPassive,
+        addResistence,
+        addImunite,
+        addVulnerabilite
     } = useGame()
 
     const router = useRouter()
@@ -252,6 +257,25 @@ export default function CharacterCreation(){
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
+
+        pAttacks.forEach(atk => {
+            addAttack?.(atk)
+        })
+        pEquipedAttacks.forEach(atk => {
+            equipAttack?.(atk)
+        })
+        pPassives.forEach(pas => {
+            addPassive?.(pas)
+        })
+        pResistences.forEach(res => {
+            addResistence?.(res)
+        })
+        pImunites.forEach(imu => {
+            addImunite?.(imu)
+        })
+        pVulnerabilites.forEach(vul => {
+            addVulnerabilite?.(vul)
+        })
     }
 
     function createChar(){
@@ -469,20 +493,32 @@ export default function CharacterCreation(){
     return(
         <div className={styles.container}>
             <div className={styles.pages}>
+                <div className={styles.options}>
+                    <div 
+                        className={styles.option}
+                        id={page==1?styles.optionSelected:""}
+                        onClick={()=>setPage(1)}
+                    >
+                        Info
+                    </div>
+                    <div 
+                        className={styles.option}
+                        id={page==2?styles.optionSelected:""}
+                        onClick={()=>setPage(2)}
+                    >
+                        Atributos
+                    </div>
+                    <div 
+                        className={styles.option}
+                        id={page==3?styles.optionSelected:""}
+                        onClick={()=>setPage(3)}
+                    >
+                        Habilidades
+                    </div>
+                </div>
             {renderPages(page)}
             </div>
-            <div className={styles.outPages}>
-                <div className={styles.paginator}>
-                    <button onClick={()=>setPage(page-1)}>
-                        <FontAwesomeIcon icon={faArrowLeft}/>
-                    </button>
-                    <p>{page}</p>
-                    <button onClick={()=>setPage(page+1)}>
-                        <FontAwesomeIcon icon={faArrowRight}/>
-                    </button>
-                </div>
-                <button className={styles.create} onClick={createChar}>Criar Personagem</button>
-            </div>
+            <button className={styles.create} onClick={createChar}>Criar Personagem</button>
         </div>
     )
 }

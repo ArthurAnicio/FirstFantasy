@@ -14,13 +14,53 @@
     align-items: center;
 }
 
+.pages{
+    margin: 80px 0;
+    position: relative;
+}
+
+.options{
+    position: absolute;
+    top: -50px;
+    right: 20;
+    display: flex;
+    gap: 20px;
+}
+
+.option {
+    width: 150px;
+    height: 70px;
+    padding: 10px;
+    text-align: center;
+    background: var(--gray-s);
+    border: none;
+    border-radius: 0.5rem;
+    font-family: var(--font-jacquard-24);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple-p);
+    cursor: pointer;
+    transition: 0.2s;
+    z-index: 0;
+}
+
+#optionSelected{
+    scale: 1.05;
+    background: var(--gray-t);
+    box-shadow: 0 0 10px var(--white);
+}
+
+.option:hover{
+    scale: 1.05;
+    background: var(--gray-t);
+}
+
 #div{
     width: 940px;
     min-height: 80vh;
-    margin: 20px 0;
     padding: 10px 30px;
-    background: var(--gray-t);
     border-radius: 0.5rem;
+    background: var(--gray-t);
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -273,55 +313,9 @@
     justify-content: center;
 }
 
-.outPages{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.paginator{
-    margin: 25px;
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.paginator button{
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 0.5rem;
-    background: var(--gray-s);
-    font-family: var(--font-jacquard-24);
-    font-size: 40px;
-    cursor: pointer;
-    transition: 0.1s;
-}
-.paginator button:hover{
-    scale: 0.95;
-    background: var(--gray-t);
-}
-
-.paginator p {
-    width: 70px;
-    height: 70px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--white);
-    border: solid 5px var(--gray-s);
-    border-radius: 0.5rem;
-    font-size: 48px;
-}
-
 .create{
     width: 300px;
-    margin: 10px 0;
+    margin-bottom: 20px;
     padding: 10px;
     background: var(--blue-t);
     border: none;
