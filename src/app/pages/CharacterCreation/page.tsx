@@ -47,7 +47,8 @@ export default function CharacterCreation(){
         addPassive,
         addResistence,
         addImunite,
-        addVulnerabilite
+        addVulnerabilite,
+        recover
     } = useGame()
 
     const router = useRouter()
@@ -328,6 +329,9 @@ export default function CharacterCreation(){
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
+
+        recover("health",0,true)
+        recover("",0,true)
 
         pAttacks.forEach(atk => {
             addAttack?.(atk)
