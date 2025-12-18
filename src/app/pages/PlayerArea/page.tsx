@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import styles from './PlayerArea.module.css'
 import { PlayerCard } from "@/components/PlayerCard"
-import { useGame } from "@/contexts/GameContext"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { DamageTypes } from "@/enums/damageTypes"
 
 export default function Player(){
@@ -15,7 +15,7 @@ export default function Player(){
         addXp,
         setXp,
         recover
-    } = useGame()
+    } = usePlayer()
 
     const router = useRouter()
 
@@ -30,32 +30,32 @@ export default function Player(){
         <div className={styles.container}>
             PlayerArea
             <button
-                onClick={()=>takeDamage(2,DamageTypes.fire)}
+                onClick={()=>takeDamage!(2,DamageTypes.fire)}
             >
                 dano
             </button>
             <button
-                onClick={()=>recover("health",1)}
+                onClick={()=>recover!("health",1,true)}
             >
                 cura
             </button>
             <button
-                onClick={()=>useStamina(1)}
+                onClick={()=>useStamina!(1)}
             >
                 usa stamina
             </button>
             <button
-                onClick={()=>recover("",1)}
+                onClick={()=>recover!("",1)}
             >
                 recupera stamina
             </button>
             <button
-                onClick={()=>addXp(20)}
+                onClick={()=>addXp!(20)}
             >
                 ganha xp
             </button>
             <button
-                onClick={()=>setXp(0)}
+                onClick={()=>setXp!(0)}
             >
                 resetaXp
             </button>

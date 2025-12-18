@@ -48,12 +48,15 @@ export interface Character {
   changeTechniquePoints?: (amount: number) => void
   changeAtributePoints?: (amount: number) => void
 
-  addXp: (amount: number) => void
-  setXp: (amount: number) => void
+  changeActualHealth?:(amount:number)=>void
+  changeActualStamina?:(amount:number)=>void
 
-  recover: (stat: string, amount: number, max?: boolean) => void
-  takeDamage: (damage: number, type: DamageTypes) => void
-  useStamina: (amount: number) => void
+  addXp?: (amount: number) => void
+  setXp?: (amount: number) => void
+
+  recover?: (stat: string, amount: number, max?: boolean) => void
+  takeDamage?: (damage: number, type: DamageTypes) => void
+  useStamina?: (amount: number) => void
 
   levelUp?: () => void
 

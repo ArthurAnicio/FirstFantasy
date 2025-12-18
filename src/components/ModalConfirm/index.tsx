@@ -1,7 +1,6 @@
 import styles from "./ModalConfirm.module.css"
 import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
-import { url } from "inspector"
 
 interface ModalConfirmProps{
     url:string

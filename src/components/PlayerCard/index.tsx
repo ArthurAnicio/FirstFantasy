@@ -1,6 +1,6 @@
 "use client"
 import styles from './PlayerCard.module.css'
-import { useGame } from '@/contexts/GameContext'
+import { usePlayer } from '@/contexts/PlayerContext'
 import { Atribute } from '@/enums/atribute'
 import { IconAtribute } from '@/functions/IconAtribute'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ export function PlayerCard(){
         maxHealth,
         actualStamina,
         maxStamina
-    } = useGame()
+    } = usePlayer()
 
     const [totalXp,setTotalXp] = useState(0)
     const [remaningXp, setRemaningXp] = useState(0)

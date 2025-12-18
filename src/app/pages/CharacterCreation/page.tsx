@@ -3,7 +3,7 @@ import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useGame } from '@/contexts/GameContext'
+import { usePlayer } from '@/contexts/PlayerContext'
 import Image from 'next/image'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -48,8 +48,10 @@ export default function CharacterCreation(){
         addResistence,
         addImunite,
         addVulnerabilite,
-        recover
-    } = useGame()
+        changeActualHealth,
+        changeActualStamina,
+        setXp
+    } = usePlayer()
 
     const router = useRouter()
     const [page,setPage] = useState(1)
@@ -94,6 +96,7 @@ export default function CharacterCreation(){
             router.push('/')
         }else{
             Cookies.set("player","")
+            setXp!(0)
         }
         
     },[])
@@ -330,8 +333,8 @@ export default function CharacterCreation(){
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
 
-        recover("health",0,true)
-        recover("",0,true)
+        changeActualHealth?.(pMaxHealth)
+        changeActualStamina?.(pMaxStamina)
 
         pAttacks.forEach(atk => {
             addAttack?.(atk)

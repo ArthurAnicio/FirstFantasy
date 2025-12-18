@@ -1,7 +1,7 @@
 import styles from "./AttackItem.module.css";
 import { Attack } from "@/interfaces/attack";
 import Image from "next/image";
-import { useGame } from "@/contexts/GameContext";
+import { usePlayer } from "@/contexts/PlayerContext";
 import { IconAtribute } from "../../functions/IconAtribute";
 import { Atribute } from "@/enums/atribute";
 import { getDamageColor } from "@/functions/getDamageColor";
@@ -13,7 +13,7 @@ interface AttackItemProps {
 }
 
 export function AttackItem(props: AttackItemProps) {
-    const { strength, dexterity, constitution, mind, presence, bonusAttack } = useGame();
+    const { strength, dexterity, constitution, mind, presence, bonusAttack } = usePlayer();
     const attack = props.attack;
     const color = getDamageColor(attack.damageType);
 

@@ -2,7 +2,7 @@ import { getDamageColor } from '@/functions/getDamageColor'
 import styles from './FirstAttackChoice.module.css'
 import { Attack } from '@/interfaces/attack'
 import Image from 'next/image'
-import { useGame } from '@/contexts/GameContext'
+import { usePlayer } from '@/contexts/PlayerContext'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { Atribute } from '@/enums/atribute'
 import { getDamageIcon } from '@/functions/getDamageIcon'
@@ -15,7 +15,7 @@ interface AttackChoiceProps{
 
 export function FirstAttackChoice(props:AttackChoiceProps){
 
-    const {strength,dexterity,constitution,mind,presence,bonusAttack} = useGame()
+    const {strength,dexterity,constitution,mind,presence,bonusAttack} = usePlayer()
     const attack = props.attack
     const color = getDamageColor(attack.damageType)
 

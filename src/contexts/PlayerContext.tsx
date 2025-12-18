@@ -20,7 +20,7 @@ import { levelFromXp } from "@/functions/xpFormulas"
 import { Character } from "@/interfaces/character"
 import { Passives } from "@/interfaces/passives"
 
-const GameContext = createContext<Character | undefined>(undefined)
+const PlayerContext = createContext<Character | undefined>(undefined)
 
 const defaultPlayer: Character = {
   name: "",
@@ -66,7 +66,7 @@ function loadPlayer(): Character {
   }
 }
 
-export function GameProvider({ children }: { children: React.ReactNode }) {
+export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const player: Character = loadPlayer()
 
   const [name, setName] = useState(player.name)
@@ -101,11 +101,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [maxHealth, setMaxHealth] = useState(
     calcHealth(level, constitution, bonusHealth),
   )
-  const [actualHealth, setActualHealth] = useState(player.maxHealth)
+  const [actualHealth, setActualHealth] = useState(player.actualHealth)
   const [maxStamina, setMaxStamina] = useState(
     calcStamina(level, presence, constitution, bonusStamina),
   )
-  const [actualStamina, setActualStamina] = useState(player.maxStamina)
+  const [actualStamina, setActualStamina] = useState(player.actualStamina)
 
   const [attacks, setAttacks] = useState(player.attacks ?? [])
   const [equipedAttacks, setEquipedAttacks] = useState(
@@ -161,6 +161,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       vulnerabilites,
       imunites,
     }
+
+    console.log("Salvando player", {
+      actualHealth,
+      actualStamina,
+      })
 
     Cookies.set("player", JSON.stringify(playerToSave), {
       expires: 365 * 20,
@@ -219,6 +224,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const changeAtributePoints = useCallback((amount: number) => {
     setAtributePoints(amount)
   }, [])
+  const changeActualHealth=(amount:number)=>{
+    setActualHealth(amount)
+  }
+  const changeActualStamina=(amount:number)=>{
+    setActualStamina(amount)
+  }
 
   const setXp = useCallback((amount: number) => {
     setXpState(amount)
@@ -378,6 +389,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     changeCash,
     changeTechniquePoints,
     changeAtributePoints,
+    changeActualHealth,
+    changeActualStamina,
     addXp,
     setXp,
     recover,
@@ -399,14 +412,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <GameContext.Provider value={value}>
+    <PlayerContext.Provider value={value}>
       {children}
-    </GameContext.Provider>
+    </PlayerContext.Provider>
   )
 }
 
-export function useGame() {
-  const ctx = useContext(GameContext)
-  if (!ctx) throw new Error("useGame deve estar dentro de GameProvider")
+export function usePlayer() {
+  const ctx = useContext(PlayerContext)
+  if (!ctx) throw new Error("usePlayer deve estar dentro de PlayerProvider")
   return ctx
 }

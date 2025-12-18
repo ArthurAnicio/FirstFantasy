@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useGame } from '@/contexts/GameContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './page.module.css'
 import { ModalConfirm } from '@/components/ModalConfirm';
 import Cookies from 'js-cookie';
@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 export default function Home() {
 
   const router = useRouter()
-  const {name} = useGame()
+  const {name} = usePlayer()
   const [canContinue,setCanContinue] = useState(true)
   const [modalOn, setModalOn] = useState(false)
 
