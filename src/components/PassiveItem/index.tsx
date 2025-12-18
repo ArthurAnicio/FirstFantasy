@@ -37,7 +37,11 @@ export function PassiveItem(props: PassiveItemProps){
                         style={{
                             background:canBuy?"var(--green-s)":"var(--red-p)"
                         }}
-                        onClick={()=>{if(canBuy)props.buy(passive.id,props.actualCash!-passive.price)}}
+                        onClick={()=>{
+                            if(canBuy){
+                                props.buy(passive.id, props.actualCash!-passive.price)
+                            }
+                        }}
                     >
                     {passive.price} <FontAwesomeIcon icon={faCoins} />
                     </button>

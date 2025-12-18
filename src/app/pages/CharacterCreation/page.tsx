@@ -33,12 +33,6 @@ export default function CharacterCreation(){
 
     const {
         level,
-        equipedAttacks,
-        attacks,
-        passives,
-        resistences,
-        vulnerabilites,
-        imunites,
         changeName,
         changeGender,
         changeCash,
@@ -63,7 +57,7 @@ export default function CharacterCreation(){
     
     const [pName, setPName] = useState("")
     const [pCash, setPCash] = useState(20)
-    const [pImage, setPImage] = useState("")
+    const [pImage, setPImage] = useState("/images/playerPic/defaultMale")
     const [pGender, setPGender] = useState("M")
 
     const [statsPoints, setStatsPoints] = useState(4)
@@ -97,7 +91,10 @@ export default function CharacterCreation(){
         const creating = Cookies.get("criando")
         if(creating!="sim"){
             router.push('/')
+        }else{
+            Cookies.set("player","")
         }
+        
     },[])
 
     useEffect(()=>{
@@ -116,9 +113,9 @@ export default function CharacterCreation(){
 
     useEffect(()=>{
         if(pGender=="M"){
-            setPImage('/images/playerPic/playerMale.png')
+            setPImage('/images/playerPic/defaultMale.png')
         }else{
-            setPImage('/images/playerPic/playerFemale.png')
+            setPImage('/images/playerPic/defaultFemale.png')
         }
     },[pGender])
 
@@ -353,12 +350,15 @@ export default function CharacterCreation(){
     }
 
     function createChar(){
-        if(canCreate){
-            setElements()
+        if (!canCreate) return
+
+        setElements()
+
+        setTimeout(() => {
             Cookies.set("carregado","sim")
             Cookies.set("criando","")
             router.push("/pages/PlayerArea")
-        }
+        }, 0)
     }
 
     function renderPages(p:number){
@@ -657,7 +657,7 @@ export default function CharacterCreation(){
             default:
                 return(
                     <div id={styles.div}>
-                        <h1>Carregando</h1>
+                        <h1>Carregando...</h1>
                     </div>
                 )
         }

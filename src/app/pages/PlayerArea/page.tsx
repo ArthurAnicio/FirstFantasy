@@ -2,6 +2,8 @@
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import styles from './PlayerArea.module.css'
+import { PlayerCard } from "@/components/PlayerCard"
 
 export default function Player(){
     
@@ -15,6 +17,9 @@ export default function Player(){
     })
 
     return(
-        <div>PlayerArea</div>
+        <div className={styles.container}>
+            PlayerArea
+            <PlayerCard/>
+        </div>
     )
 }

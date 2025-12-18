@@ -1,0 +1,25 @@
+.playerCard{
+    position: absolute;
+    bottom: 25;
+    left: 25;
+    width: 450px;
+    height: 40vh;
+    background: var(--gray-t);
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    gap: 10px;
+}
+
+.playerInfo,
+.playerStat{
+    display: flex;
+    flex-direction: column;
+    background: #00000093;
+    width: 50%;
+}
+
+.playerInfo p{
+    font-size: 38px;
+}
