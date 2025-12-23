@@ -1,11 +1,12 @@
 "use client"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import styles from './PlayerArea.module.css'
 import { PlayerCard } from "@/components/PlayerCard"
 import { usePlayer } from "@/contexts/PlayerContext"
-import { DamageTypes } from "@/enums/damageTypes"
+import { Place } from "@/components/Place"
+import { PlayerInfo } from "@/components/PlayerInfo"
 
 export default function Player(){
     
@@ -18,6 +19,7 @@ export default function Player(){
     } = usePlayer()
 
     const router = useRouter()
+    const [modalOn, setModalOn] = useState(false)
 
     useEffect(()=>{
         const auth = Cookies.get("carregado")
@@ -28,38 +30,17 @@ export default function Player(){
 
     return(
         <div className={styles.container}>
-            PlayerArea
-            <button
-                onClick={()=>takeDamage!(2,DamageTypes.fire)}
-            >
-                dano
-            </button>
-            <button
-                onClick={()=>recover!("health",1,true)}
-            >
-                cura
-            </button>
-            <button
-                onClick={()=>useStamina!(1)}
-            >
-                usa stamina
-            </button>
-            <button
-                onClick={()=>recover!("",1)}
-            >
-                recupera stamina
-            </button>
-            <button
-                onClick={()=>addXp!(20)}
-            >
-                ganha xp
-            </button>
-            <button
-                onClick={()=>setXp!(0)}
-            >
-                resetaXp
-            </button>
-            <PlayerCard/>
+            <Place 
+                image={"/images/places/coliseu.gif"} 
+                name={"Coliseu"} 
+                top={10}
+                left={10}
+                w={200} 
+                h={200}
+                centered
+            />
+            {modalOn&&<PlayerInfo close={()=>setModalOn(false)}/>}
+            <PlayerCard openInfo={()=>setModalOn(true)}/>
         </div>
     )
 }

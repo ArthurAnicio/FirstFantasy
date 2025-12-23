@@ -1,66 +1,109 @@
 .playerCard{
-    position: absolute;
+    position: fixed;
     bottom: 25;
-    left: 25;
-    width: 400px;
-    height: 30vh;
-    background: var(--gray-s);
-    border-radius: 0.3rem;
+    left: 55;
     display: flex;
     flex-direction: row;
     padding: 5px 20px;
     gap: 10px;
 }
 
-.playerInfo,
-.playerStat{
+.player {
+    height: 160px;
+    width: 160px;
+    position: relative;
+    background: var(--gray-p);
+    z-index: 3;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
-}    
-
-.playerInfo{
-    width: 40%;
+    justify-content: center;
 }
 
-.playerStat{
-    padding: 10px 0;
-    width: 60%;
-    justify-content: space-between;
+.xpCircle {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
 }
 
-.playerInfo p{
-    font-size: 32px;
+.xpTrack {
+    opacity: 0.3;
+}
+
+.xpProgress {
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .playerImage{
-    border: solid 5px var(--black);
-    border-radius: 0.3rem;
+    border-radius: 50%;
 }
 
-.stat{
-    width: 100%;
-    font-size: 32px;
-    display: flex;
-    gap: 5px;
-}
-
-.stat label{
-    width: 20%;
-}
-
-.max{
-    position: relative;
-    width: 80%;
-    border: solid 5px var(--black);
-    border-radius: 1rem;
-    background: var(--gray-p);
-    color: var(--white);
-    overflow: hidden;
-}
-
-.nums{
+.playerLevel{
     position: absolute;
-    top: -6;
-    left: 55;
+    z-index: 4 !important;
+    height: 35px;
+    width: 35px;
+    background: var(--gray-p);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    bottom: -20;
+    color: var(--light-blue-s);
+    border: solid 5px var(--light-blue-s);
+    border-radius: 50%;
+}
+
+.playerInfo{
+    width: 140px;
+    height: 60px;
+    padding: 0 10px;
+    position: absolute;
+    top: 35%;
+    left: -35;
+    background: var(--light-blue-p);
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border: solid 8px var(--gray-p);
+    border-radius: 1rem;
+    font-size: 28px;
+    color: var(--gray-p);
+    z-index: 2;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.playerInfo:hover{
+    left: -45;
+    background: var(--light-blue-t);
+}
+
+.playerStats{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 12.5%;
+    right: -105px;
+    width: 200px;
+    height: 130px;
+    background: var(--gray-p);
+    border-radius: 1rem;
+    overflow: hidden;
+    gap: 10px;
+    border: solid 15px var(--gray-p);
+}
+
+.statBar{
+    width: 100%;
+    height: 50%;
+    background: var(--black);
+    position: relative;
+}
+
+.statNum{
+    color: var(--white);
+    position: absolute;
+    top: -4;
+    left: 40%;
 }
