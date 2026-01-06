@@ -8,6 +8,8 @@ import { xpNeededForNextLevel, xpLevel } from '@/functions/xpFormulas'
 import { DamageTypes } from '@/enums/damageTypes'
 import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
+import { IconAtribute } from '@/functions/IconAtribute'
+import { Atribute } from '@/enums/atribute'
 
 interface PlayerInfoProps{
  close:()=>void
@@ -16,7 +18,52 @@ interface PlayerInfoProps{
 export function PlayerInfo({close}:PlayerInfoProps){
 
     const [page,setPage] = useState(1)
-    const {level, xp, image, name, gender, resistences, vulnerabilites, imunites} = usePlayer()
+    const {
+        level, 
+        xp, 
+        image, 
+        name, 
+        gender, 
+        resistences, 
+        vulnerabilites, 
+        imunites,
+        strength,
+        dexterity,
+        constitution,
+        mind,
+        presence,
+        defense,
+        maxHealth,
+        maxStamina,
+        bonusDefence,
+        bonusAttack,
+        bonusHealth,
+        bonusStamina,
+        atributePoints,
+        changeStat
+    } = usePlayer()
+
+    function useStatsPoints(atribute: Atribute, amount:number){
+        if(atributePoints!>0){
+            switch(atribute){
+                case Atribute.strength:
+                    changeStat!(atribute,amount)
+                    break
+                case Atribute.dexterity:
+                    changeStat!(atribute,amount)
+                    break
+                case Atribute.constitution:
+                    changeStat!(atribute,amount)
+                    break
+                case Atribute.mind:
+                    changeStat!(atribute,amount)
+                    break
+                case Atribute.presence:
+                    changeStat!(atribute,amount)
+                    break
+            }
+        }
+    }
 
     function paginator(p:number){
         switch(p){
@@ -88,10 +135,10 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                             style={{
                                                 color:"var(--black)",
                                                 background: getDamageColor(damageType),
-                                                fontSize:"35px",
+                                                fontSize:"28px",
                                                 borderRadius:"50%",
-                                                width:"50px",
-                                                height:"50px",
+                                                width:"35px",
+                                                height:"35px",
                                                 display: "flex",
                                                 alignItems: "center",
                                                 justifyContent: "center"
@@ -114,10 +161,10 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                             style={{
                                                 color:"var(--black)",
                                                 background: getDamageColor(damageType),
-                                                fontSize:"35px",
+                                                fontSize:"28px",
                                                 borderRadius:"50%",
-                                                width:"30px",
-                                                height:"30px",
+                                                width:"35px",
+                                                height:"35px",
                                                 display: "flex",
                                                 alignItems: "center",
                                                 justifyContent: "center"
@@ -135,8 +182,109 @@ export function PlayerInfo({close}:PlayerInfoProps){
                 )
             case 2:
                 return(
-                    <div id={styles.div}>
-                        Perfil
+                    <div className={styles.statsPage} id={styles.div}>
+                        <div className={styles.statsContent}>
+                            <div className={styles.atributes}>
+                                <p className={styles.labelPoints}>Pontos: {atributePoints}</p>
+                                <nav>
+                                    
+                                    <label>
+                                        <IconAtribute atribute={Atribute.strength}/>
+                                        Força:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <p>{strength}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.strength,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <IconAtribute atribute={Atribute.dexterity}/>
+                                        Destreza:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <p>{dexterity}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.dexterity,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <IconAtribute atribute={Atribute.constitution}/>
+                                        Constituição:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <p>{constitution}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.constitution,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <IconAtribute atribute={Atribute.mind}/>
+                                        Mente:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <p>{mind}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.mind,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                                <nav>
+                                    <label>
+                                        <IconAtribute atribute={Atribute.presence}/>
+                                        Presença:
+                                    </label>
+                                    <div className={styles.atribute}>
+                                        <p>{presence}</p>
+                                        <button onClick={()=>useStatsPoints(Atribute.presence,1)}>
+                                            +
+                                        </button>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div className={styles.statsInfo}>
+                                <p>Status:</p>
+                                <nav
+                                        style={{
+                                            color: "var(--green-s)"
+                                        }}
+                                >
+                                    <label >
+                                        <IconAtribute atribute={Atribute.health}/>
+                                        Vida:
+                                    </label>
+                                    <p>{maxHealth}</p>
+                                </nav>
+                                <nav
+                                    style={{
+                                            color: "var(--orange-s)"
+                                        }}
+                                >
+                                    <label>
+                                        <IconAtribute atribute={Atribute.stamina}/>
+                                        Stamina:
+                                    </label>
+                                    <p>{maxStamina}</p>
+                                </nav>
+                                <nav
+                                    style={{
+                                            color: "var(--gray-s)"
+                                        }}
+                                >
+                                    <label>
+                                        <IconAtribute atribute={Atribute.defense}/>
+                                        Defesa:
+                                    </label>
+                                    <p>{defense}</p>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 )
             case 3:
