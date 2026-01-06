@@ -1,21 +1,20 @@
-import styles from './Place.module.css'
+import styles from './Building.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-interface PlaceProps{
+interface BuildingProps{
     top?:number
     right?:number
     bottom?:number
     left?:number
     image: string
     path?: string
-    name: string
+    name?: string
     w:number
     h:number
-    centered?: boolean
 }
 
-export function Place({
+export function Building({
     top,
     right,
     bottom,
@@ -24,17 +23,11 @@ export function Place({
     name,
     w,
     h,
-    centered
-}:PlaceProps){
+    path,
+}:BuildingProps){
 
-    const style: React.CSSProperties = centered
-    ? {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }
-    : {
+    const style: React.CSSProperties = 
+     {
         position: 'absolute',
         top,
         right,
@@ -48,15 +41,17 @@ export function Place({
                 style={style}
             >
                 <Image
-                width={w}
-                height={h} 
+                    width={w}
+                    height={h} 
                     src={image}
-                    alt={name}
-                    className={styles.place}
+                    alt={name!}
+                    className={path?styles.build:''}
                 />
-                <p className={styles.title}>
-                    {name}
-                </p>
+                { path && 
+                    <p className={styles.title}>
+                        {name}
+                    </p>
+                }
             </div>
                 
     )

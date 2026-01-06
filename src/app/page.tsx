@@ -30,7 +30,7 @@ export default function Home() {
   function continueNavi(){
     if(canContinue){
       Cookies.set("carregado","sim")
-      router.push('/pages/PlayerArea')
+      router.push('/City')
     }
   }
 
@@ -54,7 +54,7 @@ export default function Home() {
       </button>
       <p className={styles.version}>v0.0.1-alpha</p>
       {modalOn?
-        <ModalConfirm url={'/pages/CharacterCreation'} cancel={()=>setModalOn(false)}/>
+        <ModalConfirm url={'/CharacterCreation'} cancel={()=>setModalOn(false)}/>
         :false
       }
     </div>

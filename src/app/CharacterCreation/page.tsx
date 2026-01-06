@@ -13,14 +13,14 @@ import {
     faCoins
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
-import { starterAttacks } from '../../../../public/objects/attacks/starterAttacks'
+import { starterAttacks } from '../../../public/objects/attacks/starterAttacks'
 import { FirstAttackChoice } from '@/components/FirstAttackChoice'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { AttackItem } from '@/components/AttackItem'
-import { defaultAttacks } from '../../../../public/objects/attacks/defaultAttacks'
+import { defaultAttacks } from '../../../public/objects/attacks/defaultAttacks'
 import { getBiggestAtribute } from '@/functions/getBiggestAtribute'
 import { EmptyAttackItem } from '@/components/EmptyAttackItem'
-import { passivesPlayer } from '../../../../public/objects/passives/passivesPlayer'
+import { passivesPlayer } from '../../../public/objects/passives/passivesPlayer'
 import { PassiveItem } from '@/components/PassiveItem'
 import { BonusTypes } from '@/enums/bonusTypes'
 import { DamageTypes } from '@/enums/damageTypes'
@@ -193,16 +193,6 @@ export default function CharacterCreation(){
             case BonusTypes.bonusAttack:
                 setPBonusAttack(passive.bonusNum)
                 break
-            case BonusTypes.bonusCriticalDamage:
-                pAttacks.forEach(atk => {
-                    atk.criticalBonus += passive.bonusNum
-                });
-                break            
-            case BonusTypes.bonusCriticalRatio:
-                pAttacks.forEach(atk => {
-                    atk.criticalRatio -= passive.bonusNum
-                });
-                break
             case BonusTypes.bonusDefense:
                 setPBonusDefence(passive.bonusNum)
                 break
@@ -364,7 +354,7 @@ export default function CharacterCreation(){
         setTimeout(() => {
             Cookies.set("carregado","sim")
             Cookies.set("criando","")
-            router.push("/pages/PlayerArea")
+            router.push("/City")
         }, 0)
     }
 

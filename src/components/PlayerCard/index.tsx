@@ -6,8 +6,6 @@ import { xpNeededForNextLevel, xpLevel } from '@/functions/xpFormulas'
 import { useEffect, useState, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookOpen } from '@fortawesome/free-solid-svg-icons'
-import { IconAtribute } from '@/functions/IconAtribute'
-import { Atribute } from '@/enums/atribute'
 
 interface PlayerCardProps {
     openInfo: () => void

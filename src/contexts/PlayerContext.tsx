@@ -29,7 +29,6 @@ const defaultPlayer: Character = {
   xp: 0,
   level: 1,
   cash: 0,
-  techniquePoints: 0,
   atributePoints: 0,
   defense: 0,
   maxHealth: 1,
@@ -78,9 +77,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   )
 
   const [cash, setCash] = useState(player.cash)
-  const [techniquePoints, setTechniquePoints] = useState(
-    player.techniquePoints,
-  )
   const [atributePoints, setAtributePoints] = useState(
     player.atributePoints ?? 0,
   )
@@ -138,7 +134,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       xp,
       level,
       cash,
-      techniquePoints,
       atributePoints,
       defense,
       maxHealth,
@@ -177,7 +172,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     xp,
     level,
     cash,
-    techniquePoints,
     atributePoints,
     strength,
     dexterity,
@@ -361,7 +355,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     xp,
     level,
     cash,
-    techniquePoints,
     atributePoints,
     defense,
     maxHealth,

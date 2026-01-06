@@ -12,7 +12,6 @@ export interface Character {
   level: number
 
   cash?: number
-  techniquePoints?: number
   atributePoints?: number
 
   defense: number

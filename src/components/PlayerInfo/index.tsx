@@ -2,7 +2,9 @@ import styles from './PlayerInfo.module.css'
 import { useState } from 'react'
 import { usePlayer } from '@/contexts/PlayerContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faChartSimple, faScroll, faX } from '@fortawesome/free-solid-svg-icons' 
+import { faUser, faChartSimple, faScroll, faX, faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import Image from 'next/image'
+import { xpNeededForNextLevel, xpLevel } from '@/functions/xpFormulas'
 
 interface PlayerInfoProps{
  close:()=>void
@@ -11,6 +13,59 @@ interface PlayerInfoProps{
 export function PlayerInfo({close}:PlayerInfoProps){
 
     const [page,setPage] = useState(1)
+    const {level, xp, image, name, gender} = usePlayer()
+
+    function paginator(p:number){
+        switch(p){
+            case 1:
+                return(
+                    <div className={styles.profile} id={styles.div}>
+                        <div className={styles.xp}>
+                            <p> Level {level}</p>
+                            <div className={styles.xpBar}>
+                                <div style={{
+                                    width: `${(xpLevel(xp)*100)/xpNeededForNextLevel(level)}%`,
+                                    height: 10,
+                                    background: 'var(--light-blue-s)',
+                                }}>
+                                </div>
+                            </div>
+                            <p> {level+1}</p>
+                        </div>
+                        <div className={styles.player}>
+                            <nav>
+                                <Image 
+                                    className={styles.playerImage} 
+                                    src={image} 
+                                    alt={'Imagem do player'} 
+                                    width={200} 
+                                    height={200}
+                                />
+                            </nav>
+                            <nav>
+                                <p>Nome: {name}</p>
+                                <p>
+                                    Gênero: 
+                                    {gender=='M'?<FontAwesomeIcon icon={faMars}/>:<FontAwesomeIcon icon={faVenus}/>}
+                                </p>
+                            </nav>
+                        </div>
+                    </div>
+                )
+            case 2:
+                return(
+                    <div id={styles.div}>
+                        Perfil
+                    </div>
+                )
+            case 3:
+                return(
+                    <div id={styles.div}>
+                        Perfil
+                    </div>
+                )
+        }
+    }
 
     return(
         <div className={styles.container}>
@@ -53,7 +108,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                     </div>
                 </div>
                 <div className={styles.content}>
-
+                    {paginator(page)}
                 </div>
             </div>
         </div>
