@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faChartSimple, faScroll, faX, faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { xpNeededForNextLevel, xpLevel } from '@/functions/xpFormulas'
+import { DamageTypes } from '@/enums/damageTypes'
+import { getDamageColor } from '@/functions/getDamageColor'
+import { getDamageIcon } from '@/functions/getDamageIcon'
 
 interface PlayerInfoProps{
  close:()=>void
@@ -13,7 +16,7 @@ interface PlayerInfoProps{
 export function PlayerInfo({close}:PlayerInfoProps){
 
     const [page,setPage] = useState(1)
-    const {level, xp, image, name, gender} = usePlayer()
+    const {level, xp, image, name, gender, resistences, vulnerabilites, imunites} = usePlayer()
 
     function paginator(p:number){
         switch(p){
@@ -49,6 +52,84 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     {gender=='M'?<FontAwesomeIcon icon={faMars}/>:<FontAwesomeIcon icon={faVenus}/>}
                                 </p>
                             </nav>
+                        </div>
+                        <div className={styles.dmgTypeInt}>
+                            <p>Resistencias:</p>
+                            {
+                                resistences.length>0?
+                                    resistences.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"28px",
+                                                borderRadius:"50%",
+                                                width:"35px",
+                                                height: "35px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                : <p>Nenhuma</p>
+                                                                              
+                            }
+                        </div>
+                        <div className={styles.dmgTypeInt}>
+                            <p>Vulnerabilidades:</p>
+                            {
+                                vulnerabilites.length>0?
+                                    vulnerabilites.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"35px",
+                                                borderRadius:"50%",
+                                                width:"50px",
+                                                height:"50px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                : <p>Nenhuma</p>
+                                                                
+                            }
+                        </div>
+                        <div className={styles.dmgTypeInt}>
+                            <p>Imunidades:</p>
+                            {
+                                imunites.length>0?
+                                    imunites.map((damageType:DamageTypes,index:number) =>(
+                                        <nav
+                                            style={{
+                                                color:"var(--black)",
+                                                background: getDamageColor(damageType),
+                                                fontSize:"35px",
+                                                borderRadius:"50%",
+                                                width:"30px",
+                                                height:"30px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center"
+                                            }} 
+                                            key={index}
+                                        >
+                                            {getDamageIcon(damageType)}
+                                        </nav>
+                                    ))
+                                : <p>Nenhuma</p>
+                                                                
+                            }
                         </div>
                     </div>
                 )

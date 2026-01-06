@@ -137,3 +137,16 @@
     border: solid 10px var(--black);
     border-radius: 0.5rem;
 }
+
+.dmgTypeInt{
+    height: 50px;
+    margin-top: 12px;
+    padding: 10px;
+    font-size: 28px;
+    gap: 15px;
+    border-radius: 1rem;
+    color: var(--white);
+    background: var(--black);
+    display: flex;
+    align-items: center;
+}
