@@ -211,10 +211,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     setCash(quant)
   }, [])
 
-  const changeTechniquePoints = useCallback((amount: number) => {
-    setTechniquePoints(amount)
-  }, [])
-
   const changeAtributePoints = useCallback((amount: number) => {
     setAtributePoints(amount)
   }, [])
@@ -380,7 +376,6 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     changeGender,
     changeImage,
     changeCash,
-    changeTechniquePoints,
     changeAtributePoints,
     changeActualHealth,
     changeActualStamina,

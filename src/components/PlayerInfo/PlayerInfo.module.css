@@ -12,10 +12,9 @@
 }
 
 .cardInfo{
-    width: 550px;
+    width: 950px;
     height: 600px;
     border-radius: 0.3rem;
-    background: var(--gray-t);
     position: relative;
     z-index: 3;
     display: flex;
@@ -40,19 +39,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gray-s);
+    background: var(--gray-p);
+    color: var(--yellow-p);
     z-index: 1;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .option:hover{
-    background: var(--gray-t);
+    background: var(--paper);
+    color: var(--gray-p);
     scale: 1.1;
 }
 
 #selected{
-    background: var(--gray-t);
+    background: var(--paper);
+    color: var(--gray-p);
     scale: 1.1;
 }
 
@@ -64,6 +66,8 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: solid 5px;
+    background: var(--gray-p);
+    color: var(--yellow-p);
 }
 
 .close{
@@ -88,6 +92,21 @@
 .content{
     width: 100%;
     height: 80vh;
+    overflow-y: scroll;
+    background: var(--paper);
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track{
+    background: var(--gray-p);
+}
+
+.content::-webkit-scrollbar-thumb{
+    background: var(--gray-s);
+    border-radius: 1rem;
 }
 
 #div{
@@ -110,7 +129,7 @@
     background: var(--black);
     color: var(--white);
     border-radius: 0.5rem;
-    width: 350px;
+    width: 650px;
     height: 20px;
     display: flex;
     align-items: center;
@@ -123,7 +142,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 1000px;
     gap: 20px;
 }
 
@@ -152,7 +170,6 @@
 }
 
 .statsContent{
-    width: 500px;
     display: flex;
     flex-direction: row;
 }
@@ -168,7 +185,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28px;
+    font-size: 38px;
 }
 
 .atributes nav label{
@@ -188,35 +205,37 @@
 }
 
 .atribute button{
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
     border-radius: 0.3rem;
-    background: var(--gray-s);
+    background: var(--gray-p);
+    color: var(--yellow-p);
     font-family: var(--font-jacquard-24);
-    font-size: 40px;
+    font-size: 50px;
     cursor: pointer;
     transition: 0.1s;
 }
 .atribute button:hover{
     scale: 0.95;
-    background: var(--gray-p);
+    background: var(--black);
 }
 
 .atribute p {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     margin: 0 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--white);
-    border: solid 5px var(--gray-p);
+    color: var(--yellow-p);
+    background: var(--gray-p);
+    border: solid 5px var(--yellow-p);
     border-radius: 0.3rem;
-    font-size: 30px;
+    font-size: 38px;
 }
 
 .statsInfo{
@@ -247,4 +266,73 @@
     height: 40px;
     text-align: center;
     border: solid 5px var(--gray-p);
+}
+
+.passivesContainer{
+    color: var(--white);
+    background: var(--gray-p);
+    padding: 15px;
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.passives{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.attacks{
+    color: var(--white);
+    background: var(--gray-p);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 0.3rem;
+}
+
+.equipedAttacks{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.line{
+    width: 100%;
+    height: 8px;
+    background: calc(--white);
+}
+
+.playerAttacks{
+    width: 90%;
+    border-top: solid 5px var(--white);
+    border-bottom: solid 5px var(--white);
+    padding: 50px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.showAttacks{
+    margin: 20px 0;
+    width: 50%;
+    padding: 10px 0;
+    font-size: 30px;
+    color: var(--white);
+    background: var(--blue-p);
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.showAttacks:hover{
+    background: var(--blue-s);
+    scale: 0.98;
 }

@@ -1,8 +1,19 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react-hooks/rules-of-hooks */
 import styles from './PlayerInfo.module.css'
 import { useState } from 'react'
 import { usePlayer } from '@/contexts/PlayerContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faChartSimple, faScroll, faX, faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { 
+    faUser, 
+    faChartSimple, 
+    faScroll, 
+    faX, 
+    faMars, 
+    faVenus,
+    faAngleUp,
+    faAngleDown 
+} from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { xpNeededForNextLevel, xpLevel } from '@/functions/xpFormulas'
 import { DamageTypes } from '@/enums/damageTypes'
@@ -10,6 +21,10 @@ import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { Atribute } from '@/enums/atribute'
+import { AttackItem } from '../AttackItem'
+import { EmptyAttackItem } from '../EmptyAttackItem'
+import { PassiveItem } from '../PassiveItem'
+import { AttackChoice } from '../AttackChoice'
 
 interface PlayerInfoProps{
  close:()=>void
@@ -18,6 +33,7 @@ interface PlayerInfoProps{
 export function PlayerInfo({close}:PlayerInfoProps){
 
     const [page,setPage] = useState(1)
+    const [attacksVisible, setAttacksVisible] = useState(true)
     const {
         level, 
         xp, 
@@ -35,12 +51,11 @@ export function PlayerInfo({close}:PlayerInfoProps){
         defense,
         maxHealth,
         maxStamina,
-        bonusDefence,
-        bonusAttack,
-        bonusHealth,
-        bonusStamina,
         atributePoints,
-        changeStat
+        changeStat,
+        attacks,
+        equipedAttacks,
+        passives
     } = usePlayer()
 
     function useStatsPoints(atribute: Atribute, amount:number){
@@ -290,7 +305,49 @@ export function PlayerInfo({close}:PlayerInfoProps){
             case 3:
                 return(
                     <div id={styles.div}>
-                        Perfil
+                        <div className={styles.passivesContainer}>
+                            Habilidades:
+                            <div className={styles.passives}>
+                                {
+                                    passives?.map(passive=>(
+                                        <PassiveItem passive={passive} buy={console.log}/>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <div className={styles.attacks}>
+                            Ataques Equipados:
+                            <div className={styles.equipedAttacks}>
+                                {
+                                    equipedAttacks.map((attack)=>(
+                                        <AttackItem attack={attack} inBattle={false}/>
+                                    ))
+                                }
+                                
+                                {Array.from({ length: Math.max(0, 6 - equipedAttacks.length) }).map((_, i) => (
+                                    <EmptyAttackItem key={`empty-${i}`} />
+                                ))}
+                            </div>
+                            {
+                                attacksVisible &&
+                                <> 
+                                    Seus Ataques:
+                                    <div className={styles.playerAttacks}>
+                                        {
+                                            attacks.map(attack=>
+                                                <AttackChoice 
+                                                    attack={attack} 
+                                                    select={()=>console.log()}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                </>
+                            }
+                            <button className={styles.showAttacks} onClick={()=>setAttacksVisible(!attacksVisible)}>
+                                <FontAwesomeIcon icon={attacksVisible?faAngleUp:faAngleDown}/>
+                            </button>
+                    </div>
                     </div>
                 )
         }

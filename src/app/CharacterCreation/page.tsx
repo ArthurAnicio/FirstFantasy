@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'

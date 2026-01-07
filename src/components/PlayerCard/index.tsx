@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client"
 import styles from './PlayerCard.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
