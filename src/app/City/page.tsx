@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
@@ -7,11 +8,12 @@ import {PlayerCard} from '@/components/PlayerCard'
 import { usePlayer } from '@/contexts/PlayerContext'
 import {Building} from '@/components/Building'
 import {PlayerInfo} from '@/components/PlayerInfo'
+import { DaylyReward } from '@/components/DaylyReward'
 
 export default function Player() {
   const { takeDamage, useStamina, addXp, setXp, recover } = usePlayer()
   const router = useRouter()
-  const modalOn = useState(false)
+  const [modalOn,setModalOn] = useState(false)
   const cityRef = useRef<HTMLDivElement>(null)
 
   const scrollSpeed = 70
@@ -42,8 +44,6 @@ export default function Player() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  const setModalOn = (value: boolean) => modalOn[1](value)
-
   return (
     <>
       <div className={styles.container}>
@@ -60,7 +60,9 @@ export default function Player() {
         </div>
       </div>
       
-      {modalOn[0] && <PlayerInfo close={() => setModalOn(false)} />}
+      <DaylyReward/>
+
+      {modalOn && <PlayerInfo close={() => setModalOn(false)} />}
       <PlayerCard openInfo={() => setModalOn(true)} />
     </>
   )

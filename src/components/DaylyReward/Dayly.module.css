@@ -1,0 +1,136 @@
+.iconForm{
+    position: fixed;
+    top: 120;
+    right: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--blue-p);
+    color: var(--gray-t);
+    font-size: 60px;
+    width: 80px;
+    height: 80px;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.iconForm:hover{
+    background: var(--blue-s);
+    scale: 0.95;
+    box-shadow: 0 0 10px var(--white);
+}
+
+.container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #0000005d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.modal{
+    width: 55%;
+    height: 85vh;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.header{
+    font-size: 65px;
+    color: var(--white);
+    background: var(--blue-p);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.close{
+    width: 50px;
+    height: 50px;
+    background: var(--red-p);
+    color: var(--white);
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close:hover{
+    scale: 0.95;
+    background: var(--red-s);
+}
+
+.rewards{
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.reward{
+    width: 160px;
+    max-height: 200px;
+    font-size: 80px;
+    background: linear-gradient(var(--purple-t),var(--purple-p));
+    color: var(--green-f);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reward p{
+    margin: 10px 0;
+    padding: 0;
+    width: 100%;
+    font-size: 44px;
+    text-align: center;
+    border-top: solid 5px var(--green-f);
+    border-bottom: solid 5px var(--green-f);
+}
+
+.reward:hover{
+    scale: 0.95;
+}
+
+.space{
+     width: 160px;
+    max-height: 200px;
+    font-size: 80px;
+    background: linear-gradient(var(--gray-p),var(--black));
+    color: var(--white);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 10px var(--black);
+}
+
+#reclaimed{
+    background: linear-gradient(var(--gray-s),var(--gray-p));
+    cursor: no-drop;
+    color: var(--white);
+    scale: 0.95;
+}
+
+#reclaimed p{
+    border-top: solid 5px var(--white);
+    border-bottom: solid 5px var(--white);
+}
