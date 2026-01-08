@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import React, {
@@ -20,7 +21,7 @@ import { levelFromXp } from "@/functions/xpFormulas"
 import { Character } from "@/interfaces/character"
 import { Passives } from "@/interfaces/passives"
 
-const GameContext = createContext<Character | undefined>(undefined)
+const PlayerContext = createContext<Character | undefined>(undefined)
 
 const defaultPlayer: Character = {
   name: "",
@@ -29,7 +30,6 @@ const defaultPlayer: Character = {
   xp: 0,
   level: 1,
   cash: 0,
-  techniquePoints: 0,
   atributePoints: 0,
   defense: 0,
   maxHealth: 1,
@@ -66,59 +66,69 @@ function loadPlayer(): Character {
   }
 }
 
-export function GameProvider({ children }: { children: React.ReactNode }) {
-  const player: Character = loadPlayer()
+export function PlayerProvider({ children }: { children: React.ReactNode }) {
+  const loadedPlayer = loadPlayer()
+  
+  const isNewPlayer = !loadedPlayer.name || loadedPlayer.name === ""
+  
+  const initialMaxHealth = calcHealth(loadedPlayer.level ?? 1, loadedPlayer.constitution ?? 0, loadedPlayer.bonusHealth ?? 0)
+  const initialActualHealth = isNewPlayer 
+    ? initialMaxHealth 
+    : Math.min(loadedPlayer.actualHealth ?? 0, initialMaxHealth)
+    
+  const initialMaxStamina = calcStamina(
+    loadedPlayer.level ?? 1, 
+    loadedPlayer.presence ?? 0, 
+    loadedPlayer.constitution ?? 0, 
+    loadedPlayer.bonusStamina ?? 0
+  )
+  const initialActualStamina = isNewPlayer 
+    ? initialMaxStamina 
+    : Math.min(loadedPlayer.actualStamina ?? 0, initialMaxStamina)
 
-  const [name, setName] = useState(player.name)
-  const [gender, setGender] = useState(player.gender)
-  const [image, setImage] = useState(player.image)
-  const [xp, setXpState] = useState(player.xp ?? 0)
+  const [name, setName] = useState(loadedPlayer.name)
+  const [gender, setGender] = useState(loadedPlayer.gender)
+  const [image, setImage] = useState(loadedPlayer.image)
+  const [xp, setXpState] = useState(loadedPlayer.xp ?? 0)
   const [level, setLevel] = useState(
-    player.level ?? levelFromXp(player.xp ?? 0),
+    loadedPlayer.level ?? levelFromXp(loadedPlayer.xp ?? 0),
   )
 
-  const [cash, setCash] = useState(player.cash)
-  const [techniquePoints, setTechniquePoints] = useState(
-    player.techniquePoints,
-  )
+  const [cash, setCash] = useState(loadedPlayer.cash ?? 0)
   const [atributePoints, setAtributePoints] = useState(
-    player.atributePoints ?? 0,
+    loadedPlayer.atributePoints ?? 0,
   )
 
-  const [strength, setStrength] = useState(player.strength)
-  const [dexterity, setDexterity] = useState(player.dexterity)
-  const [constitution, setConstitution] = useState(player.constitution)
-  const [presence, setPresence] = useState(player.presence)
-  const [mind, setMind] = useState(player.mind)
-  const [bonusAttack, setBonusAttack] = useState(player.bonusAttack)
-  const [bonusDefence, setBonusDefence] = useState(player.bonusDefence)
-  const [bonusHealth, setBonusHealth] = useState(player.bonusHealth)
-  const [bonusStamina, setBonusStamina] = useState(player.bonusStamina)
+  const [strength, setStrength] = useState(loadedPlayer.strength ?? 0)
+  const [dexterity, setDexterity] = useState(loadedPlayer.dexterity ?? 0)
+  const [constitution, setConstitution] = useState(loadedPlayer.constitution ?? 0)
+  const [presence, setPresence] = useState(loadedPlayer.presence ?? 0)
+  const [mind, setMind] = useState(loadedPlayer.mind ?? 0)
+  const [bonusAttack, setBonusAttack] = useState(loadedPlayer.bonusAttack ?? 0)
+  const [bonusDefence, setBonusDefence] = useState(loadedPlayer.bonusDefence ?? 0)
+  const [bonusHealth, setBonusHealth] = useState(loadedPlayer.bonusHealth ?? 0)
+  const [bonusStamina, setBonusStamina] = useState(loadedPlayer.bonusStamina ?? 0)
 
   const [defense, setDefense] = useState(
-    calcDefense(dexterity, bonusDefence),
+    calcDefense(loadedPlayer.dexterity ?? 0, loadedPlayer.bonusDefence ?? 0),
   )
-  const [maxHealth, setMaxHealth] = useState(
-    calcHealth(level, constitution, bonusHealth),
-  )
-  const [actualHealth, setActualHealth] = useState(player.maxHealth)
-  const [maxStamina, setMaxStamina] = useState(
-    calcStamina(level, presence, constitution, bonusStamina),
-  )
-  const [actualStamina, setActualStamina] = useState(player.maxStamina)
+  const [maxHealth, setMaxHealth] = useState(initialMaxHealth)
+  const [actualHealth, setActualHealth] = useState(initialActualHealth)
+  const [maxStamina, setMaxStamina] = useState(initialMaxStamina)
+  const [actualStamina, setActualStamina] = useState(initialActualStamina)
 
-  const [attacks, setAttacks] = useState(player.attacks ?? [])
+  const [attacks, setAttacks] = useState(loadedPlayer.attacks ?? [])
   const [equipedAttacks, setEquipedAttacks] = useState(
-    player.equipedAttacks ?? [],
+    loadedPlayer.equipedAttacks ?? [],
   )
-  const [passives, setPassives] = useState(player.passives ?? [])
+  const [passives, setPassives] = useState(loadedPlayer.passives ?? [])
   const [resistences, setResistences] = useState(
-    player.resistences ?? [],
+    loadedPlayer.resistences ?? [],
   )
   const [vulnerabilites, setVulnerabilites] = useState(
-    player.vulnerabilites ?? [],
+    loadedPlayer.vulnerabilites ?? [],
   )
-  const [imunites, setImunites] = useState(player.imunites ?? [])
+  const [imunites, setImunites] = useState(loadedPlayer.imunites ?? [])
 
   useEffect(() => {
     setLevel(levelFromXp(xp))
@@ -126,8 +136,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setDefense(calcDefense(dexterity, bonusDefence))
-    setMaxHealth(calcHealth(level, constitution, bonusHealth))
-    setMaxStamina(calcStamina(level, presence, constitution, bonusStamina))
+    
+    const newMaxHealth = calcHealth(level, constitution, bonusHealth)
+    setMaxHealth(newMaxHealth)
+    
+    const newMaxStamina = calcStamina(level, presence, constitution, bonusStamina)
+    setMaxStamina(newMaxStamina)
   }, [dexterity, level, constitution, presence, bonusDefence, bonusHealth, bonusStamina])
 
   useEffect(() => {
@@ -138,7 +152,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       xp,
       level,
       cash,
-      techniquePoints,
       atributePoints,
       defense,
       maxHealth,
@@ -162,6 +175,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       imunites,
     }
 
+    console.log("Salvando player", {
+      actualHealth,
+      actualStamina,
+    })
+
     Cookies.set("player", JSON.stringify(playerToSave), {
       expires: 365 * 20,
     })
@@ -172,7 +190,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     xp,
     level,
     cash,
-    techniquePoints,
     atributePoints,
     strength,
     dexterity,
@@ -212,13 +229,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setCash(quant)
   }, [])
 
-  const changeTechniquePoints = useCallback((amount: number) => {
-    setTechniquePoints(amount)
-  }, [])
-
   const changeAtributePoints = useCallback((amount: number) => {
     setAtributePoints(amount)
   }, [])
+  
+  const changeActualHealth = (amount: number) => {
+    setActualHealth(amount)
+  }
+  
+  const changeActualStamina = (amount: number) => {
+    setActualStamina(amount)
+  }
 
   const setXp = useCallback((amount: number) => {
     setXpState(amount)
@@ -307,20 +328,40 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setPassives(prev => [...prev, passive])
   }, [])
 
-  const unequipAttack = useCallback((attackName: string) => {
-    setEquipedAttacks(prev => prev.filter(a => a.name !== attackName))
+  const unequipAttack = useCallback((attack: Attack) => {
+    setEquipedAttacks(prev => prev.filter(a => a.name !== attack.name))
+  }, [])
+
+  const removeAttack = useCallback((attack: Attack) => {
+    setAttacks(prev => prev.filter(a => a.name !== attack.name))
+  }, [])
+
+  const removePassive = useCallback((passive: Passives) => {
+    setPassives(prev => prev.filter(p => p.name !== passive.name))
   }, [])
 
   const addResistence = useCallback((resistence: DamageTypes) => {
     setResistences(prev => [...prev, resistence])
   }, [])
 
+  const removeResistence = useCallback((resistence: DamageTypes) => {
+    setResistences(prev => prev.filter(r => r !== resistence))
+  }, [])
+
   const addVulnerabilite = useCallback((v: DamageTypes) => {
     setVulnerabilites(prev => [...prev, v])
   }, [])
 
+  const removeVulnerabilite = useCallback((vulnerabilite: DamageTypes) => {
+    setVulnerabilites(prev => prev.filter(v => v !== vulnerabilite))
+  }, [])
+
   const addImunite = useCallback((v: DamageTypes) => {
     setImunites(prev => [...prev, v])
+  }, [])
+
+  const removeImunite = useCallback((imunite: DamageTypes) => {
+    setImunites(prev => prev.filter(i => i !== imunite))
   }, [])
 
   const changeStat = useCallback((stat: Atribute, amount: number) => {
@@ -343,6 +384,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
+  const resetPlayer = useCallback(() => {
+    Cookies.remove("player")
+  }, [])
+
   const value: Character = {
     name,
     gender,
@@ -350,7 +395,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     xp,
     level,
     cash,
-    techniquePoints,
     atributePoints,
     defense,
     maxHealth,
@@ -376,8 +420,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     changeGender,
     changeImage,
     changeCash,
-    changeTechniquePoints,
     changeAtributePoints,
+    changeActualHealth,
+    changeActualStamina,
     addXp,
     setXp,
     recover,
@@ -396,17 +441,23 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     addVulnerabilite,
     addImunite,
     changeStat,
+    removeAttack,
+    removeImunite,
+    removePassive,
+    removeResistence,
+    removeVulnerabilite,
+    resetPlayer
   }
 
   return (
-    <GameContext.Provider value={value}>
+    <PlayerContext.Provider value={value}>
       {children}
-    </GameContext.Provider>
+    </PlayerContext.Provider>
   )
 }
 
-export function useGame() {
-  const ctx = useContext(GameContext)
-  if (!ctx) throw new Error("useGame deve estar dentro de GameProvider")
+export function usePlayer() {
+  const ctx = useContext(PlayerContext)
+  if (!ctx) throw new Error("usePlayer deve estar dentro de PlayerProvider")
   return ctx
 }

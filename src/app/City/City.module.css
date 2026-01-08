@@ -1,0 +1,18 @@
+.container{
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.city{
+    position: relative;
+    height: 1200px;
+    width: 2000px;
+    background-image: 
+        url('/images/backgrounds/cidade-alpha2.png');
+    backdrop-filter: blur(5px); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

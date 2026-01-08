@@ -16,3 +16,17 @@ export function levelFromXp(xp: number): number {
 
   return level
 }
+
+export function xpLevel(xp:number){
+  let level = 1
+  let remaining = xp
+
+  while (true) {
+    const needed = xpNeededForNextLevel(level)
+    if (remaining < needed) break
+    remaining -= needed
+    level++
+  }
+
+  return remaining
+}

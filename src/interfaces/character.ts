@@ -12,7 +12,6 @@ export interface Character {
   level: number
 
   cash?: number
-  techniquePoints?: number
   atributePoints?: number
 
   defense: number
@@ -48,6 +47,9 @@ export interface Character {
   changeTechniquePoints?: (amount: number) => void
   changeAtributePoints?: (amount: number) => void
 
+  changeActualHealth?:(amount:number)=>void
+  changeActualStamina?:(amount:number)=>void
+
   addXp?: (amount: number) => void
   setXp?: (amount: number) => void
 
@@ -63,13 +65,21 @@ export interface Character {
   staminaBonusUp?: (amount: number) => void
 
   addAttack?: (attack: Attack) => void
+  removeAttack?: (attack: Attack) => void
   equipAttack?: (attack: Attack) => void
-  unequipAttack?: (attackName: string) => void
+  unequipAttack?: (attack: Attack) => void
+
   addPassive?: (passive: Passives) => void
+  removePassive?: (passive:Passives) => void
 
   addResistence?: (resistence: DamageTypes) => void
-  addVulnerabilite?: (v: DamageTypes) => void
-  addImunite?: (v: DamageTypes) => void
+  removeResistence?: (resistence: DamageTypes) => void
+  addVulnerabilite?: (vulnerabilite: DamageTypes) => void
+  removeVulnerabilite?: (vulnerabilite: DamageTypes) => void
+  addImunite?: (imunite: DamageTypes) => void
+  removeImunite?: (imunite: DamageTypes) => void
 
   changeStat?: (stat: Atribute, amount: number) => void
+
+  resetPlayer?: ()=>void
 }

@@ -1,23 +1,32 @@
-import { getDamageColor } from '@/functions/getDamageColor'
-import styles from './FirstAttackChoice.module.css'
-import { Attack } from '@/interfaces/attack'
+/* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image'
+import { Attack } from '@/interfaces/attack'
+import styles from './AttackChoice.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
-import { IconAtribute } from '@/functions/IconAtribute'
 import { Atribute } from '@/enums/atribute'
+import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
+import { IconAtribute } from '@/functions/IconAtribute'
+import { useEffect, useState } from 'react'
 
 interface AttackChoiceProps{
     attack:Attack
-    selected?:boolean
-    onClick:(id:string)=>void
 }
 
-export function FirstAttackChoice(props:AttackChoiceProps){
+export function AttackChoice({attack}:AttackChoiceProps){
 
-    const {strength,dexterity,constitution,mind,presence,bonusAttack} = usePlayer()
-    const attack = props.attack
+    const {strength,dexterity,constitution,mind,presence,bonusAttack,equipedAttacks,equipAttack,unequipAttack} = usePlayer()
     const color = getDamageColor(attack.damageType)
+    const [equiped,setEquiped] = useState(false)
+
+    useEffect(()=>{
+        const isEquiped = equipedAttacks.filter((atk)=>atk.id===attack.id).length
+        if(isEquiped>0){
+            setEquiped(true)
+        }else{
+            setEquiped(false)
+        }
+    },[equipedAttacks])
 
     function getAtribute(){
         switch(attack.atribute){
@@ -34,12 +43,22 @@ export function FirstAttackChoice(props:AttackChoiceProps){
         }
     }
 
+    function EquipAttack(){
+        if(equipedAttacks.length<6&&equiped==false){
+            equipAttack!(attack)
+        }else if(equiped){
+            if(equipedAttacks.length>1){
+                unequipAttack!(attack)
+            }
+        }
+    }
+
     return(
         <div className={styles.wraper}>
             <div 
-                className={styles.card} 
-                id={props.selected ? styles.selected : ""}
-                onClick={()=> props.onClick(attack.id)}
+                className={styles.card}
+                id={equiped?styles.selected:''}
+                onClick={EquipAttack}
             >
                 <Image 
                     alt={attack.name} 

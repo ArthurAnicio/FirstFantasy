@@ -30,6 +30,8 @@
   --pink-s: #c90d81;
   --pink-t: #8d0c5c;
 
+  --paper:#e4e4b7;
+
   font-size: 48px;
   color: var(--black);
 }

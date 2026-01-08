@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import styles from './CharacterCreation.module.css'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useGame } from '@/contexts/GameContext'
+import { usePlayer } from '@/contexts/PlayerContext'
 import Image from 'next/image'
 import { calcDefense, calcHealth, calcStamina } from '@/functions/calcStats'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,14 +15,14 @@ import {
     faCoins
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
-import { starterAttacks } from '../../../../public/objects/attacks/starterAttacks'
+import { starterAttacks } from '../../../public/objects/attacks/starterAttacks'
 import { FirstAttackChoice } from '@/components/FirstAttackChoice'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { AttackItem } from '@/components/AttackItem'
-import { defaultAttacks } from '../../../../public/objects/attacks/defaultAttacks'
+import { defaultAttacks } from '../../../public/objects/attacks/defaultAttacks'
 import { getBiggestAtribute } from '@/functions/getBiggestAtribute'
 import { EmptyAttackItem } from '@/components/EmptyAttackItem'
-import { passivesPlayer } from '../../../../public/objects/passives/passivesPlayer'
+import { passivesPlayer } from '../../../public/objects/passives/passivesPlayer'
 import { PassiveItem } from '@/components/PassiveItem'
 import { BonusTypes } from '@/enums/bonusTypes'
 import { DamageTypes } from '@/enums/damageTypes'
@@ -44,11 +46,27 @@ export default function CharacterCreation(){
         staminaBonusUp,
         addAttack,
         equipAttack,
+        unequipAttack,
         addPassive,
         addResistence,
         addImunite,
-        addVulnerabilite
-    } = useGame()
+        addVulnerabilite,
+        changeActualHealth,
+        changeActualStamina,
+        setXp,
+        attacks,
+        equipedAttacks,
+        passives,
+        resistences,
+        vulnerabilites,
+        imunites,
+        removeAttack,
+        removeImunite,
+        removePassive,
+        removeResistence,
+        removeVulnerabilite,
+        resetPlayer
+    } = usePlayer()
 
     const router = useRouter()
     const [page,setPage] = useState(1)
@@ -92,7 +110,8 @@ export default function CharacterCreation(){
         if(creating!="sim"){
             router.push('/')
         }else{
-            Cookies.set("player","")
+            resetPlayer!()
+            setXp!(0)
         }
         
     },[])
@@ -188,16 +207,6 @@ export default function CharacterCreation(){
         switch(passive.typeBonus){
             case BonusTypes.bonusAttack:
                 setPBonusAttack(passive.bonusNum)
-                break
-            case BonusTypes.bonusCriticalDamage:
-                pAttacks.forEach(atk => {
-                    atk.criticalBonus += passive.bonusNum
-                });
-                break            
-            case BonusTypes.bonusCriticalRatio:
-                pAttacks.forEach(atk => {
-                    atk.criticalRatio -= passive.bonusNum
-                });
                 break
             case BonusTypes.bonusDefense:
                 setPBonusDefence(passive.bonusNum)
@@ -329,6 +338,33 @@ export default function CharacterCreation(){
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
 
+        changeActualHealth?.(pMaxHealth)
+        changeActualStamina?.(pMaxStamina)
+
+        attacks.forEach(atk => {
+            removeAttack!(atk)
+        })
+
+        equipedAttacks.forEach(atk =>{
+            unequipAttack!(atk)
+        })
+
+        resistences.forEach(r => {
+            removeResistence!(r)
+        })
+
+        passives!.forEach(p => {
+            removePassive!(p)
+        })
+
+        vulnerabilites.forEach(v => {
+            removeVulnerabilite!(v)
+        })
+
+        imunites.forEach(i => {
+            removeImunite!(i)
+        })
+
         pAttacks.forEach(atk => {
             addAttack?.(atk)
         })
@@ -357,7 +393,7 @@ export default function CharacterCreation(){
         setTimeout(() => {
             Cookies.set("carregado","sim")
             Cookies.set("criando","")
-            router.push("/pages/PlayerArea")
+            router.push("/City")
         }, 0)
     }
 

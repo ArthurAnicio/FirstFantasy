@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useGame } from '@/contexts/GameContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './page.module.css'
 import { ModalConfirm } from '@/components/ModalConfirm';
 import Cookies from 'js-cookie';
@@ -9,7 +10,7 @@ import Cookies from 'js-cookie';
 export default function Home() {
 
   const router = useRouter()
-  const {name} = useGame()
+  const {name} = usePlayer()
   const [canContinue,setCanContinue] = useState(true)
   const [modalOn, setModalOn] = useState(false)
 
@@ -30,7 +31,7 @@ export default function Home() {
   function continueNavi(){
     if(canContinue){
       Cookies.set("carregado","sim")
-      router.push('/pages/PlayerArea')
+      router.push('/City')
     }
   }
 
@@ -54,7 +55,7 @@ export default function Home() {
       </button>
       <p className={styles.version}>v0.0.1-alpha</p>
       {modalOn?
-        <ModalConfirm url={'/pages/CharacterCreation'} cancel={()=>setModalOn(false)}/>
+        <ModalConfirm url={'/CharacterCreation'} cancel={()=>setModalOn(false)}/>
         :false
       }
     </div>
