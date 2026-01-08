@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image'
 import { Attack } from '@/interfaces/attack'
 import styles from './AttackChoice.module.css'
@@ -15,7 +15,7 @@ interface AttackChoiceProps{
 
 export function AttackChoice({attack}:AttackChoiceProps){
 
-    const {strength,dexterity,constitution,mind,presence,bonusAttack,equipedAttacks} = usePlayer()
+    const {strength,dexterity,constitution,mind,presence,bonusAttack,equipedAttacks,equipAttack,unequipAttack} = usePlayer()
     const color = getDamageColor(attack.damageType)
     const [equiped,setEquiped] = useState(false)
 
@@ -26,7 +26,7 @@ export function AttackChoice({attack}:AttackChoiceProps){
         }else{
             setEquiped(false)
         }
-    },[])
+    },[equipedAttacks])
 
     function getAtribute(){
         switch(attack.atribute){
@@ -43,11 +43,22 @@ export function AttackChoice({attack}:AttackChoiceProps){
         }
     }
 
+    function EquipAttack(){
+        if(equipedAttacks.length<6&&equiped==false){
+            equipAttack!(attack)
+        }else if(equiped){
+            if(equipedAttacks.length>1){
+                unequipAttack!(attack)
+            }
+        }
+    }
+
     return(
         <div className={styles.wraper}>
             <div 
                 className={styles.card}
                 id={equiped?styles.selected:''}
+                onClick={EquipAttack}
             >
                 <Image 
                     alt={attack.name} 

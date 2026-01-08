@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 import styles from './CharacterCreation.module.css'
@@ -45,13 +46,26 @@ export default function CharacterCreation(){
         staminaBonusUp,
         addAttack,
         equipAttack,
+        unequipAttack,
         addPassive,
         addResistence,
         addImunite,
         addVulnerabilite,
         changeActualHealth,
         changeActualStamina,
-        setXp
+        setXp,
+        attacks,
+        equipedAttacks,
+        passives,
+        resistences,
+        vulnerabilites,
+        imunites,
+        removeAttack,
+        removeImunite,
+        removePassive,
+        removeResistence,
+        removeVulnerabilite,
+        resetPlayer
     } = usePlayer()
 
     const router = useRouter()
@@ -96,7 +110,7 @@ export default function CharacterCreation(){
         if(creating!="sim"){
             router.push('/')
         }else{
-            Cookies.set("player","")
+            resetPlayer!()
             setXp!(0)
         }
         
@@ -326,6 +340,30 @@ export default function CharacterCreation(){
 
         changeActualHealth?.(pMaxHealth)
         changeActualStamina?.(pMaxStamina)
+
+        attacks.forEach(atk => {
+            removeAttack!(atk)
+        })
+
+        equipedAttacks.forEach(atk =>{
+            unequipAttack!(atk)
+        })
+
+        resistences.forEach(r => {
+            removeResistence!(r)
+        })
+
+        passives!.forEach(p => {
+            removePassive!(p)
+        })
+
+        vulnerabilites.forEach(v => {
+            removeVulnerabilite!(v)
+        })
+
+        imunites.forEach(i => {
+            removeImunite!(i)
+        })
 
         pAttacks.forEach(atk => {
             addAttack?.(atk)

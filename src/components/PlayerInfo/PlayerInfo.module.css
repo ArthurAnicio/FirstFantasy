@@ -91,7 +91,7 @@
 
 .content{
     width: 100%;
-    height: 80vh;
+    height: 900px;
     overflow-y: scroll;
     background: var(--paper);
 }
@@ -241,7 +241,9 @@
 .statsInfo{
     width: 50%;
     height: 60vh;
-    padding-left: 40px;
+    border-left: solid 8px var(--black);
+    margin-left: 20px;
+    padding-left: 90px;
 }
 
 .statsInfo nav{
@@ -260,12 +262,17 @@
 
 .statsInfo nav p{
     margin-left: 10px;
-    background: var(--white);
+    background: var(--gray-p);
     border-radius: 0.3rem;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    border: solid 5px var(--gray-p);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skillsPage{
+    padding: 80px 0;
 }
 
 .passivesContainer{
@@ -279,9 +286,14 @@
 }
 
 .passives{
+    width: 90%;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    border-top: solid 5px var(--white);
+    border-bottom: solid 5px var(--white);
+    margin: 10px 0;
+    padding: 20px 0;
 }
 
 .attacks{
@@ -299,7 +311,7 @@
     margin: 20px 0;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
 }
 
 .line{
