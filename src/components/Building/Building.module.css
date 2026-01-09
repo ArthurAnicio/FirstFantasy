@@ -14,7 +14,7 @@
 }
 
 .title{
-    background: var(--gray-t);
+    background: linear-gradient(var(--white), var(--gray-t), var(--gray-s));
     width: 200px;
     font-size: 34px;
     text-align: center;

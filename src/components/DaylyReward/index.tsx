@@ -4,7 +4,7 @@ import styles from './Dayly.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSackDollar, faX, faCoins, faCalendar } from '@fortawesome/free-solid-svg-icons'
+import { faX, faCoins, faCalendar } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie'
 
 interface DailyData {
@@ -117,7 +117,7 @@ export function DaylyReward() {
           className={styles.iconForm}
           onClick={() => setIsOpen(true)}
         >
-          <FontAwesomeIcon icon={faSackDollar} />
+          <FontAwesomeIcon icon={faCalendar} />
         </div>
       ) : (
         <div className={styles.container}>

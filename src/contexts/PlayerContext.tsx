@@ -249,23 +249,15 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const recover = useCallback(
-    (stat: string, amount: number, max?: boolean) => {
+    (stat: string, amount: number) => {
       if (stat === "health") {
-        if (max) {
-          setActualHealth(maxHealth)
-        } else {
-          setActualHealth(prev =>
-            prev + amount >= maxHealth ? maxHealth : prev + amount,
-          )
-        }
+        setActualHealth(prev =>
+          prev + amount >= maxHealth ? maxHealth : prev + amount,
+        )
       } else {
-        if (max) {
-          setActualStamina(maxStamina)
-        } else {
-          setActualStamina(prev =>
-            prev + amount >= maxStamina ? maxStamina : prev + amount,
-          )
-        }
+        setActualStamina(prev =>
+          prev + amount >= maxStamina ? maxStamina : prev + amount,
+        )
       }
     },
     [maxHealth, maxStamina],

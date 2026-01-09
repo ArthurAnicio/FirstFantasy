@@ -57,6 +57,15 @@ export default function Player() {
             h={200}
             path='/coliseu' 
           />
+          <Building 
+            image="/images/buildings/hospital.png" 
+            name="Hospital" 
+            top={200} 
+            left={200}
+            w={200} 
+            h={200}
+            path='/Hospital' 
+          />
         </div>
       </div>
       

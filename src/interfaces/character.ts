@@ -53,7 +53,7 @@ export interface Character {
   addXp?: (amount: number) => void
   setXp?: (amount: number) => void
 
-  recover?: (stat: string, amount: number, max?: boolean) => void
+  recover?: (stat: string, amount: number) => void
   takeDamage?: (damage: number, type: DamageTypes) => void
   useStamina?: (amount: number) => void
 

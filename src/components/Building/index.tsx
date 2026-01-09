@@ -35,10 +35,13 @@ export function Building({
         left,
       }
 
+    const router = useRouter()
+
     return(
             <div
                 className={styles.wraper}
                 style={style}
+                onClick={() => router.push(path!)}
             >
                 <Image
                     width={w}

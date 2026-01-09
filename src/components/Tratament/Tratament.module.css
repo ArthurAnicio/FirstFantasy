@@ -1,0 +1,44 @@
+.tratament{
+    width: 250px;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--paper);
+    border-radius: .5rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.title{
+    font-size: 48px;
+    text-align: center;
+}
+
+.desc{
+    margin: 10px 0;
+    font-size: 28px;
+}
+
+.tratament p{
+    width: 100px;
+    border: solid 5px var(--black);
+    border-radius: 0.3rem;
+    background: var(--white);
+    padding: 5px 0;
+    display: flex;
+    gap: 20px;
+    font-size: 32px;
+    margin: 5px 0;
+}
+
+.price{
+    width: 100%;
+    text-align: center;
+}
+
+.tratament:hover{
+    filter: saturate(1.5);
+    border-bottom: solid 8px var(--black);
+    box-shadow: 0 10px 10px var(--black);
+}
