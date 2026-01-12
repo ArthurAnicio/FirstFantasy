@@ -1,26 +1,18 @@
 'use client'
 import styles from './Hospital.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWallet, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
 import { Tratament } from '@/components/Tratament'
-import { useRouter } from 'next/navigation'
+import { Wallet } from '@/components/Wallet'
+import { Leave } from '@/components/Leave'
 
 export default function Hospital(){
 
-    const {cash, maxHealth, maxStamina} = usePlayer()
-
-    const router = useRouter()
+    const {maxHealth, maxStamina} = usePlayer()
 
     return(
         <div className={styles.container}>
-            <div className={styles.wallet}>
-                <FontAwesomeIcon icon={faWallet}/>
-                {cash}
-            </div>
-            <div className={styles.leave} onClick={()=>router.push('/City')}>
-                <FontAwesomeIcon icon={faDoorOpen}/>
-            </div>
+            <Wallet/>
+            <Leave/>
             <div className={styles.content}>
                 <p>Escolha seu Tratamento</p>
                 <div className={styles.trataments}>

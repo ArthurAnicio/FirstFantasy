@@ -66,6 +66,15 @@ export default function Player() {
             h={200}
             path='/Hospital' 
           />
+          <Building 
+            image="/images/buildings/treinamento.png" 
+            name="Treinamento" 
+            top={200} 
+            left={500}
+            w={200} 
+            h={200}
+            path='/Training' 
+          />
         </div>
       </div>
       

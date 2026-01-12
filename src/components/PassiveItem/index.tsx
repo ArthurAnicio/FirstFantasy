@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import styles from './PassiveItem.module.css'
 import { Passives } from '@/interfaces/passives'
 import Image from 'next/image'
@@ -24,6 +23,7 @@ export function PassiveItem(props: PassiveItemProps){
         }else{
             setCanBuy(true)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.actualCash])
 
     return(
