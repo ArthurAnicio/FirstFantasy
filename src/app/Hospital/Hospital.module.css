@@ -15,10 +15,46 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--yellow-p);
-    background: var(--gray-s);
-    border: solid 5px var(--yellow-p);
+    color: var(--gray-p);
+    background: var(--gray-t);
+    border: solid 5px var(--gray-p);
     border-radius: 0.5rem;
-    width: 180px;
+    width: 160px;
     font-size: 45px;
+}
+
+.leave{
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 30;
+    left: 30;
+    background: var(--red-p);
+    color: var(--white);
+    border-radius: .3rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.leave:hover{
+    scale: .95;
+    background: var(--red-s);
+    box-shadow: 0 0 10px var(--gray-p);
+}
+
+.content{
+    font-size: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+.trataments{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }

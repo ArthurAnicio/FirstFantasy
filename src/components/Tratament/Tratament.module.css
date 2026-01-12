@@ -1,11 +1,13 @@
 .tratament{
     width: 250px;
-    height: 330px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     padding: 20px;
     background: var(--paper);
+    border: solid 5px var(--gray-p);
     border-radius: .5rem;
+    position: relative;
     cursor: pointer;
     transition: .2s;
 }
@@ -33,8 +35,13 @@
 }
 
 .price{
+    font-size: 42px;
     width: 100%;
     text-align: center;
+    position: absolute;
+    right: 0;
+    bottom: 5;
+    cursor: pointer;
 }
 
 .tratament:hover{

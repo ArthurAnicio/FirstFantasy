@@ -45,7 +45,7 @@ export function Tratament({ title, desc ,price ,health ,stamina }:TratamentProps
             <label 
                 className={styles.price}
                 style={{
-                    color:cash!>=10?'var(--green-p)':'var(--red-p)'
+                    color:cash!>=price?'var(--green-p)':'var(--red-p)'
                 }}
             >
                 ${price}
