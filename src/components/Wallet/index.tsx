@@ -1,16 +1,20 @@
 import styles from './Wallet.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWallet } from '@fortawesome/free-solid-svg-icons'
+import { faWallet, faBookBookmark } from '@fortawesome/free-solid-svg-icons'
 
-export function Wallet(){
+interface WalletProps{
+    isCash:boolean
+}
+
+export function Wallet({isCash}:WalletProps){
     
-    const {cash} = usePlayer()
+    const {cash, technicalPoints} = usePlayer()
 
     return(
             <div className={styles.wallet}>
-                <FontAwesomeIcon icon={faWallet}/>
-                {cash}
+                <FontAwesomeIcon icon={isCash? faWallet : faBookBookmark}/>
+                {isCash? cash : technicalPoints}
             </div>
     )
 }

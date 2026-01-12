@@ -1,16 +1,17 @@
+/* eslint-disable react/jsx-key */
 'use client'
 import styles from './Training.module.css'
 import { useState } from 'react'
 import { Leave } from '@/components/Leave'
 import { Wallet } from '@/components/Wallet'
 import { Attack } from '@/interfaces/attack'
-import { Passives } from '@/interfaces/passives'
 import { Atribute } from '@/enums/atribute'
 import { DamageTypes } from '@/enums/damageTypes'
 import { EffectTypes } from '@/enums/effectTypes'
-import { BonusTypes } from '@/enums/bonusTypes'
 import { AttackShop } from '@/components/AttackShop'
 import { PassiveShop } from '@/components/PassiveShop'
+import { passivesPlayer } from '../../../public/objects/passives/passivesPlayer'
+import { usePlayer } from '@/contexts/PlayerContext'
 
 const testAttack:Attack={
     id: 'teste',
@@ -26,25 +27,14 @@ const testAttack:Attack={
     costStamina: 6
 }
 
-const testPassive:Passives={
-    id: 'sss',
-    name: 'Pastor de Almas',
-    image: 'https://ddragon.leagueoflegends.com/cdn/16.1.1/img/passive/Yorick_P.png',
-    description: 'Teste',
-    typeBonus: BonusTypes.bonusAttack,
-    bonusNum: 6,
-    bonusDamageType: DamageTypes.physical,
-    bonusStat: Atribute.strength,
-    price: 10
-}
-
 export default function Training(){
 
     const [selected,setSelected] = useState(1)
+    const {attacks, passives} = usePlayer()
 
     return(
         <div className={styles.container}>
-            <Wallet/>
+            <Wallet isCash={false}/>
             <Leave/>
             <h1>Campo de trinamento</h1>
             <p>Aprenda novos ataques e habilidades</p>
@@ -70,7 +60,14 @@ export default function Training(){
                         selected==1?
                             <AttackShop attack={testAttack} price={20}/>
                         :
-                            <PassiveShop passive={testPassive}/>
+                            passivesPlayer
+                            .filter(passiveLoja =>
+                                !passives?.some(passivePlayer => passivePlayer.id === passiveLoja.id)
+                            )
+                            .map(passive => (
+                                <PassiveShop key={passive.id} passive={passive} />
+                            ))
+                                
                     }
                 </div>
             </div>

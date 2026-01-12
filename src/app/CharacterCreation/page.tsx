@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
     faMars,
     faVenus,
-    faCoins
+    faBookBookmark
 } from '@fortawesome/free-solid-svg-icons'
 import { Atribute } from '@/enums/atribute'
 import { starterAttacks } from '../../../public/objects/attacks/starterAttacks'
@@ -65,7 +65,8 @@ export default function CharacterCreation(){
         removePassive,
         removeResistence,
         removeVulnerabilite,
-        resetPlayer
+        resetPlayer,
+        changeTechnicalPoints
     } = usePlayer()
 
     const router = useRouter()
@@ -74,7 +75,8 @@ export default function CharacterCreation(){
     const [canCreate,setCanCreate] = useState(false)
     
     const [pName, setPName] = useState("")
-    const [pCash, setPCash] = useState(20)
+    const pCash = 50
+    const [pTechnicalPoints, setPTechnicalPoints] = useState(20)
     const [pImage, setPImage] = useState("/images/playerPic/defaultMale")
     const [pGender, setPGender] = useState("M")
 
@@ -193,11 +195,11 @@ export default function CharacterCreation(){
         });
     }, [selectedAttackId]);
 
-    function buyPassive(passiveId:string,newCash:number){
+    function buyPassive(passiveId:string,newPoints:number){
         const passive = passivesPlayer.find(pas=>pas.id==passiveId)
         if(!passive)return
         setPPassives(prev => [...prev,passive])
-        setPCash(newCash)
+        setPTechnicalPoints(newPoints)
         aplicatePassive(passiveId)
     }
 
@@ -324,6 +326,7 @@ export default function CharacterCreation(){
     function setElements() {
         changeName?.(pName)
         changeCash?.(pCash)
+        changeTechnicalPoints?.(pTechnicalPoints)
         changeImage?.(pImage)
         changeGender?.(pGender)
 
@@ -671,8 +674,8 @@ export default function CharacterCreation(){
                                 <h3>
                                     Loja de Habilidades
                                     <div>
-                                        <FontAwesomeIcon icon={faCoins}/>
-                                        <span>{pCash}</span>
+                                        <FontAwesomeIcon icon={faBookBookmark}/>
+                                        <span>{pTechnicalPoints}</span>
                                     </div>
                                 </h3>
                                 <div className={styles.passivesToBuy}>
@@ -682,7 +685,7 @@ export default function CharacterCreation(){
                                             passive={passive}
                                             buy={buyPassive}
                                             shop={true}
-                                            actualCash={pCash}
+                                            actualPoints={pTechnicalPoints}
                                         />
                                     ))}
                                 </div>

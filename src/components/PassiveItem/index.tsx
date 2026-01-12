@@ -2,14 +2,14 @@ import styles from './PassiveItem.module.css'
 import { Passives } from '@/interfaces/passives'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoins } from '@fortawesome/free-solid-svg-icons'
+import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
 interface PassiveItemProps{
     passive: Passives
-    buy: (passiveId:string,newCash:number)=>void
+    buy: (passiveId:string,newPoints:number)=>void
     shop?: boolean
-    actualCash?: number
+    actualPoints?: number
 }
 
 export function PassiveItem(props: PassiveItemProps){
@@ -18,13 +18,13 @@ export function PassiveItem(props: PassiveItemProps){
     const [canBuy,setCanBuy] =  useState(true)
 
     useEffect(()=>{
-        if(props.actualCash! < passive.price){
+        if(props.actualPoints! < passive.price){
             setCanBuy(false)
         }else{
             setCanBuy(true)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[props.actualCash])
+    },[props.actualPoints])
 
     return(
         <div className={styles.wraper}>
@@ -40,11 +40,11 @@ export function PassiveItem(props: PassiveItemProps){
                         }}
                         onClick={()=>{
                             if(canBuy){
-                                props.buy(passive.id, props.actualCash!-passive.price)
+                                props.buy(passive.id, props.actualPoints!-passive.price)
                             }
                         }}
                     >
-                    {passive.price} <FontAwesomeIcon icon={faCoins} />
+                    <FontAwesomeIcon icon={faBookBookmark} />{passive.price} 
                     </button>
                 }
             </div>

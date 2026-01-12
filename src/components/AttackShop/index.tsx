@@ -6,6 +6,8 @@ import { Atribute } from '@/enums/atribute'
 import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
 import { Attack } from '@/interfaces/attack'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
 
 interface AttackShopProps{
     attack: Attack
@@ -21,9 +23,9 @@ export function AttackShop({attack, price}:AttackShopProps){
             mind,
             presence,
             bonusAttack,
-            cash,
-            addAttack,
-            changeCash
+            technicalPoints,
+            changeTechnicalPoints,
+            addAttack
         } = usePlayer()
     const color = getDamageColor(attack.damageType)
 
@@ -43,8 +45,8 @@ export function AttackShop({attack, price}:AttackShopProps){
     }
 
     function buyAttack(){
-        if(cash!>=price){
-            changeCash!(cash!-price)
+        if(technicalPoints!>=price){
+            changeTechnicalPoints!(technicalPoints!-price)
             addAttack!(attack)
         }
     }
@@ -67,10 +69,10 @@ export function AttackShop({attack, price}:AttackShopProps){
                 </div>
                 <div 
                     className={styles.price} 
-                    style={{background:cash!>=price?'var(--green-s)':'var(--red-p)'}}
+                    style={{background:technicalPoints!>=price?'var(--green-s)':'var(--red-p)'}}
                     onClick={buyAttack}
                 >
-                    ${price}
+                    <FontAwesomeIcon icon={faBookBookmark}/>{price}
                 </div>
             </div>
             <div className={styles.info}>

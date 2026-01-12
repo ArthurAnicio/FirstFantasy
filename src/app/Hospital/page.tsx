@@ -11,7 +11,7 @@ export default function Hospital(){
 
     return(
         <div className={styles.container}>
-            <Wallet/>
+            <Wallet isCash={true}/>
             <Leave/>
             <div className={styles.content}>
                 <p>Escolha seu Tratamento</p>

@@ -13,6 +13,7 @@ export interface Character {
 
   cash?: number
   atributePoints?: number
+  technicalPoints?: number
 
   defense: number
   maxHealth: number
@@ -46,6 +47,7 @@ export interface Character {
   changeCash?: (quant: number) => void
   changeTechniquePoints?: (amount: number) => void
   changeAtributePoints?: (amount: number) => void
+  changeTechnicalPoints?: (amount:number) => void
 
   changeActualHealth?:(amount:number)=>void
   changeActualStamina?:(amount:number)=>void

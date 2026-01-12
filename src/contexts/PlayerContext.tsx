@@ -30,6 +30,7 @@ const defaultPlayer: Character = {
   level: 1,
   cash: 0,
   atributePoints: 0,
+  technicalPoints: 0,
   defense: 0,
   maxHealth: 1,
   actualHealth: 1,
@@ -97,6 +98,10 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [atributePoints, setAtributePoints] = useState(
     loadedPlayer.atributePoints ?? 0,
   )
+  
+const [technicalPoints, setTechnicalPoints] = useState(
+  loadedPlayer.technicalPoints ?? 0,
+)
 
   const [strength, setStrength] = useState(loadedPlayer.strength ?? 0)
   const [dexterity, setDexterity] = useState(loadedPlayer.dexterity ?? 0)
@@ -152,6 +157,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       level,
       cash,
       atributePoints,
+      technicalPoints,
       defense,
       maxHealth,
       actualHealth,
@@ -174,43 +180,10 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       imunites,
     }
 
-    console.log("Salvando player", {
-      actualHealth,
-      actualStamina,
-    })
-
     Cookies.set("player", JSON.stringify(playerToSave), {
       expires: 365 * 20,
     })
-  }, [
-    name,
-    gender,
-    image,
-    xp,
-    level,
-    cash,
-    atributePoints,
-    strength,
-    dexterity,
-    constitution,
-    presence,
-    mind,
-    bonusAttack,
-    bonusDefence,
-    bonusHealth,
-    bonusStamina,
-    defense,
-    maxHealth,
-    maxStamina,
-    actualHealth,
-    actualStamina,
-    attacks,
-    equipedAttacks,
-    passives,
-    resistences,
-    vulnerabilites,
-    imunites,
-  ])
+  }, [name, gender, image, xp, level, cash, atributePoints, strength, dexterity, constitution, presence, mind, bonusAttack, bonusDefence, bonusHealth, bonusStamina, defense, maxHealth, maxStamina, actualHealth, actualStamina, attacks, equipedAttacks, passives, resistences, vulnerabilites, imunites, technicalPoints])
 
   const changeName = useCallback((text: string) => {
     setName(text)
@@ -230,6 +203,10 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
 
   const changeAtributePoints = useCallback((amount: number) => {
     setAtributePoints(amount)
+  }, [])
+
+  const changeTechnicalPoints = useCallback((amount: number) => {
+    setTechnicalPoints(amount)
   }, [])
   
   const changeActualHealth = (amount: number) => {
@@ -387,6 +364,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     level,
     cash,
     atributePoints,
+    technicalPoints,
     defense,
     maxHealth,
     actualHealth,

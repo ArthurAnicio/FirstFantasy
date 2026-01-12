@@ -18,7 +18,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-2',
         name:"Preparado",
-        image:"/images/passives/preparado.png",
+        image:"/images/passives/preparado.jpg",
         description:"+5 em bonus de defesa",
         typeBonus: BonusTypes.bonusDefense,
         bonusNum: 5,
@@ -29,7 +29,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-3',
         name:"Saudável",
-        image:"/images/passives/saudavel.png",
+        image:"/images/passives/saudavel.jpg",
         description:"+5 pontos de vida máxima",
         typeBonus: BonusTypes.bonusHp,
         bonusNum: 5,
@@ -40,7 +40,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-4',
         name:"Energético",
-        image:"/images/passives/energetico.png",
+        image:"/images/passives/energetico.jpg",
         description:"+5 pontos de stamina máxima",
         typeBonus: BonusTypes.bonusStamina,
         bonusNum: 5,
@@ -117,7 +117,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-11',
         name:"Fortificado",
-        image:"/images/passives/fortificado.png",
+        image:"/images/passives/Fortificado.jpg",
         description:"+1 no atributo de força",
         typeBonus: BonusTypes.bonusStat,
         bonusStat: Atribute.strength,
@@ -128,7 +128,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-12',
         name:"Agil",
-        image:"/images/passives/agil.png",
+        image:"/images/passives/agil.jpg",
         description:"+1 no atributo de destreza",
         typeBonus: BonusTypes.bonusStat,
         bonusStat: Atribute.dexterity,
@@ -139,7 +139,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-13',
         name:"Resiliente",
-        image:"/images/passives/resiliente.png",
+        image:"/images/passives/resiliente.jpg",
         description:"+1 no atributo de constituição",
         typeBonus: BonusTypes.bonusStat,
         bonusStat: Atribute.constitution,
@@ -150,7 +150,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-14',
         name:"Inteligente",
-        image:"/images/passives/inteligente.png",
+        image:"/images/passives/inteligente.jpg",
         description:"+1 no atributo de mente",
         typeBonus: BonusTypes.bonusStat,
         bonusStat: Atribute.mind,
@@ -161,7 +161,7 @@ export const passivesPlayer:Passives[] = [
     {
         id:'pas-player-15',
         name:"Perspicaz",
-        image:"/images/passives/perspicaz.png",
+        image:"/images/passives/perspicaz.jpg",
         description:"+1 no atributo de presença",
         typeBonus: BonusTypes.bonusStat,
         bonusStat: Atribute.presence,
@@ -190,5 +190,71 @@ export const passivesPlayer:Passives[] = [
         bonusDamageType: DamageTypes.none,
         bonusStat: Atribute.none,
         price: 15
-    }
+    },
+    {
+        id:'pas-player-18',
+        name:"Intocável",
+        image:"/images/passives/imunidadeFisica.png",
+        description:"Recebe imunidade a dano físico",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.physical,
+        bonusStat: Atribute.none,
+        price: 50
+    },
+    {
+        id:'pas-player-19',
+        name:"Inabalável",
+        image:"/images/passives/imunidadePsiquico.png",
+        description:"Recebe imunidade a dano psiquico",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.psychic,
+        bonusStat: Atribute.none,
+        price: 50
+    },
+    {
+        id:'pas-player-20',
+        name:"Flamejante",
+        image:"/images/passives/imunidadeFogo.png",
+        description:"Recebe imunidade a dano de fogo",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.fire,
+        bonusStat: Atribute.none,
+        price: 50
+    },
+    {
+        id:'pas-player-21',
+        name:"Trovejante",
+        image:"/images/passives/imunidadeTrovao.png",
+        description:"Recebe imunidade a dano de trovão",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.thunder,
+        bonusStat: Atribute.none,
+        price: 50
+    },
+    {
+        id:'pas-player-22',
+        name:"Ártiico",
+        image:"/images/passives/imunidadeFrio.png",
+        description:"Recebe imunidade a dano de frio",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.ice,
+        bonusStat: Atribute.none,
+        price: 50
+    },
+    {
+        id:'pas-player-23',
+        name:"Tóxico",
+        image:"/images/passives/imunidadeVeneno.png",
+        description:"Recebe imunidade a dano venenoso",
+        typeBonus: BonusTypes.imunite,
+        bonusNum: 1,
+        bonusDamageType: DamageTypes.poison,
+        bonusStat: Atribute.none,
+        price: 50
+    },
 ]

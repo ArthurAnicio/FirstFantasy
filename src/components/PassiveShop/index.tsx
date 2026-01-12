@@ -1,7 +1,7 @@
 import styles from './PassiveShop.module.css'
 import { Passives } from '@/interfaces/passives'
 import { usePlayer } from '@/contexts/PlayerContext'
-import { faCoins } from '@fortawesome/free-solid-svg-icons'
+import { faBookBookmark} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 
@@ -11,12 +11,12 @@ interface PassiveShopProps{
 
 export function PassiveShop({passive}:PassiveShopProps){
 
-    const {cash,addPassive, changeCash} = usePlayer()
-    const canBuy = passive.price<= cash!
+    const {technicalPoints,addPassive, changeTechnicalPoints} = usePlayer()
+    const canBuy = passive.price<= technicalPoints!
 
     function buyPassive(){
         if(canBuy){
-            changeCash!(cash!-passive.price)
+            changeTechnicalPoints!(technicalPoints!-passive.price)
             addPassive!(passive)
         }
     }
@@ -34,7 +34,7 @@ export function PassiveShop({passive}:PassiveShopProps){
                     }}
                     onClick={buyPassive}
                 >
-                    {passive.price} <FontAwesomeIcon icon={faCoins} />
+                    {passive.price} <FontAwesomeIcon icon={faBookBookmark} />
                 </button>
             </div>
             
