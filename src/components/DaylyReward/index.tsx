@@ -15,14 +15,18 @@ interface DailyData {
 
 const REWARD_AMOUNTS = [0, 10, 15, 20, 25, 30, 35, 50]
 
+function getTodayDate(): string {
+  return new Date().toISOString().split('T')[0]
+}
+
 function loadDailyData(): DailyData {
   if (typeof window === 'undefined') {
-    return { currentDay: 1, claimedDays: [], lastResetDate: new Date().toISOString().split('T')[0] }
+    return { currentDay: 1, claimedDays: [], lastResetDate: getTodayDate() }
   }
   
   try {
     const raw = Cookies.get('dailyRewards')
-    if (!raw) return { currentDay: 1, claimedDays: [], lastResetDate: new Date().toISOString().split('T')[0] }
+    if (!raw) return { currentDay: 1, claimedDays: [], lastResetDate: getTodayDate() }
     
     const data = JSON.parse(raw)
     const lastDate = new Date(data.lastResetDate)
@@ -30,10 +34,11 @@ function loadDailyData(): DailyData {
     const daysDiff = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
     
     if (daysDiff >= 1) {
+      const newCurrentDay = data.currentDay < 7 ? data.currentDay + 1 : 1
       const newData = {
-        currentDay: data.currentDay < 7 ? data.currentDay + 1 : 1,
-        claimedDays: [],
-        lastResetDate: today.toISOString().split('T')[0]
+        currentDay: newCurrentDay,
+        claimedDays: newCurrentDay === 1 ? [] : data.claimedDays,
+        lastResetDate: getTodayDate()
       }
       saveDailyData(newData)
       return newData
@@ -41,7 +46,7 @@ function loadDailyData(): DailyData {
     
     return data
   } catch {
-    return { currentDay: 1, claimedDays: [], lastResetDate: new Date().toISOString().split('T')[0] }
+    return { currentDay: 1, claimedDays: [], lastResetDate: getTodayDate() }
   }
 }
 
@@ -61,9 +66,11 @@ export function DaylyReward() {
   }, [isOpen])
 
   function reclaim(day: number) {
-    if (dailyData.claimedDays.includes(day)) return
+    if (day !== dailyData.currentDay || dailyData.claimedDays.includes(day)) return
+    
     const amount = REWARD_AMOUNTS[day]
     if (!amount) return
+    
     changeCash!(cash! + amount)
     const newData = {
       ...dailyData,
@@ -75,7 +82,7 @@ export function DaylyReward() {
   }
 
   function isDayAvailable(day: number): boolean {
-    return day <= dailyData.currentDay && !dailyData.claimedDays.includes(day)
+    return day === dailyData.currentDay && !dailyData.claimedDays.includes(day)
   }
 
   function renderRewards() {
