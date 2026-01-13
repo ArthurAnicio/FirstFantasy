@@ -8,6 +8,7 @@ import { getDamageIcon } from '@/functions/getDamageIcon'
 import { Attack } from '@/interfaces/attack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
+import { addNewAttack } from '@/functions/addNewAttack'
 
 interface AttackShopProps{
     attack: Attack
@@ -25,7 +26,6 @@ export function AttackShop({attack, price}:AttackShopProps){
             bonusAttack,
             technicalPoints,
             changeTechnicalPoints,
-            addAttack
         } = usePlayer()
     const color = getDamageColor(attack.damageType)
 
@@ -47,7 +47,7 @@ export function AttackShop({attack, price}:AttackShopProps){
     function buyAttack(){
         if(technicalPoints!>=price){
             changeTechnicalPoints!(technicalPoints!-price)
-            addAttack!(attack)
+            addNewAttack(attack)
         }
     }
 

@@ -4,6 +4,7 @@ import { usePlayer } from '@/contexts/PlayerContext'
 import { faBookBookmark} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
+import { applyPassive } from '@/functions/applyPassives'
 
 interface PassiveShopProps{
     passive:Passives
@@ -18,6 +19,7 @@ export function PassiveShop({passive}:PassiveShopProps){
         if(canBuy){
             changeTechnicalPoints!(technicalPoints!-passive.price)
             addPassive!(passive)
+            applyPassive(passive)
         }
     }
     

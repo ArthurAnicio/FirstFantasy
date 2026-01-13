@@ -207,6 +207,22 @@ export default function CharacterCreation(){
         const passive = passivesPlayer.find(pas=>pas.id==id)
         if(!passive)return
         switch(passive.typeBonus){
+            case BonusTypes.bonusCriticalDamage:
+                pAttacks.forEach((atk)=>{
+                    atk.criticalBonus += passive.bonusNum
+                })
+                pEquipedAttacks.forEach((atk)=>{
+                    atk.criticalBonus += passive.bonusNum
+                })
+                break
+            case BonusTypes.bonusCriticalRatio:
+                pAttacks.forEach((atk)=>{
+                    atk.criticalRatio -= passive.bonusNum
+                })
+                pEquipedAttacks.forEach((atk)=>{
+                    atk.criticalRatio -= passive.bonusNum
+                })
+                break 
             case BonusTypes.bonusAttack:
                 setPBonusAttack(passive.bonusNum)
                 break
