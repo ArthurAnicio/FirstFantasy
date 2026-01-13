@@ -55,7 +55,8 @@ export function PlayerInfo({close}:PlayerInfoProps){
         changeStat,
         attacks,
         equipedAttacks,
-        passives
+        passives,
+        changeAtributePoints
     } = usePlayer()
 
     function useStatsPoints(atribute: Atribute, amount:number){
@@ -63,18 +64,23 @@ export function PlayerInfo({close}:PlayerInfoProps){
             switch(atribute){
                 case Atribute.strength:
                     changeStat!(atribute,amount)
+                    changeAtributePoints!(atributePoints!-1)
                     break
                 case Atribute.dexterity:
                     changeStat!(atribute,amount)
+                    changeAtributePoints!(atributePoints!-1)
                     break
                 case Atribute.constitution:
                     changeStat!(atribute,amount)
+                    changeAtributePoints!(atributePoints!-1)
                     break
                 case Atribute.mind:
                     changeStat!(atribute,amount)
+                    changeAtributePoints!(atributePoints!-1)
                     break
                 case Atribute.presence:
                     changeStat!(atribute,amount)
+                    changeAtributePoints!(atributePoints!-1)
                     break
             }
         }
@@ -200,7 +206,10 @@ export function PlayerInfo({close}:PlayerInfoProps){
                     <div className={styles.statsPage} id={styles.div}>
                         <div className={styles.statsContent}>
                             <div className={styles.atributes}>
-                                <p className={styles.labelPoints}>Pontos: {atributePoints}</p>
+                                <p className={styles.labelPoints}>
+                                    Pontos: {atributePoints}
+                                    <FontAwesomeIcon icon={faChartSimple} />
+                                </p>
                                 <nav>
                                     
                                     <label>
@@ -209,7 +218,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     </label>
                                     <div className={styles.atribute}>
                                         <p>{strength}</p>
-                                        <button onClick={()=>useStatsPoints(Atribute.strength,1)}>
+                                        <button onClick={()=>useStatsPoints(Atribute.strength,strength+1)}>
                                             +
                                         </button>
                                     </div>
@@ -221,7 +230,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     </label>
                                     <div className={styles.atribute}>
                                         <p>{dexterity}</p>
-                                        <button onClick={()=>useStatsPoints(Atribute.dexterity,1)}>
+                                        <button onClick={()=>useStatsPoints(Atribute.dexterity,dexterity+1)}>
                                             +
                                         </button>
                                     </div>
@@ -233,7 +242,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     </label>
                                     <div className={styles.atribute}>
                                         <p>{constitution}</p>
-                                        <button onClick={()=>useStatsPoints(Atribute.constitution,1)}>
+                                        <button onClick={()=>useStatsPoints(Atribute.constitution,constitution+1)}>
                                             +
                                         </button>
                                     </div>
@@ -245,7 +254,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     </label>
                                     <div className={styles.atribute}>
                                         <p>{mind}</p>
-                                        <button onClick={()=>useStatsPoints(Atribute.mind,1)}>
+                                        <button onClick={()=>useStatsPoints(Atribute.mind,mind+1)}>
                                             +
                                         </button>
                                     </div>
@@ -257,7 +266,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                     </label>
                                     <div className={styles.atribute}>
                                         <p>{presence}</p>
-                                        <button onClick={()=>useStatsPoints(Atribute.presence,1)}>
+                                        <button onClick={()=>useStatsPoints(Atribute.presence,presence+1)}>
                                             +
                                         </button>
                                     </div>
@@ -267,14 +276,14 @@ export function PlayerInfo({close}:PlayerInfoProps){
                                 <p>Status:</p>
                                 <nav
                                         style={{
-                                            color: "var(--green-s)"
+                                            color: "var(--red-p)"
                                         }}
                                 >
                                     <label >
                                         <IconAtribute atribute={Atribute.health}/>
                                         Vida:
                                     </label>
-                                    <p  style={{border: 'solid 5px var(--green-s)'}}>{maxHealth}</p>
+                                    <p  style={{border: 'solid 5px var(--red-p)'}}>{maxHealth}</p>
                                 </nav>
                                 <nav
                                     style={{

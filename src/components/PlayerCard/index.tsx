@@ -107,7 +107,7 @@ export function PlayerCard({ openInfo }: PlayerCardProps) {
                     <div
                         style={{
                             height:'100%',
-                            width: `${((actualHealth*100)/maxHealth)+27}%`,
+                            width: `${((actualHealth*100)/maxHealth)}%`,
                             background: 'var(--red-p)'
                         }}
                     />
@@ -121,7 +121,7 @@ export function PlayerCard({ openInfo }: PlayerCardProps) {
                     <div
                         style={{
                             height:'100%',
-                            width: `${((actualStamina*100)/maxStamina)+30}%`,
+                            width: `${((actualStamina*100)/maxStamina)}%`,
                             background: 'var(--orange-p)'
                         }}
                     />

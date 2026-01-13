@@ -58,6 +58,8 @@ export interface Character {
   recover?: (stat: string, amount: number) => void
   takeDamage?: (damage: number, type: DamageTypes) => void
   useStamina?: (amount: number) => void
+  setHealth?: (amount: number) => void
+  setStamina?: (amount: number) => void
 
   levelUp?: () => void
 

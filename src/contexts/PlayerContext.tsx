@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import React, {
@@ -19,6 +20,7 @@ import { Attack } from "@/interfaces/attack"
 import { levelFromXp } from "@/functions/xpFormulas"
 import { Character } from "@/interfaces/character"
 import { Passives } from "@/interfaces/passives"
+import { leveling } from "@/functions/leveling"
 
 const PlayerContext = createContext<Character | undefined>(undefined)
 
@@ -146,6 +148,9 @@ const [technicalPoints, setTechnicalPoints] = useState(
     
     const newMaxStamina = calcStamina(level, presence, constitution, bonusStamina)
     setMaxStamina(newMaxStamina)
+
+    setActualHealth(Math.round((actualHealth*newMaxHealth)/maxHealth))
+    setActualStamina(Math.round((actualStamina*newMaxStamina)/maxStamina))
   }, [dexterity, level, constitution, presence, bonusDefence, bonusHealth, bonusStamina])
 
   useEffect(() => {
@@ -184,6 +189,12 @@ const [technicalPoints, setTechnicalPoints] = useState(
       expires: 365 * 20,
     })
   }, [name, gender, image, xp, level, cash, atributePoints, strength, dexterity, constitution, presence, mind, bonusAttack, bonusDefence, bonusHealth, bonusStamina, defense, maxHealth, maxStamina, actualHealth, actualStamina, attacks, equipedAttacks, passives, resistences, vulnerabilites, imunites, technicalPoints])
+
+  useEffect(() => {
+    const { rewardAtributePoints, rewardTechnicalPoints } = leveling(level)
+    setAtributePoints(atributePoints+rewardAtributePoints)
+    setTechnicalPoints(technicalPoints+rewardTechnicalPoints)
+  }, [level])
 
   const changeName = useCallback((text: string) => {
     setName(text)
@@ -390,6 +401,7 @@ const [technicalPoints, setTechnicalPoints] = useState(
     changeImage,
     changeCash,
     changeAtributePoints,
+    changeTechnicalPoints,
     changeActualHealth,
     changeActualStamina,
     addXp,

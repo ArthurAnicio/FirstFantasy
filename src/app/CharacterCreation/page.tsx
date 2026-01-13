@@ -66,7 +66,8 @@ export default function CharacterCreation(){
         removeResistence,
         removeVulnerabilite,
         resetPlayer,
-        changeTechnicalPoints
+        changeTechnicalPoints,
+        changeAtributePoints
     } = usePlayer()
 
     const router = useRouter()
@@ -345,6 +346,7 @@ export default function CharacterCreation(){
         changeTechnicalPoints?.(pTechnicalPoints)
         changeImage?.(pImage)
         changeGender?.(pGender)
+        changeAtributePoints?.(0)
 
         changeStat?.(Atribute.strength, pStrength)
         changeStat?.(Atribute.dexterity, pDexterity)
@@ -356,9 +358,6 @@ export default function CharacterCreation(){
         defenseBonusUp?.(pBonusDefence)
         healthBonusUp?.(pBonusHealth)
         staminaBonusUp?.(pBonusStamina)
-
-        changeActualHealth?.(pMaxHealth)
-        changeActualStamina?.(pMaxStamina)
 
         attacks.forEach(atk => {
             removeAttack!(atk)
@@ -410,6 +409,9 @@ export default function CharacterCreation(){
         setElements()
 
         setTimeout(() => {
+            changeActualHealth?.(pMaxHealth)
+            changeActualStamina?.(pMaxStamina)
+            Cookies.remove("lastLevelSeen")
             Cookies.set("carregado","sim")
             Cookies.set("criando","")
             router.push("/City")
@@ -540,7 +542,7 @@ export default function CharacterCreation(){
                                 <p>Status:</p>
                                 <nav
                                         style={{
-                                            color: "var(--green-s)"
+                                            color: "var(--red-p)"
                                         }}
                                 >
                                     <label >

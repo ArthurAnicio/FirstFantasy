@@ -9,11 +9,14 @@ import { usePlayer } from '@/contexts/PlayerContext'
 import {Building} from '@/components/Building'
 import {PlayerInfo} from '@/components/PlayerInfo'
 import { DaylyReward } from '@/components/DaylyReward'
+import { LevelUpModal } from '@/components/LevelUpModal'
+import { DamageTypes } from '@/enums/damageTypes'
 
 export default function Player() {
-  const { takeDamage, useStamina, addXp, setXp, recover } = usePlayer()
+  const { takeDamage, addXp, setXp, level} = usePlayer()
   const router = useRouter()
-  const [modalOn,setModalOn] = useState(false)
+  const [playerInfoOn,setPlayerInfoOn] = useState(false)
+  const [levelUpModalOn,setLevelUpModalOn] = useState(false)
   const cityRef = useRef<HTMLDivElement>(null)
 
   const scrollSpeed = 70
@@ -43,6 +46,21 @@ export default function Player() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
+
+  useEffect(() => {
+  const raw = Cookies.get('lastLevelSeen')
+  let savedLevel = 1
+  
+  if (raw) {
+    const parsed = Number(raw)
+    savedLevel = isNaN(parsed) ? 1 : parsed
+  }
+  
+  if (level > savedLevel) {
+    setLevelUpModalOn(true)
+    Cookies.set('lastLevelSeen', String(level), { expires: 365 })
+  }
+}, [level])
 
   return (
     <>
@@ -77,11 +95,13 @@ export default function Player() {
           />
         </div>
       </div>
-      
+      <button onClick={() => addXp!(200)}>Adicionar xp</button>
+      <button onClick={() => takeDamage!(10,DamageTypes.fire)}>Dano</button>
+      <button onClick={() => setXp!(0)}>Zerar xp</button>
+      {levelUpModalOn && <LevelUpModal close={() => setLevelUpModalOn(false)} />}
+      {playerInfoOn && <PlayerInfo close={() => setPlayerInfoOn(false)} />}
+      <PlayerCard openInfo={() => setPlayerInfoOn(true)} />
       <DaylyReward/>
-
-      {modalOn && <PlayerInfo close={() => setModalOn(false)} />}
-      <PlayerCard openInfo={() => setModalOn(true)} />
     </>
   )
 }
