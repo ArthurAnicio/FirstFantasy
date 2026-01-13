@@ -2,7 +2,7 @@
     position: relative;
 }
 .card{
-    width: 160px;
+    width: 180px;
     padding: 15px;    
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     border-radius: 0.3rem;
     background: linear-gradient(to bottom, var(--blue-p),var(--purple-p));
     color: var(--white);
-    font-size: 20px;
+    font-size: 18px;
     position: relative;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .stamina {
-  z-index: 9999;
+  z-index: 5;
   width: 40px;
   height: 40px;
   display: flex;
@@ -28,8 +28,8 @@
   position: absolute;
   background: var(--orange-s);
   border: solid 5px var(--white);
-  top: -10px;
-  right: -10px;
+  top: -15px;
+  right: -15px;
   transform: rotate(45deg);
   font-size: 32px;
 }
@@ -41,15 +41,15 @@
 .wraper:hover .info{
     display: block;
     position: absolute;
-    width: 250px;
+    width: 260px;
     padding: 15px;
     top: 200;
-    left: 35%;
+    left: 50%;
     transform: translateX(-50%);
     background: var(--purple-p);
     border-radius: 0.3rem;
     box-shadow: 0 0 10px var(--black);
-    z-index: 1000;
+    z-index: 2000;
     font-size: 28px;
     color: var(--white);
 }

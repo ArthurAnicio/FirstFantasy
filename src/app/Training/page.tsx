@@ -12,20 +12,8 @@ import { AttackShop } from '@/components/AttackShop'
 import { PassiveShop } from '@/components/PassiveShop'
 import { passivesPlayer } from '../../../public/objects/passives/passivesPlayer'
 import { usePlayer } from '@/contexts/PlayerContext'
+import { shopAttacks } from '../../../public/objects/attacks/shopAttacks'
 
-const testAttack:Attack={
-    id: 'teste',
-    name: 'Louvor das Ilhas',
-    image: 'https://ddragon.leagueoflegends.com/cdn/16.1.1/img/spell/YorickR.png',
-    atribute: Atribute.mind,
-    damageDice: 8,
-    damageQuant: 3,
-    damageType: DamageTypes.physical,
-    criticalBonus: 3,
-    criticalRatio: 17,
-    effect: EffectTypes.none,
-    costStamina: 6
-}
 
 export default function Training(){
 
@@ -58,7 +46,13 @@ export default function Training(){
                 <div className={styles.items}>
                     {
                         selected==1?
-                            <AttackShop attack={testAttack} price={20}/>
+                            shopAttacks
+                            .filter(shopAttack =>
+                                !attacks?.some(attackPlayer => attackPlayer.id === shopAttack.attack.id)
+                            )
+                            .map(shopAttack => (
+                                <AttackShop attack={shopAttack.attack} price={shopAttack.price}/>
+                            ))
                         :
                             passivesPlayer
                             .filter(passiveLoja =>

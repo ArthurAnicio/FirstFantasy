@@ -35,7 +35,7 @@
 }
 
 .modal{
-    width: 55%;
+    width: 60%;
     height: 85vh;
     background: var(--paper);
     display: flex;
@@ -63,6 +63,9 @@
     font-size: 30px;
     cursor: pointer;
     transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close:hover{
@@ -71,12 +74,12 @@
 }
 
 .rewards{
+    padding-top: 20px;
+    padding-left: 30px;
     width: 100%;
-    padding: 20px;
     height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .reward{
