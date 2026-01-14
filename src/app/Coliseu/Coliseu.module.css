@@ -1,0 +1,66 @@
+.container{
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-image: 
+        url('/images/backgrounds/entradaColiseu.jpg'),
+        linear-gradient(#00000080, #00000080)
+        ;
+    backdrop-filter: blur(5px); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;  
+}
+
+.container h2{
+    padding: 10px 40px;
+    border-radius: .5rem;
+    font-size: 2rem;
+    background: linear-gradient(var(--gray-t),var(--gray-s));
+    color: var(--gray-p);
+    margin-bottom: 20px;
+}
+
+.challenger{
+    background: linear-gradient(var(--gray-t),var(--gray-s));
+    min-height: 312px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    border-radius: 0.5rem;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+.challenger p{
+    width: 100%;
+    border-top: solid 5px var(--gray-p);
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--gray-p);
+}
+
+.findChallenger{
+    font-family: var(--font-jacquard-24);
+    background: var(--gray-p);
+    color: var(--red-p);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 10px 20px;
+    font-size: 1.3rem;
+    transition: 0.2s;
+}
+
+.findChallenger:hover{
+    scale: .95;
+    box-shadow: 0 0 20px 10px var(--red-p);
+    background: linear-gradient(var(--red-p),var(--red-t));
+    color: var(--paper);
+}

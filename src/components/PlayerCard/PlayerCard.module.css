@@ -84,12 +84,13 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 12.5%;
-    right: -105px;
+    top: 17%;
+    right: -150px;
     width: 200px;
-    height: 130px;
+    height: 110px;
     background: var(--gray-p);
-    border-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
     overflow: hidden;
     gap: 10px;
     border: solid 15px var(--gray-p);
@@ -105,7 +106,7 @@
 .statNum{
     color: var(--white);
     position: absolute;
-    top: 0;
-    left: 35%;
+    top: -5;
+    left: 25%;
     font-size: 42px;
 }

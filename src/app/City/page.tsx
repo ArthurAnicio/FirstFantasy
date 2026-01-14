@@ -72,7 +72,7 @@ export default function Player() {
             left={900}
             w={200} 
             h={200}
-            path='/coliseu' 
+            path='/Coliseu' 
           />
           <Building 
             image="/images/buildings/hospital.png" 
