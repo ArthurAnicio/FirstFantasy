@@ -8,7 +8,6 @@ import { getDamageIcon } from '@/functions/getDamageIcon'
 import { Attack } from '@/interfaces/attack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
-import { addNewAttack } from '@/functions/addNewAttack'
 
 interface AttackShopProps{
     attack: Attack
@@ -26,6 +25,8 @@ export function AttackShop({attack, price}:AttackShopProps){
             bonusAttack,
             technicalPoints,
             changeTechnicalPoints,
+            addAttack,
+            passives
         } = usePlayer()
     const color = getDamageColor(attack.damageType)
 
@@ -42,6 +43,18 @@ export function AttackShop({attack, price}:AttackShopProps){
             case Atribute.presence:
                 return presence
         }
+    }
+
+    function addNewAttack(attack:Attack){
+
+        if(passives!.find(pas=>pas.id === 'pas-player-16')){
+            attack.criticalBonus += 1
+        }
+        if(passives!.find(pas=>pas.id === 'pas-player-17')){
+            attack.criticalRatio -= 1
+        }
+
+        addAttack!(attack);
     }
 
     function buyAttack(){

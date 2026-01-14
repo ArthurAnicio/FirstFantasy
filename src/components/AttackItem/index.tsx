@@ -38,8 +38,8 @@ export function AttackItem(props: AttackItemProps) {
                 <Image
                     alt={attack.name}
                     src={attack.image}
-                    width={120}
-                    height={120}
+                    width={100}
+                    height={100}
                     style={{ margin: "0 auto" }}
                 />
                 <div className={styles.stamina}>

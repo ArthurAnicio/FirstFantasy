@@ -97,7 +97,6 @@ export default function CharacterCreation(){
     const [pMaxHealth,setPMaxHealth] = useState(calcHealth(level,pConstitution,pBonusHealth))
     const [pMaxStamina, setPMaxStamina] = useState(calcStamina(level,pPresence,pConstitution,pBonusStamina))
 
-    const [pEquipedAttacks, setPEquippedAttacks] = useState<Attack[]>([])
     const [pAttacks, setPAttacks] = useState<Attack[]>([])
     const [pPassives, setPPassives] = useState<Passives[]>([])
     const [pResistences, setPResistences] = useState<DamageTypes[]>([])
@@ -161,7 +160,7 @@ export default function CharacterCreation(){
             return [...withoutDefaults, atk]
         });
 
-        setPEquippedAttacks(prev => {
+        setPAttacks(prev => {
             const withoutDefaults = prev.filter(a =>
             !defaultAttacks.some(d => d.id === a.id)
             );
@@ -179,14 +178,6 @@ export default function CharacterCreation(){
     useEffect(() => {
         const attack = starterAttacks.find(atk => atk.id == selectedAttackId);
         if (!attack) return;
-
-        setPEquippedAttacks(prev => {
-            const fixed = prev.filter(
-            atk => !starterAttacks.some(satk => satk.id == atk.id)
-            );
-
-            return [...fixed, attack];
-        });
 
         setPAttacks(prev => {
             const fixed = prev.filter(
@@ -212,15 +203,9 @@ export default function CharacterCreation(){
                 pAttacks.forEach((atk)=>{
                     atk.criticalBonus += passive.bonusNum
                 })
-                pEquipedAttacks.forEach((atk)=>{
-                    atk.criticalBonus += passive.bonusNum
-                })
                 break
             case BonusTypes.bonusCriticalRatio:
                 pAttacks.forEach((atk)=>{
-                    atk.criticalRatio -= passive.bonusNum
-                })
-                pEquipedAttacks.forEach((atk)=>{
                     atk.criticalRatio -= passive.bonusNum
                 })
                 break 
@@ -385,8 +370,6 @@ export default function CharacterCreation(){
 
         pAttacks.forEach(atk => {
             addAttack?.(atk)
-        })
-        pEquipedAttacks.forEach(atk => {
             equipAttack?.(atk)
         })
         pPassives.forEach(pas => {
@@ -658,10 +641,10 @@ export default function CharacterCreation(){
                         <div className={styles.attacksArea}>
                             <p>Ataques Equipados</p>
                             <div className={styles.equipedAttacks}>
-                                {pEquipedAttacks.map((attack)=>(
+                                {pAttacks.map((attack)=>(
                                     <AttackItem key={attack.id} attack={attack} inBattle={false} />
                                 ))}
-                                {Array.from({ length: Math.max(0, 6 - pEquipedAttacks.length) }).map((_, i) => (
+                                {Array.from({ length: Math.max(0, 6 - pAttacks.length) }).map((_, i) => (
                                     <EmptyAttackItem key={`empty-${i}`} />
                                 ))}
                             </div>
