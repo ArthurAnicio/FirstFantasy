@@ -10,10 +10,9 @@ import {Building} from '@/components/Building'
 import {PlayerInfo} from '@/components/PlayerInfo'
 import { DaylyReward } from '@/components/DaylyReward'
 import { LevelUpModal } from '@/components/LevelUpModal'
-import { DamageTypes } from '@/enums/damageTypes'
 
 export default function Player() {
-  const { takeDamage, addXp, setXp, level} = usePlayer()
+  const { level} = usePlayer()
   const router = useRouter()
   const [playerInfoOn,setPlayerInfoOn] = useState(false)
   const [levelUpModalOn,setLevelUpModalOn] = useState(false)
@@ -95,9 +94,6 @@ export default function Player() {
           />
         </div>
       </div>
-      <button onClick={() => addXp!(200)}>Adicionar xp</button>
-      <button onClick={() => takeDamage!(10,DamageTypes.fire)}>Dano</button>
-      <button onClick={() => setXp!(0)}>Zerar xp</button>
       {levelUpModalOn && <LevelUpModal close={() => setLevelUpModalOn(false)} />}
       {playerInfoOn && <PlayerInfo close={() => setPlayerInfoOn(false)} />}
       <PlayerCard openInfo={() => setPlayerInfoOn(true)} />
