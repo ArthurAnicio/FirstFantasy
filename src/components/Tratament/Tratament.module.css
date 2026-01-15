@@ -20,6 +20,7 @@
 .desc{
     margin: 10px 0;
     font-size: 28px;
+    cursor: pointer;
 }
 
 .tratament p{

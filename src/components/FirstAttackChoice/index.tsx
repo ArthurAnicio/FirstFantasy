@@ -6,6 +6,7 @@ import { usePlayer } from '@/contexts/PlayerContext'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { Atribute } from '@/enums/atribute'
 import { getDamageIcon } from '@/functions/getDamageIcon'
+import { useSound } from '@/contexts/SoundContext'
 
 interface AttackChoiceProps{
     attack:Attack
@@ -15,6 +16,7 @@ interface AttackChoiceProps{
 
 export function FirstAttackChoice(props:AttackChoiceProps){
 
+    const {play} = useSound()
     const {strength,dexterity,constitution,mind,presence,bonusAttack} = usePlayer()
     const attack = props.attack
     const color = getDamageColor(attack.damageType)
@@ -34,12 +36,19 @@ export function FirstAttackChoice(props:AttackChoiceProps){
         }
     }
 
+    function equip(id:string){
+        play("Equip.mp3")
+        setTimeout(() => {
+            props.onClick(id)
+        }, 100);
+    }
+
     return(
         <div className={styles.wraper}>
             <div 
                 className={styles.card} 
                 id={props.selected ? styles.selected : ""}
-                onClick={()=> props.onClick(attack.id)}
+                onClick={()=> equip(attack.id)}
             >
                 <Image 
                     alt={attack.name} 

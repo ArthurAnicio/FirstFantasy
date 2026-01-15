@@ -6,15 +6,18 @@ import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './page.module.css'
 import { ModalConfirm } from '@/components/ModalConfirm';
 import Cookies from 'js-cookie';
+import { useMusic } from '@/contexts/MusicContext';
 
 export default function Home() {
 
+  const { playMusic } = useMusic()
   const router = useRouter()
   const {name} = usePlayer()
   const [canContinue,setCanContinue] = useState(true)
   const [modalOn, setModalOn] = useState(false)
 
   useEffect(()=>{
+    Cookies.remove('soundVolume')
     if(name!=""){
       setCanContinue(true)
       Cookies.set("carregado","sim")
@@ -22,6 +25,7 @@ export default function Home() {
       setCanContinue(false)
       Cookies.set("carregado","")
     }
+    playMusic('')
   },[])
 
   useEffect(()=>{

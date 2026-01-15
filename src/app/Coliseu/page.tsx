@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import styles from './Coliseu.module.css';
 import Image from 'next/image';
@@ -10,9 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import { Leave } from '@/components/Leave';
+import { useSound } from '@/contexts/SoundContext';
 
 export default function Coliseu() {
 
+  const { play, stopSound, changeSVolume } = useSound()
   const router = useRouter();
   const [challenger, setChallenger] = useState<Character | null>(null);
   const [canClick, setCanClick] = useState(true);
@@ -20,6 +22,7 @@ export default function Coliseu() {
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
+    play('Crowd.mp3',true)
     Cookies.remove('challenger');
     Cookies.remove('battleField');
   }, []);
@@ -32,6 +35,9 @@ export default function Coliseu() {
   },[countdown]);
 
   function startCountdown() {
+    stopSound("Crowd.mp3")
+    changeSVolume(1)
+    play("Count.mp3")
     setCountdown(5);
     const interval = setInterval(() => {
       setCountdown((prev) => {
@@ -42,6 +48,7 @@ export default function Coliseu() {
         return prev - 1;
       });
     }, 1000);
+    changeSVolume(parseFloat(Cookies.get('soundVolume') as string))
   }
     
 

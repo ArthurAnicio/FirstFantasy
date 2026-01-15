@@ -8,6 +8,7 @@ import { getDamageIcon } from '@/functions/getDamageIcon'
 import { Attack } from '@/interfaces/attack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
+import { useSound } from '@/contexts/SoundContext'
 
 interface AttackShopProps{
     attack: Attack
@@ -29,6 +30,8 @@ export function AttackShop({attack, price}:AttackShopProps){
             passives
         } = usePlayer()
     const color = getDamageColor(attack.damageType)
+
+    const { play } = useSound()
 
     function getAtribute(){
         switch(attack.atribute){
@@ -59,8 +62,11 @@ export function AttackShop({attack, price}:AttackShopProps){
 
     function buyAttack(){
         if(technicalPoints!>=price){
-            changeTechnicalPoints!(technicalPoints!-price)
-            addNewAttack(attack)
+            play('Buy.mp3')
+            setTimeout(() => {
+                changeTechnicalPoints!(technicalPoints!-price)
+                addNewAttack(attack)
+            }, 200);
         }
     }
 

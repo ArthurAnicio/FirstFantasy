@@ -1,6 +1,7 @@
 import styles from './Building.module.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useSound } from '@/contexts/SoundContext'
 
 interface BuildingProps{
     top?:number
@@ -26,6 +27,8 @@ export function Building({
     path,
 }:BuildingProps){
 
+    const { play } = useSound();
+
     const style: React.CSSProperties = 
      {
         position: 'absolute',
@@ -37,11 +40,20 @@ export function Building({
 
     const router = useRouter()
 
+    function enter(){
+        if(path){
+            play('Enter.mp3')
+            setTimeout(() => {
+                router.push(path)
+            }, 300);
+        }
+    }
+
     return(
             <div
                 className={styles.wraper}
                 style={style}
-                onClick={() => router.push(path!)}
+                onClick={enter}
             >
                 <Image
                     width={w}

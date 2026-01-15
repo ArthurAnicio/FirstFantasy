@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './PassiveItem.module.css'
 import { Passives } from '@/interfaces/passives'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookBookmark } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
+import { useSound } from '@/contexts/SoundContext'
 
 interface PassiveItemProps{
     passive: Passives
@@ -14,6 +16,7 @@ interface PassiveItemProps{
 
 export function PassiveItem(props: PassiveItemProps){
 
+    const { play } = useSound()
     const passive = props.passive
     const [canBuy,setCanBuy] =  useState(true)
 
@@ -23,8 +26,14 @@ export function PassiveItem(props: PassiveItemProps){
         }else{
             setCanBuy(true)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.actualPoints])
+
+    function buyPassive(){
+        play("Buy.mp3")
+        setTimeout(() => {
+            props.buy(passive.id, props.actualPoints!-passive.price)
+        }, 100);
+    }
 
     return(
         <div className={styles.wraper}>
@@ -38,11 +47,7 @@ export function PassiveItem(props: PassiveItemProps){
                         style={{
                             background:canBuy?"var(--green-s)":"var(--red-p)"
                         }}
-                        onClick={()=>{
-                            if(canBuy){
-                                props.buy(passive.id, props.actualPoints!-passive.price)
-                            }
-                        }}
+                        onClick={()=>buyPassive()}
                     >
                     <FontAwesomeIcon icon={faBookBookmark} />{passive.price} 
                     </button>

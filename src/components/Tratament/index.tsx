@@ -2,6 +2,7 @@ import { Atribute } from '@/enums/atribute'
 import styles from './Tratament.module.css'
 import { usePlayer } from '@/contexts/PlayerContext'
 import { IconAtribute } from '@/functions/IconAtribute'
+import { useSound } from '@/contexts/SoundContext'
 
 interface TratamentProps{
     title: string
@@ -14,12 +15,16 @@ interface TratamentProps{
 export function Tratament({ title, desc ,price ,health ,stamina }:TratamentProps){
 
     const { recover, cash, changeCash } = usePlayer()
+    const { play } = useSound()
 
     function treat(){
         if(price<=cash!){
-            recover!('health', health)
-            recover!('',stamina)
-            changeCash!(cash!-price)
+            play('Buy.mp3')
+            setTimeout(() => {
+                recover!('health', health)
+                recover!('',stamina)
+                changeCash!(cash!-price)
+            }, 200);
         }
     }
 

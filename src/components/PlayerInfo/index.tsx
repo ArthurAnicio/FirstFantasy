@@ -25,6 +25,7 @@ import { AttackItem } from '../AttackItem'
 import { EmptyAttackItem } from '../EmptyAttackItem'
 import { PassiveItem } from '../PassiveItem'
 import { AttackChoice } from '../AttackChoice'
+import { useSound } from '@/contexts/SoundContext'
 
 interface PlayerInfoProps{
  close:()=>void
@@ -32,6 +33,7 @@ interface PlayerInfoProps{
 
 export function PlayerInfo({close}:PlayerInfoProps){
 
+    const { play } = useSound()
     const [page,setPage] = useState(1)
     const [attacksVisible, setAttacksVisible] = useState(false)
     const {
@@ -59,28 +61,57 @@ export function PlayerInfo({close}:PlayerInfoProps){
         changeAtributePoints
     } = usePlayer()
 
+    function changePage(p:number){
+        play('Book.mp3')
+        setTimeout(() => {
+            setPage(p)
+        }, 100);
+    }
+
+    function closeInfo(){
+        play('Book2.mp3')
+        setTimeout(() => {
+            close()
+        }, 100);
+    }
+
     function useStatsPoints(atribute: Atribute, amount:number){
         if(atributePoints!>0){
             switch(atribute){
                 case Atribute.strength:
-                    changeStat!(atribute,amount)
-                    changeAtributePoints!(atributePoints!-1)
+                    play('Increase.mp3')
+                    setTimeout(() => {
+                        changeStat!(atribute,amount)
+                        changeAtributePoints!(atributePoints!-1)
+                    }, 300);
                     break
                 case Atribute.dexterity:
-                    changeStat!(atribute,amount)
-                    changeAtributePoints!(atributePoints!-1)
+                    play('Increase.mp3')
+                    setTimeout(() => {
+                        changeStat!(atribute,amount)
+                        changeAtributePoints!(atributePoints!-1)
+                    }, 300);
                     break
                 case Atribute.constitution:
-                    changeStat!(atribute,amount)
-                    changeAtributePoints!(atributePoints!-1)
+                    play('Increase.mp3')
+                    setTimeout(() => {
+                        changeStat!(atribute,amount)
+                        changeAtributePoints!(atributePoints!-1)
+                    }, 300);
                     break
                 case Atribute.mind:
-                    changeStat!(atribute,amount)
-                    changeAtributePoints!(atributePoints!-1)
+                    play('Increase.mp3')
+                    setTimeout(() => {
+                        changeStat!(atribute,amount)
+                        changeAtributePoints!(atributePoints!-1)
+                    }, 300);
                     break
                 case Atribute.presence:
-                    changeStat!(atribute,amount)
-                    changeAtributePoints!(atributePoints!-1)
+                    play('Increase.mp3')
+                    setTimeout(() => {
+                        changeStat!(atribute,amount)
+                        changeAtributePoints!(atributePoints!-1)
+                    }, 300);
                     break
             }
         }
@@ -371,21 +402,21 @@ export function PlayerInfo({close}:PlayerInfoProps){
                     <div 
                         className={styles.option}
                         id={page==1?styles.selected:''}
-                        onClick={()=>setPage(1)}
+                        onClick={()=>changePage(1)}
                     >
                         <FontAwesomeIcon icon={faUser}/>
                     </div>
                     <div 
                         className={styles.option}
                         id={page==2?styles.selected:''}
-                        onClick={()=>setPage(2)}
+                        onClick={()=>changePage(2)}
                     >
                         <FontAwesomeIcon icon={faChartSimple}/>
                     </div>
                     <div 
                         className={styles.option}
                         id={page==3?styles.selected:''}
-                        onClick={()=>setPage(3)}
+                        onClick={()=>changePage(3)}
                     >
                         <FontAwesomeIcon icon={faScroll}/>
                     </div>
@@ -400,7 +431,7 @@ export function PlayerInfo({close}:PlayerInfoProps){
                         :
                             <p>Habilidades</p>
                     }
-                    <div className={styles.close} onClick={close}>
+                    <div className={styles.close} onClick={closeInfo}>
                         <FontAwesomeIcon icon={faX}/>
                     </div>
                 </div>

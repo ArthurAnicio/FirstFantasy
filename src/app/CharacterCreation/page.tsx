@@ -30,9 +30,11 @@ import { getDamageIcon } from '@/functions/getDamageIcon'
 import { getDamageColor } from '@/functions/getDamageColor'
 import { Attack } from '@/interfaces/attack'
 import { Passives } from '@/interfaces/passives'
+import { useSound } from '@/contexts/SoundContext'
 
 export default function CharacterCreation(){
 
+    const { play } = useSound()
     const {
         level,
         changeName,
@@ -187,6 +189,18 @@ export default function CharacterCreation(){
         });
     }, [selectedAttackId]);
 
+    function write(text:string){
+        play("Writing.mp3")
+        setPName(text)
+    }
+
+    function changePage(p:number){
+        play("Book.mp3")
+        setTimeout(()=>{
+            setPage(p)
+        },150)
+    }
+
     function buyPassive(passiveId:string,newPoints:number){
         const passive = passivesPlayer.find(pas=>pas.id==passiveId)
         if(!passive)return
@@ -257,32 +271,47 @@ export default function CharacterCreation(){
                 switch(atribute){
                     case Atribute.strength:
                         if(pStrength<3){
-                            setPStrength(pStrength+1)
-                            setStatsPoints(statsPoints-1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPStrength(pStrength+1)
+                                setStatsPoints(statsPoints-1)
+                            }, 300);
                         }
                         break
                     case Atribute.dexterity:
                         if(pDexterity<3){
-                            setPDexterity(pDexterity+1)
-                            setStatsPoints(statsPoints-1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPDexterity(pDexterity+1)
+                                setStatsPoints(statsPoints-1)
+                            }, 300);
                         }
                         break
                     case Atribute.constitution:
                         if(pConstitution<3){
-                            setPConstitution(pConstitution+1)
-                            setStatsPoints(statsPoints-1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPConstitution(pConstitution+1)
+                                setStatsPoints(statsPoints-1)
+                            }, 300);
                         }
                         break
                     case Atribute.mind:
                         if(pMind<3){
-                            setPMind(pMind+1)
-                            setStatsPoints(statsPoints-1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPMind(pMind+1)
+                                setStatsPoints(statsPoints-1)
+                            }, 300);
                         }
                         break
                     case Atribute.presence:
                         if(pPresence<3){
-                            setPPresence(pPresence+1)
-                            setStatsPoints(statsPoints-1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPPresence(pPresence+1)
+                                setStatsPoints(statsPoints-1)
+                            }, 300);
                         }
                         break
                 }
@@ -292,32 +321,47 @@ export default function CharacterCreation(){
                switch(atribute){
                     case Atribute.strength:
                         if(pStrength>0){
-                            setPStrength(pStrength-1)
-                            setStatsPoints(statsPoints+1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPStrength(pStrength-1)
+                                setStatsPoints(statsPoints+1)
+                            }, 300);
                         }
                         break
                     case Atribute.dexterity:
                         if(pDexterity>0){
-                            setPDexterity(pDexterity-1)
-                            setStatsPoints(statsPoints+1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPDexterity(pDexterity-1)
+                                setStatsPoints(statsPoints+1)
+                            }, 300);
                         }
                         break
                     case Atribute.constitution:
                         if(pConstitution>0){
-                            setPConstitution(pConstitution-1)
-                            setStatsPoints(statsPoints+1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPConstitution(pConstitution-1)
+                                setStatsPoints(statsPoints+1)
+                            }, 300);
                         }
                         break
                     case Atribute.mind:
                         if(pMind>0){
-                            setPMind(pMind-1)
-                            setStatsPoints(statsPoints+1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPMind(pMind-1)
+                                setStatsPoints(statsPoints+1)
+                            }, 300);
                         }
                         break
                     case Atribute.presence:
                         if(pPresence>0){
-                            setPPresence(pPresence-1)
-                            setStatsPoints(statsPoints+1)
+                            play("Increase.mp3")
+                            setTimeout(() => {
+                                setPPresence(pPresence-1)
+                                setStatsPoints(statsPoints+1)
+                            }, 300);
                         }
                         break
                 } 
@@ -386,6 +430,11 @@ export default function CharacterCreation(){
         })
     }
 
+    function changePGender(gender: string) {
+        play("Writing.mp3")
+        setPGender(gender)
+    }
+
     function createChar(){
         if (!canCreate) return
 
@@ -410,21 +459,25 @@ export default function CharacterCreation(){
                         <div className={styles.infos}>
                             <nav className={styles.info}>
                                 <label>Nome:</label>
-                                <input type="text" value={pName} onChange={(e)=>setPName(e.target.value)} />
+                                <input 
+                                    type="text" 
+                                    value={pName} 
+                                    onChange={(e)=>write(e.target.value)} 
+                                />
                             </nav>
                             <nav className={styles.info}>
                                 <label>Gênero:</label>
                                 <div 
                                     className={styles.maleGender}
                                     id={pGender=="M"?styles.selected:""}
-                                    onClick={()=>setPGender("M")}
+                                    onClick={()=>changePGender("M")}
                                 >
                                     <FontAwesomeIcon icon={faMars}/>
                                 </div>
                                 <div 
                                     className={styles.femaleGender}
                                     id={pGender=="F"?styles.selected:""}
-                                    onClick={()=>setPGender("F")}
+                                    onClick={()=>changePGender("F")}
                                 >
                                     <FontAwesomeIcon icon={faVenus}/>
                                 </div>
@@ -710,21 +763,21 @@ export default function CharacterCreation(){
                     <div 
                         className={styles.option}
                         id={page==1?styles.optionSelected:""}
-                        onClick={()=>setPage(1)}
+                        onClick={()=>changePage(1)}
                     >
                         Info
                     </div>
                     <div 
                         className={styles.option}
                         id={page==2?styles.optionSelected:""}
-                        onClick={()=>setPage(2)}
+                        onClick={()=>changePage(2)}
                     >
                         Atributos
                     </div>
                     <div 
                         className={styles.option}
                         id={page==3?styles.optionSelected:""}
-                        onClick={()=>setPage(3)}
+                        onClick={()=>changePage(3)}
                     >
                         Habilidades
                     </div>

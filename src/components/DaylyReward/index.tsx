@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faCoins, faCalendar } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie'
+import { useSound } from '@/contexts/SoundContext'
 
 interface DailyData {
   currentDay: number
@@ -55,6 +56,8 @@ function saveDailyData(data: DailyData) {
 }
 
 export function DaylyReward() {
+
+  const { play } = useSound()
   const [isOpen, setIsOpen] = useState(false)
   const { cash, changeCash } = usePlayer()
   const [dailyData, setDailyData] = useState<DailyData>(loadDailyData())
@@ -70,15 +73,19 @@ export function DaylyReward() {
     
     const amount = REWARD_AMOUNTS[day]
     if (!amount) return
-    
-    changeCash!(cash! + amount)
-    const newData = {
-      ...dailyData,
-      claimedDays: [...dailyData.claimedDays, day]
-    }
-    
-    setDailyData(newData)
-    saveDailyData(newData)
+
+    play('GetCash.mp3')
+    setTimeout(()=>{
+      
+      changeCash!(cash! + amount)
+      const newData = {
+        ...dailyData,
+        claimedDays: [...dailyData.claimedDays, day]
+      }
+      
+      setDailyData(newData)
+      saveDailyData(newData)
+    }, 100)
   }
 
   function isDayAvailable(day: number): boolean {

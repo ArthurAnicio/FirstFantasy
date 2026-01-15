@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import { Atribute } from '@/enums/atribute'
 import { BonusTypes } from '@/enums/bonusTypes'
+import { useSound } from '@/contexts/SoundContext'
 
 interface PassiveShopProps{
     passive:Passives
@@ -28,6 +29,9 @@ export function PassiveShop({passive}:PassiveShopProps){
         attacks,
         equipedAttacks
     } = usePlayer()
+
+    const { play } = useSound()
+
     const canBuy = passive.price<= technicalPoints!
 
     function applyPassive(passive: Passives){
@@ -94,9 +98,12 @@ export function PassiveShop({passive}:PassiveShopProps){
 
     function buyPassive(){
         if(canBuy){
-            changeTechnicalPoints!(technicalPoints!-passive.price)
-            addPassive!(passive)
-            applyPassive(passive)
+            play('Buy.mp3')
+            setTimeout(() => {
+                changeTechnicalPoints!(technicalPoints!-passive.price)
+                addPassive!(passive)
+                applyPassive(passive)
+            }, 200);
         }
     }
     

@@ -8,6 +8,7 @@ import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
 import { IconAtribute } from '@/functions/IconAtribute'
 import { useEffect, useState } from 'react'
+import { useSound } from '@/contexts/SoundContext'
 
 interface AttackChoiceProps{
     attack:Attack
@@ -16,6 +17,7 @@ interface AttackChoiceProps{
 export function AttackChoice({attack}:AttackChoiceProps){
 
     const {strength,dexterity,constitution,mind,presence,bonusAttack,equipedAttacks,equipAttack,unequipAttack} = usePlayer()
+    const { play } = useSound()
     const color = getDamageColor(attack.damageType)
     const [equiped,setEquiped] = useState(false)
 
@@ -45,10 +47,16 @@ export function AttackChoice({attack}:AttackChoiceProps){
 
     function EquipAttack(){
         if(equipedAttacks.length<6&&equiped==false){
-            equipAttack!(attack)
+            play('Equip.mp3')
+            setTimeout(() => {
+                equipAttack!(attack)
+            }, 100);
         }else if(equiped){
             if(equipedAttacks.length>1){
-                unequipAttack!(attack)
+                play('Unequip.mp3')
+                setTimeout(() => {
+                    unequipAttack!(attack)
+                }, 100);
             }
         }
     }

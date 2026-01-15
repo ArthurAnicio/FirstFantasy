@@ -4,6 +4,7 @@ import "./globals.css";
 import { PlayerProvider } from "@/contexts/PlayerContext";
 import { SoundProvider } from "@/contexts/SoundContext";
 import Template from "./template";
+import { MusicProvider } from "@/contexts/MusicContext";
 
 const jacquard24 = Jacquard_24({
   variable: "--font-jacquard-24",
@@ -26,11 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jacquard24.variable}>
-        <SoundProvider>
-          <PlayerProvider>
-            <Template>{children}</Template>
-          </PlayerProvider>
-        </SoundProvider>
+        <MusicProvider>
+          <SoundProvider>
+            <PlayerProvider>
+              <Template>{children}</Template>
+            </PlayerProvider>
+          </SoundProvider>
+        </MusicProvider>
       </body>
     </html>
   );
