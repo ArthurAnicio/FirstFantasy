@@ -15,7 +15,6 @@ export default function BattleField() {
             : `url(/images/backgrounds/${backgroundImage}.jpg), linear-gradient(#00000080, #00000080)`,
         }}
         >
-            <h2>Battle Field</h2>
         </div>
     )
 }

@@ -44,5 +44,6 @@
 }
 
 body{
+  background: var(--black);
   font-family: var(--font-jacquard-24);
 }

@@ -64,3 +64,33 @@
     background: linear-gradient(var(--red-p),var(--red-t));
     color: var(--paper);
 }
+
+.countdown{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000cc;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 100px;
+    font-size: 8em;
+    color: var(--red-p);
+    font-family: var(--font-jacquard-48);
+    text-shadow: 0 0 20px var(--red-p);
+    border: solid 20px var(--red-p);
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px var(--red-p);
+    height: 300px;
+    width: 300px;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}

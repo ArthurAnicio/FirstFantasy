@@ -44,6 +44,8 @@
     z-index: 1;
     cursor: pointer;
     transition: 0.2s;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
 }
 
 .option:hover{
@@ -68,6 +70,8 @@
     border-bottom: solid 5px;
     background: var(--gray-p);
     color: var(--yellow-p);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
 }
 
 .close{

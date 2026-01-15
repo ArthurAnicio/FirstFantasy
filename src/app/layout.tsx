@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Jacquard_24 } from "next/font/google";
 import "./globals.css";
 import { PlayerProvider } from "@/contexts/PlayerContext";
+import { SoundProvider } from "@/contexts/SoundContext";
+import Template from "./template";
 
 const jacquard24 = Jacquard_24({
   variable: "--font-jacquard-24",
@@ -24,9 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jacquard24.variable}>
-        <PlayerProvider>
-          {children}
-        </PlayerProvider>
+        <SoundProvider>
+          <PlayerProvider>
+            <Template>{children}</Template>
+          </PlayerProvider>
+        </SoundProvider>
       </body>
     </html>
   );
