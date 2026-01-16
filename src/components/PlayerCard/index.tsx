@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookOpen } from '@fortawesome/free-solid-svg-icons'
 
 interface PlayerCardProps {
-    openInfo: () => void
+    openInfo?: () => void
 }
 
 export function PlayerCard({ openInfo }: PlayerCardProps) {
@@ -94,9 +94,9 @@ export function PlayerCard({ openInfo }: PlayerCardProps) {
                     height={130}
                 />
             </div>
-            <div className={styles.playerInfo} onClick={openInfo}>
+            {openInfo && <div className={styles.playerInfo} onClick={openInfo}>
                 <FontAwesomeIcon icon={faBookOpen} />
-            </div>
+            </div>}
             <div className={styles.playerStats}>
                 <div
                     className={styles.statBar}

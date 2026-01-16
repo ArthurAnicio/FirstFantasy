@@ -31,9 +31,11 @@ import { getDamageColor } from '@/functions/getDamageColor'
 import { Attack } from '@/interfaces/attack'
 import { Passives } from '@/interfaces/passives'
 import { useSound } from '@/contexts/SoundContext'
+import { useMusic } from '@/contexts/MusicContext'
 
 export default function CharacterCreation(){
 
+    const { stopMusic } = useMusic()
     const { play } = useSound()
     const {
         level,
@@ -265,109 +267,90 @@ export default function CharacterCreation(){
         }
     }
 
-    function useStatsPoints(atribute:Atribute,amount:number){
-        if(amount==1){
-            if(statsPoints!=0){
-                switch(atribute){
-                    case Atribute.strength:
-                        if(pStrength<3){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPStrength(pStrength+1)
-                                setStatsPoints(statsPoints-1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.dexterity:
-                        if(pDexterity<3){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPDexterity(pDexterity+1)
-                                setStatsPoints(statsPoints-1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.constitution:
-                        if(pConstitution<3){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPConstitution(pConstitution+1)
-                                setStatsPoints(statsPoints-1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.mind:
-                        if(pMind<3){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPMind(pMind+1)
-                                setStatsPoints(statsPoints-1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.presence:
-                        if(pPresence<3){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPPresence(pPresence+1)
-                                setStatsPoints(statsPoints-1)
-                            }, 300);
-                        }
-                        break
+    function useStatsPoints(attribute: Atribute, amount: number) {
+        if (amount === 1) {
+            if (statsPoints !== 0) {
+            switch (attribute) {
+                case Atribute.strength:
+                if (pStrength < 3) {
+                    play("Increase.mp3");
+                    setPStrength(pStrength + 1);
+                    setStatsPoints(statsPoints - 1);
                 }
+                break;
+                case Atribute.dexterity:
+                if (pDexterity < 3) {
+                    play("Increase.mp3");
+                    setPDexterity(pDexterity + 1);
+                    setStatsPoints(statsPoints - 1);
+                }
+                break;
+                case Atribute.constitution:
+                if (pConstitution < 3) {
+                    play("Increase.mp3");
+                    setPConstitution(pConstitution + 1);
+                    setStatsPoints(statsPoints - 1);
+                }
+                break;
+                case Atribute.mind:
+                if (pMind < 3) {
+                    play("Increase.mp3");
+                    setPMind(pMind + 1);
+                    setStatsPoints(statsPoints - 1);
+                }
+                break;
+                case Atribute.presence:
+                if (pPresence < 3) {
+                    play("Increase.mp3");
+                    setPPresence(pPresence + 1);
+                    setStatsPoints(statsPoints - 1);
+                }
+                break;
             }
-        }else{
-            if(statsPoints<=4){
-               switch(atribute){
-                    case Atribute.strength:
-                        if(pStrength>0){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPStrength(pStrength-1)
-                                setStatsPoints(statsPoints+1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.dexterity:
-                        if(pDexterity>0){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPDexterity(pDexterity-1)
-                                setStatsPoints(statsPoints+1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.constitution:
-                        if(pConstitution>0){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPConstitution(pConstitution-1)
-                                setStatsPoints(statsPoints+1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.mind:
-                        if(pMind>0){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPMind(pMind-1)
-                                setStatsPoints(statsPoints+1)
-                            }, 300);
-                        }
-                        break
-                    case Atribute.presence:
-                        if(pPresence>0){
-                            play("Increase.mp3")
-                            setTimeout(() => {
-                                setPPresence(pPresence-1)
-                                setStatsPoints(statsPoints+1)
-                            }, 300);
-                        }
-                        break
-                } 
+            }
+        } else {
+            if (statsPoints <= 4) {
+            switch (attribute) {
+                case Atribute.strength:
+                if (pStrength > 0) {
+                    play("Increase.mp3");
+                    setPStrength(pStrength - 1);
+                    setStatsPoints(statsPoints + 1);
+                }
+                break;
+                case Atribute.dexterity:
+                if (pDexterity > 0) {
+                    play("Increase.mp3");
+                    setPDexterity(pDexterity - 1);
+                    setStatsPoints(statsPoints + 1);
+                }
+                break;
+                case Atribute.constitution:
+                if (pConstitution > 0) {
+                    play("Increase.mp3");
+                    setPConstitution(pConstitution - 1);
+                    setStatsPoints(statsPoints + 1);
+                }
+                break;
+                case Atribute.mind:
+                if (pMind > 0) {
+                    play("Increase.mp3");
+                    setPMind(pMind - 1);
+                    setStatsPoints(statsPoints + 1);
+                }
+                break;
+                case Atribute.presence:
+                if (pPresence > 0) {
+                    play("Increase.mp3");
+                    setPPresence(pPresence - 1);
+                    setStatsPoints(statsPoints + 1);
+                }
+                break;
+            }
             }
         }
     }
+
 
     function setElements() {
         changeName?.(pName)
@@ -441,6 +424,7 @@ export default function CharacterCreation(){
         setElements()
 
         setTimeout(() => {
+            stopMusic()
             changeActualHealth?.(pMaxHealth)
             changeActualStamina?.(pMaxStamina)
             Cookies.remove("lastLevelSeen")
@@ -758,6 +742,7 @@ export default function CharacterCreation(){
 
     return(
         <div className={styles.container}>
+            <div className={styles.background}/>
             <div className={styles.pages}>
                 <div className={styles.options}>
                     <div 

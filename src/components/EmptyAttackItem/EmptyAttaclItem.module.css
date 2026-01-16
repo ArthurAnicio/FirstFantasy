@@ -9,4 +9,5 @@
     background-color: var(--gray-s);
     opacity: 0.5;
     cursor: pointer;
+    color: var(--white);
 }

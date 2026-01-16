@@ -11,8 +11,10 @@ export function ModalConfirm(props:ModalConfirmProps){
 
     const router = useRouter()
     function confirm(){
-        Cookies.set("criando","sim")
-        router.push(props.url)
+        setTimeout(()=>{
+            Cookies.set("criando","sim")
+            router.push(props.url)
+        },0)
     }
 
     return(

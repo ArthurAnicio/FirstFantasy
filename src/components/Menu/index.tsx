@@ -3,7 +3,7 @@ import { useSound } from '@/contexts/SoundContext'
 import { useMusic } from '@/contexts/MusicContext'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars} from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
 
 export function Menu(){
@@ -30,8 +30,8 @@ export function Menu(){
                         <h2>Menu</h2>
                         <button onClick={()=>setOption(1)}>Audio</button>
                         <button>Outro</button>
-                        <button>Outro</button>
-                        <button onClick={()=>rounter.push('/')}>Sair</button>
+                        <button onClick={()=>rounter.push('/')}>Inicio</button>
+                        <button onClick={()=>setIsMenuOpen(false)}>Fechar</button>
                     </div>
                )
             case 1:
@@ -39,7 +39,6 @@ export function Menu(){
                     <div className={styles.options}>
                         <h2>Audio</h2>
                         
-                        {/* SFX Volume */}
                         <div className={styles.sliderContainer}>
                             <label>Sons: {Math.round(soundVolume * 100)}%</label>
                             <input
@@ -53,7 +52,6 @@ export function Menu(){
                             />
                         </div>
 
-                        {/* Music Volume */}
                         <div className={styles.sliderContainer}>
                             <label>Música: {Math.round(musicVolume * 100)}%</label>
                             <input

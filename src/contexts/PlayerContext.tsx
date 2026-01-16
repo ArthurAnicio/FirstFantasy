@@ -24,7 +24,7 @@ import { leveling } from "@/functions/leveling"
 
 const PlayerContext = createContext<Character | undefined>(undefined)
 
-const defaultPlayer: Character = {
+export const defaultCharacter: Character = {
   name: "",
   gender: "",
   image: "",
@@ -56,15 +56,15 @@ const defaultPlayer: Character = {
 }
 
 function loadPlayer(): Character {
-  if (typeof window === "undefined") return defaultPlayer
+  if (typeof window === "undefined") return defaultCharacter
 
   try {
     const raw = Cookies.get("player")
-    if (!raw) return defaultPlayer
+    if (!raw) return defaultCharacter
     const parsed = JSON.parse(raw)
-    return { ...defaultPlayer, ...parsed }
+    return { ...defaultCharacter, ...parsed }
   } catch {
-    return defaultPlayer
+    return defaultCharacter
   }
 }
 
@@ -268,7 +268,7 @@ const [technicalPoints, setTechnicalPoints] = useState(
         return next <= 0 ? 0 : next
       })
     },
-    [resistences, vulnerabilites, imunites],
+    [],
   )
 
   const useStamina = useCallback((amount: number) => {

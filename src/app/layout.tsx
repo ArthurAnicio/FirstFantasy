@@ -5,6 +5,7 @@ import { PlayerProvider } from "@/contexts/PlayerContext";
 import { SoundProvider } from "@/contexts/SoundContext";
 import Template from "./template";
 import { MusicProvider } from "@/contexts/MusicContext";
+import { BattleProvider } from "@/contexts/BattleContext";
 
 const jacquard24 = Jacquard_24({
   variable: "--font-jacquard-24",
@@ -30,7 +31,9 @@ export default function RootLayout({
         <MusicProvider>
           <SoundProvider>
             <PlayerProvider>
-              <Template>{children}</Template>
+              <BattleProvider>
+                <Template>{children}</Template>
+              </BattleProvider>
             </PlayerProvider>
           </SoundProvider>
         </MusicProvider>

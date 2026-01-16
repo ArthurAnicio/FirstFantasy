@@ -4,7 +4,7 @@
     min-height: 100vh;
     background-image: 
         linear-gradient(#000000cb, #000000cb),
-        url(https://i.pinimg.com/originals/14/7e/bc/147ebcb24cff03349a15afdbc500be2c.jpg);
+        url(/images/backgrounds/castelo.jpg);
     backdrop-filter: blur(5px); 
     background-size: cover;
     background-position: center;
@@ -13,21 +13,46 @@
     display: flex; 
     flex-direction: column;
     align-items: center;
+    justify-content: end;
+    padding: 120px;
+}
+
+.overlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: var(--black);
+    transition: 2.5s;
+}
+
+.overlay p{
+    position: fixed;
+    bottom: 20;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--white);
+    transition: 1s;
 }
 
 .title{
+    width: 800px;
+    text-align: center;
+    position: fixed;
     color: var(--white);
     background: linear-gradient(to bottom,var(--black),var(--gray-p));
-    margin-top: 30px;
-    margin-bottom: 90px;
     padding: 20px 40px;
-    font-size: 90px;
     font-weight: 500;
     border-radius: 1rem;
+    z-index: 14;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 2.5s;
 }
 
 .btn{
-    width: 400px;
+    width: 450px;
     margin: 20px;
     padding: 5px;
     font-size: 50px;
@@ -42,7 +67,8 @@
 
 .btn:hover{
     background: linear-gradient(to right, var(--blue-p),var(--blue-t));
-    scale: 1.05;
+    width: 420px;
+    box-shadow: inset 0 0 0px 3px var(--white);
 }
 
 #disable{

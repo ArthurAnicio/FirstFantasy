@@ -11,8 +11,10 @@ import {PlayerInfo} from '@/components/PlayerInfo'
 import { DaylyReward } from '@/components/DaylyReward'
 import { LevelUpModal } from '@/components/LevelUpModal'
 import { useSound } from '@/contexts/SoundContext'
+import { useMusic } from '@/contexts/MusicContext'
 
 export default function Player() {
+  const { playMusic } = useMusic()
   const { play, stopSound } = useSound()
   const { level } = usePlayer()
   const router = useRouter()
@@ -43,6 +45,7 @@ export default function Player() {
 
   useEffect(() => {
     stopSound("Crowd.mp3")
+    playMusic('Yonder_Hill_and_Dale.mp3')
     const auth = Cookies.get('carregado')
     if (auth !== 'sim') router.push('/')
     window.addEventListener('keydown', handleKeyDown)
@@ -81,10 +84,10 @@ export default function Player() {
           <Building 
             image="/images/buildings/coliseu.gif" 
             name="Coliseu" 
-            top={470} 
-            left={900}
-            w={200} 
-            h={200}
+            top={430} 
+            left={880}
+            w={250} 
+            h={250}
             path='/Coliseu' 
           />
           <Building 
@@ -95,6 +98,7 @@ export default function Player() {
             w={200} 
             h={200}
             path='/Hospital' 
+            soundTrack='Pulsar.mp3'
           />
           <Building 
             image="/images/buildings/treinamento.png" 
@@ -103,7 +107,8 @@ export default function Player() {
             left={500}
             w={200} 
             h={200}
-            path='/Training' 
+            path='/Training'
+            soundTrack='Sizzr.mp3' 
           />
         </div>
       </div>

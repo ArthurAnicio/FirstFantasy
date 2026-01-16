@@ -5,15 +5,17 @@ import Image from 'next/image';
 import { chalengers } from '../../../public/objects/enemies/chalengers';
 import { Character } from '@/interfaces/character';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import { Leave } from '@/components/Leave';
 import { useSound } from '@/contexts/SoundContext';
+import { useMusic } from '@/contexts/MusicContext';
 
 export default function Coliseu() {
 
+  const { stopMusic } = useMusic()
   const { play, stopSound, changeSVolume } = useSound()
   const router = useRouter();
   const [challenger, setChallenger] = useState<Character | null>(null);
@@ -22,6 +24,7 @@ export default function Coliseu() {
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
+    stopMusic()
     play('Crowd.mp3',true)
     Cookies.remove('challenger');
     Cookies.remove('battleField');
@@ -54,21 +57,24 @@ export default function Coliseu() {
 
   function getRandomChallenger() {
     const randomIndex = Math.floor(Math.random() * chalengers.length);
-    setChallenger(chalengers[randomIndex]);
+    const challengerData = chalengers[randomIndex];
+    setChallenger(challengerData);
+    return challengerData;
   }
+
+  const getBattleData = useCallback((challengerData: Character) => {
+    Cookies.set('battleTrack', 'Video_Game_Soldier.mp3');
+    Cookies.set('challenger', JSON.stringify(challengerData));
+    Cookies.set('battleField', 'coliseu');
+    router.push('/BattleField');
+  }, [router]);
 
   function handleStartBattle() {
     if (!canClick) return;
     setCanClick(false);
-    getRandomChallenger();
-    setTimeout(() => {
-      startCountdown();
-    }, 500);
-    setTimeout(() => {
-      Cookies.set('challenger', JSON.stringify(challenger!));
-      Cookies.set('battleField', 'coliseu');
-      router.push('/BattleField');
-    }, 5500);
+    const challengerData = getRandomChallenger();  // Pega o mesmo!
+    setTimeout(() => startCountdown(), 500);
+    setTimeout(() => getBattleData(challengerData), 5500);  // Usa o MESMO!
   }
 
   return(

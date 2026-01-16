@@ -10,14 +10,27 @@ import { useMusic } from '@/contexts/MusicContext';
 
 export default function Home() {
 
-  const { playMusic } = useMusic()
+  const [isPlaying, setIsPlaying]=useState(false)
+  const [blink, setBlink]=useState(true)
+  const { playMusic, stopMusic } = useMusic()
   const router = useRouter()
   const {name} = usePlayer()
   const [canContinue,setCanContinue] = useState(true)
   const [modalOn, setModalOn] = useState(false)
 
   useEffect(()=>{
-    Cookies.remove('soundVolume')
+    if(blink==true){
+      setTimeout(()=>{
+        setBlink(false)
+      }, 800)
+    }else{
+      setTimeout(()=>{
+        setBlink(true)
+      }, 800)
+    }
+  },[blink])
+
+  useEffect(()=>{
     if(name!=""){
       setCanContinue(true)
       Cookies.set("carregado","sim")
@@ -25,7 +38,6 @@ export default function Home() {
       setCanContinue(false)
       Cookies.set("carregado","")
     }
-    playMusic('')
   },[])
 
   useEffect(()=>{
@@ -34,14 +46,39 @@ export default function Home() {
 
   function continueNavi(){
     if(canContinue){
+      stopMusic()
       Cookies.set("carregado","sim")
       router.push('/City')
     }
   }
 
+  function startPlay(){
+    playMusic('Nature_Nurture.mp3')
+    setIsPlaying(true)
+  }
+
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
+      <div 
+        className={styles.overlay} 
+        onClick={startPlay}
+        style={{
+          opacity: isPlaying?0:1,
+          zIndex: isPlaying?-1:12
+        }}
+      >
+        <p style={{opacity: blink?1:0}}>
+          --Clique na tela para começar--
+        </p>
+      </div>
+      <div 
+        className={styles.title}
+        style={{
+          top:isPlaying?40:160,
+          fontSize:isPlaying?'90px':'135px',
+          width:isPlaying?'600px':'800px'
+        }}
+      >
         First Fantasy
       </div>
       <button 
