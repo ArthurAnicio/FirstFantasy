@@ -13,22 +13,216 @@
     background-blend-mode: multiply;  
 }
 
-.player{
-    width: 80%;
-    height: 150px;
-    position: absolute;
-    background: var(--gray-p);
-    bottom: 20;
-    display: flex;
+.whoseTurn{
+    background: var(--gray-t);
+    padding: 10px;
+    border-radius: .3rem;
+    font-size: 1.3rem;
+    transition: .5s;
 }
 
-.attacks{
-    position: absolute;
-    bottom: 10;
-    left: 380;
-    background: var(--gray-p);
-    padding: 20px;
-    border-radius: .5rem;
+.enemyCard{
+    position: fixed;
+    bottom: 25;
+    right: 50;
     display: flex;
-    gap: 25;
+    flex-direction: row;
+    padding: 5px 20px;
+    gap: 10px;
+}
+
+.enemy {
+    height: 160px;
+    width: 160px;
+    position: relative;
+    background: var(--gray-p);
+    z-index: 3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.enemyImage{
+    border-radius: 50%;
+}
+
+.enemyLevel{
+    position: absolute;
+    z-index: 4 !important;
+    height: 35px;
+    width: 35px;
+    background: var(--gray-p);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    padding: 15px;
+    bottom: -20;
+    color: var(--light-blue-s);
+    border: solid 5px var(--light-blue-s);
+    border-radius: 50%;
+}
+
+.enemyStats{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 17%;
+    left: -150px;
+    width: 200px;
+    height: 110px;
+    background: var(--gray-p);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    overflow: hidden;
+    gap: 10px;
+    border: solid 15px var(--gray-p);
+}
+
+.statBar {
+    width: 100%;
+    height: 50%;
+    background: var(--black);
+    position: relative;
+    display: flex;          
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+.statNum{
+    color: var(--white);
+    position: absolute;
+    top: -5;
+    right: 25%;
+    font-size: 42px;
+}
+
+.attackInfo{
+    background: #ffffff33;
+    padding: 10px;
+    position: fixed;
+    right: 50;
+    border-radius: .5rem;
+    box-shadow: 0 10px 10px 10px var(--gray-p);
+    transition: 1s;
+}
+
+.attackInfo p{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skipTurn {
+  width: 200px;
+  position: fixed;
+  bottom: 180;
+  left: 200;
+  background: var(--gray-p);
+  border-top: solid 5px var(--gray-p);
+  border-bottom: solid 5px var(--gray-p);
+  color: var(--orange-p);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 0.5rem;
+  transition: .5s;
+  cursor: pointer;
+
+  clip-path: polygon(
+        10% 0,   
+        50% 0,     
+        90% 0,      
+        100% 50%,  
+        90% 100%, 
+        50% 100%,
+        10% 100%,
+        0 50%       
+    );
+}
+
+.skipTurn:hover{
+    scale: .98;
+    background: linear-gradient(var(--orange-p),var(--red-p));
+    color: var(--gray-p);
+}
+
+.utils {
+  width: 200px;
+  position: fixed;
+  background: var(--gray-p);
+  border-top: solid 5px var(--gray-p);
+  border-bottom: solid 5px var(--gray-p);
+  color: var(--green-p);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 0.5rem;
+  transition: .5s;
+  cursor: pointer;
+
+  clip-path: polygon(
+        10% 0,   
+        50% 0,     
+        90% 0,      
+        100% 50%,  
+        90% 100%, 
+        50% 100%,
+        10% 100%,
+        0 50%       
+    );
+}
+
+.utils:hover{
+    scale: .98;
+    background: linear-gradient(var(--light-blue-t),var(--green-p));
+    color: var(--gray-p);
+}
+
+#utilsS{
+    scale: .98;
+    background: linear-gradient(var(--light-blue-t),var(--green-p));
+    color: var(--gray-p);
+}
+
+.attacksButton {
+  width: 200px;
+  position: fixed;
+  left: 200;
+  background: var(--gray-p);
+  border-top: solid 5px var(--gray-p);
+  border-bottom: solid 5px var(--gray-p);
+  color: var(--pink-p);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 0.5rem;
+  transition: .5s;
+  cursor: pointer;
+
+  clip-path: polygon(
+        10% 0,   
+        50% 0,     
+        90% 0,      
+        100% 50%,  
+        90% 100%, 
+        50% 100%,
+        10% 100%,
+        0 50%       
+    );
+}
+
+.attacksButton:hover{
+    scale: .98;
+    background: linear-gradient(var(--pink-p),var(--purple-t));
+    color: var(--gray-p);
+}
+
+#attacksButtonS{
+    scale: .98;
+    background: linear-gradient(var(--pink-p),var(--purple-t));
+    color: var(--gray-p);
 }

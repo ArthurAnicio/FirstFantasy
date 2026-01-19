@@ -23,7 +23,7 @@ export function attackCall(stat:number,bonusAttack:number,targetDefense:number,a
                 damage+=rollDice(attack.damageDice)
                 i++
             }
-            return {damage, result:attackTest.result, critical:true, failure: false}
+            return {damage, result:attackTest.result, critical:false, failure: false}
         }
     }else{
         return {damage:0, result: attackTest.result, critical: false, failure: true}

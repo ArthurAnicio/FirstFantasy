@@ -264,7 +264,7 @@ const [technicalPoints, setTechnicalPoints] = useState(
         if (isResistent) effectiveDamage = effectiveDamage / 2
         if (isVulnerable) effectiveDamage = effectiveDamage * 2
 
-        const next = prev - effectiveDamage
+        const next = prev - Math.floor(effectiveDamage)
         return next <= 0 ? 0 : next
       })
     },
