@@ -108,7 +108,8 @@ export function PlayerCard({ openInfo }: PlayerCardProps) {
                         style={{
                             height:'100%',
                             width: `${((actualHealth*100)/maxHealth)}%`,
-                            background: 'var(--red-p)'
+                            background: 'linear-gradient(var(--red-p), var(--red-t))',
+                            transition: '.8s'
                         }}
                     />
                 </div>
@@ -122,7 +123,8 @@ export function PlayerCard({ openInfo }: PlayerCardProps) {
                         style={{
                             height:'100%',
                             width: `${((actualStamina*100)/maxStamina)}%`,
-                            background: 'var(--orange-p)'
+                            background: 'linear-gradient(var(--orange-p), var(--orange-t))',
+                            transition: '.8s'
                         }}
                     />
                 </div>

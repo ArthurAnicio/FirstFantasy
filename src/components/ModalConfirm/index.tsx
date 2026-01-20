@@ -10,11 +10,10 @@ interface ModalConfirmProps{
 export function ModalConfirm(props:ModalConfirmProps){
 
     const router = useRouter()
+    
     function confirm(){
-        setTimeout(()=>{
-            Cookies.set("criando","sim")
-            router.push(props.url)
-        },0)
+        Cookies.set("criando","sim")
+        router.push(props.url)
     }
 
     return(

@@ -11,12 +11,12 @@ import Image from 'next/image'
 import { Character } from '@/interfaces/character'
 import { PlayerCard } from '@/components/PlayerCard'
 import { AttackItem } from '@/components/AttackItem'
-import { EmptyAttackItem } from '@/components/EmptyAttackItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPersonRunning, faFlask,faScroll } from '@fortawesome/free-solid-svg-icons'
+import { faPersonRunning, faFlask,faScroll, faBriefcaseMedical, faAlarmClock, faHeart, faBolt, faCoins} from '@fortawesome/free-solid-svg-icons'
 import { Challengers } from '@/contexts/BattleContext'
 import { getDamageColor } from '@/functions/getDamageColor'
 import { getDamageIcon } from '@/functions/getDamageIcon'
+import { useRouter } from 'next/navigation'
 
 enum Actions{
     attack,
@@ -26,7 +26,19 @@ enum Actions{
 
 export default function BattleField() {
 
-    const {equipedAttacks, maxHealth, maxStamina, name} = usePlayer()
+    const router = useRouter()
+    const {
+        equipedAttacks, 
+        maxHealth, 
+        maxStamina, 
+        name, 
+        recover,
+        changeActualHealth,
+        changeActualStamina,
+        changeCash,
+        cash,
+        addXp
+    } = usePlayer()
     const { playMusic } = useMusic()
     const {} = useSound()
     const {
@@ -37,7 +49,9 @@ export default function BattleField() {
         startBattle, 
         enemyAttack,
         usedAttack,
-        changeTurn
+        changeTurn,
+        resetBattle,
+        winner,
     } = useBattle()
     const [quantHp, setQuantHp] = useState(2)
     const [quantSta,setQuantSta] = useState(2)
@@ -47,12 +61,27 @@ export default function BattleField() {
     const [attacked, setAttacked] = useState(false)
     const [colorTurn, setColorTurn] = useState('')
     const [wichAction, setWichAction] = useState(Actions.none)
+    const [lost, setLost] = useState(false)
+    const [win, setWin] = useState(false)
+    
 
     useEffect(()=>{
+        resetBattle()
         playMusic(track)
         getEnemy(challenger)
         setTimeout(()=>{startBattle()},3000)
     },[])
+
+    useEffect(()=>{
+        console.log('Que que tá no winner: ',winner)
+        setTimeout(()=>{
+            if(winner==Challengers.player){
+                setWin(true)
+            }else if(winner==Challengers.enemy){
+                setLost(true)
+            }
+        },2000)
+    },[winner])
 
     useEffect(()=>{
         if(whoseTurn == Challengers.enemy){
@@ -68,6 +97,47 @@ export default function BattleField() {
         setTimeout(()=>{setAttacked(false)},1500)
     },[usedAttack])
 
+    function skipTurn(){
+        setWichAction(Actions.none)
+        changeTurn()
+    }
+
+    function heal(stamina=false){
+        if(stamina){
+            if(quantSta>0){
+                recover!('',maxStamina/2)
+                setQuantSta(quantSta-1)
+                setWichAction(Actions.none)
+                changeTurn()
+            }
+        }else{
+            if(quantHp>0){
+                recover!('health',maxHealth/2)
+                setQuantHp(quantHp-1)
+                setWichAction(Actions.none)
+                changeTurn()
+            }
+        }
+    }
+
+    function losted() {
+        changeActualHealth!(1)
+        changeActualStamina!(0)
+        const lCash = cash! - 10
+        if(lCash<0){
+            changeCash!(0)
+        }else{
+            changeCash!(lCash)
+        }
+        router.push('/City')
+    }
+
+    function winned(){
+        addXp!(challenger.xp)
+        changeCash!(cash!+(challenger.level*10))
+        router.push('/City')
+    }
+
     return(
         <div
             className={styles.container} 
@@ -77,6 +147,35 @@ export default function BattleField() {
             }}
         >
             <div 
+                className={styles.win}
+                style={{
+                    opacity: win?1:0,
+                    zIndex: win?8:-1
+                }}
+            >
+                <h2>Você Ganhou!</h2>
+                
+                <p>+{challenger.xp} xp</p>
+                <p>+{challenger.level*10}<FontAwesomeIcon icon={faCoins}/></p>
+
+                <div onClick={winned}>Voltar</div>
+            </div>
+            <div 
+                className={styles.lost} 
+                style={{
+                    opacity: lost?1:0,
+                    zIndex: lost?8:-1
+                }}
+            >
+                <h2>Você Perdeu!</h2>
+                
+                <p>1<FontAwesomeIcon icon={faHeart}/></p>
+                <p>0<FontAwesomeIcon icon={faBolt}/></p>
+                <p>-10<FontAwesomeIcon icon={faCoins}/></p>
+
+                <div onClick={losted}>Voltar</div>
+            </div>
+           { whoseTurn != Challengers.none && <div 
                 className={styles.whoseTurn} 
                 style={{
                     borderBottom: `solid 5px ${colorTurn}`,
@@ -84,7 +183,7 @@ export default function BattleField() {
                 }}
             >
                 Turno de {whoseTurn == Challengers.enemy? challenger.name : name}
-            </div>
+            </div>}
             <PlayerCard/>
             <div className={styles.enemyCard}>
                 <div className={styles.enemy}>
@@ -110,7 +209,8 @@ export default function BattleField() {
                             style={{
                                 height:'100%',
                                 width: `${((enemyHealth*100)/challenger.maxHealth)}%`,
-                                background: 'var(--red-p)'
+                                background: 'linear-gradient(var(--red-p), var(--red-t))',
+                                transition: '.8s'
                             }}
                         />
                     </div>
@@ -124,7 +224,8 @@ export default function BattleField() {
                             style={{
                                 height:'100%',
                                 width: `${((enemyStamina*100)/challenger.maxStamina)}%`,
-                                background: 'var(--orange-p)'
+                                background: 'linear-gradient(var(--orange-p), var(--orange-t))',
+                                transition: '.8s'
                             }}
                         />
                     </div>
@@ -153,7 +254,7 @@ export default function BattleField() {
             }
             <div 
                 className={styles.skipTurn} 
-                onClick={changeTurn}
+                onClick={skipTurn}
                 style={{
                     opacity: whoseTurn==Challengers.player? 1 : 0
                 }}
@@ -185,6 +286,52 @@ export default function BattleField() {
             >
                 <FontAwesomeIcon icon={faScroll}/>
                 Ataques
+            </div>
+            <div 
+                className={styles.recoverCon}
+                style={{
+                    width: wichAction == Actions.recover?440:0,
+                    opacity: wichAction == Actions.recover?1:0
+                }}
+            >
+                <div
+                    className={styles.recoverItem}
+                    onClick={()=>heal()}
+                    style={{
+                        background: quantHp==0?'linear-gradient(var(--gray-s),var(--gray-p))':'linear-gradient(var(--red-p), var(--red-t))',
+                        cursor: quantHp!=0?'pointer':'not-allowed'
+                    }}
+                >
+                    <FontAwesomeIcon className={styles.recoverIcon} icon={faBriefcaseMedical}/>
+                    <p className={styles.recoverInfo}>
+                        Recupera metade da vida || x{quantHp} 
+                    </p>
+                </div>
+                <div
+                    className={styles.recoverItem}
+                    onClick={()=>heal(true)}
+                    style={{
+                        background: quantSta==0?'linear-gradient(var(--gray-s),var(--gray-p))':'linear-gradient(var(--orange-p), var(--orange-t))',
+                        cursor: quantSta!=0?'pointer':'not-allowed'
+                    }}
+                >
+                    <FontAwesomeIcon className={styles.recoverIcon} icon={faAlarmClock}/>
+                    <p className={styles.recoverInfo}>
+                        Recupera metade da stamina || x{quantSta} 
+                    </p>
+                </div>
+            </div>
+            <div 
+                className={styles.attacksCon}
+                style={{
+                    width: wichAction == Actions.attack?440:0,
+                    opacity: wichAction == Actions.attack?1:0,
+                    bottom: wichAction == Actions.attack?50:500
+                }}
+            >
+                {equipedAttacks.map(atk=>
+                    <AttackItem key={atk.id} attack={atk} inBattle={true} changeAction={()=>setWichAction(Actions.none)}/>
+                )}
             </div>
         </div>
     )

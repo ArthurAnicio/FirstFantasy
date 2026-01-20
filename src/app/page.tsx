@@ -31,6 +31,7 @@ export default function Home() {
   },[blink])
 
   useEffect(()=>{
+    stopMusic()
     if(name!=""){
       setCanContinue(true)
       Cookies.set("carregado","sim")

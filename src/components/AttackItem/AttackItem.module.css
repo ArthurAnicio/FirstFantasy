@@ -49,3 +49,8 @@
     font-size: 22px;
     color: var(--white);
 }
+
+#desable{
+    filter: saturate(0);
+    scale: .9;
+}

@@ -127,7 +127,7 @@
   align-items: center;
   padding: 10px 0;
   font-size: 0.5rem;
-  transition: .5s;
+  transition: opacity 0.5s, background 0.2s;
   cursor: pointer;
 
   clip-path: polygon(
@@ -160,7 +160,7 @@
   align-items: center;
   padding: 10px 0;
   font-size: 0.5rem;
-  transition: .5s;
+  transition: opacity 0.2s, bototm 1s, left 1s, background 0.2s;
   cursor: pointer;
 
   clip-path: polygon(
@@ -200,7 +200,7 @@
   align-items: center;
   padding: 10px 0;
   font-size: 0.5rem;
-  transition: .5s;
+  transition: opacity 0.3s, bototm 2s, background 0.2s;
   cursor: pointer;
 
   clip-path: polygon(
@@ -225,4 +225,192 @@
     scale: .98;
     background: linear-gradient(var(--pink-p),var(--purple-t));
     color: var(--gray-p);
+}
+
+.recoverCon{
+    position: fixed;
+    bottom: 60;
+    background: var(--black);
+    padding: 20px;
+    display: flex;
+    border-top: solid 5px var(--gray-t);
+    border-bottom: solid 5px var(--gray-t);
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    overflow: visible;
+    transition: .5s;
+
+    clip-path: polygon(
+        10% 0,   
+        50% 0,     
+        90% 0,      
+        100% 50%,  
+        90% 100%, 
+        50% 100%,
+        10% 100%,
+        0 50%       
+    );
+}
+
+.recoverItem{
+    width: 100px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: var(--white);
+    transition: .2s;
+    clip-path: polygon(
+        20% 0,   
+        50% 0,     
+        80% 0,      
+        100% 50%,  
+        80% 100%, 
+        50% 100%,
+        20% 100%,
+        0 50%       
+    );
+}
+
+.recoverItem:hover{
+    width: 200px;
+    padding-left: 30px;
+    clip-path: polygon(
+        13% 0,   
+        50% 0,     
+        87% 0,      
+        100% 50%,  
+        87% 100%, 
+        50% 100%,
+        13% 100%,
+        0 50%       
+    );
+}
+
+.recoverInfo{
+    display: none;
+}
+
+.recoverItem:hover .recoverIcon{
+    display: none;
+}
+
+.recoverItem:hover .recoverInfo{
+    display: block;
+    font-size: .5rem;
+}
+
+#desable{
+    background: linear-gradient(var(--gray-s),var(--gray-p));
+}
+
+.attacksCon{
+    position: fixed;
+    bottom: 50;
+    display: grid;
+    padding: 20px 5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--black);
+    border-left: solid 10px var(--white);
+    border-right: solid 10px var(--white);
+    border-radius: .3rem;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+    transition: .5s;
+}
+
+.lost{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--red-p);
+    transition: 1s;
+}
+
+.lost h2{
+    font-size: 3rem;
+    text-shadow: 0 0 2px var(--red-p);
+    margin-bottom: 50px;
+}
+
+.lost p{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.lost div{
+    margin-top: 30px;
+    text-align: center;
+    width: 20%;
+    font-size: 1.5rem;
+    color: var(--white);
+    border-radius: .5rem;
+    background: linear-gradient(var(--red-p), var(--red-t));
+    cursor: pointer;
+    transition: .2s;
+}
+
+.lost div:hover{
+    scale: .9;
+    filter: brightness(1.5);
+    box-shadow: 0 0 10px var(--red-p);
+}
+
+.win{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: var(--gray-s);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-blue-t);
+    transition: 1s;
+}
+
+.win h2{
+    font-size: 3rem;
+    text-shadow: 0 0 2px var(--blue-t);
+    margin-bottom: 50px;
+}
+
+.win p{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--yellow-p);
+    margin-bottom: 20px;
+}
+
+.win div{
+    margin-top: 30px;
+    text-align: center;
+    width: 20%;
+    font-size: 1.5rem;
+    color: var(--gray-p);
+    border-radius: .5rem;
+    background: linear-gradient(var(--yellow-p), var(--orange-t));
+    cursor: pointer;
+    transition: .2s;
+}
+
+.win div:hover{
+    scale: .9;
+    filter: brightness(1.5);
+    box-shadow: 0 0 10px var(--yellow-p);
 }

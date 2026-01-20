@@ -112,14 +112,17 @@ export default function CharacterCreation(){
     },[])
 
     useEffect(()=>{
-        const creating = Cookies.get("criando")
-        if(creating!="sim"){
-            router.push('/')
-        }else{
-            resetPlayer!()
-            setXp!(0)
-        }
-        
+        setTimeout(()=>{
+            const creating = Cookies.get("criando")
+            
+            if(creating!="sim"){
+                console.log("Não tá criando")
+                router.push('/')
+            }else{
+                resetPlayer!()
+                setXp!(0)
+            }
+        },1000)
     },[])
 
     useEffect(()=>{

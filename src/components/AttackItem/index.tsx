@@ -6,15 +6,20 @@ import { IconAtribute } from "../../functions/IconAtribute";
 import { Atribute } from "@/enums/atribute";
 import { getDamageColor } from "@/functions/getDamageColor";
 import { getDamageIcon } from "@/functions/getDamageIcon";
+import { useBattle } from "@/contexts/BattleContext";
 
 interface AttackItemProps {
     attack: Attack;
     inBattle: boolean;
+    changeAction?: ()=>void
 }
 
 export function AttackItem(props: AttackItemProps) {
-    const { strength, dexterity, constitution, mind, presence, bonusAttack } = usePlayer();
+
+    const { attackingEnemy } = useBattle()
+    const { strength, dexterity, constitution, mind, presence, bonusAttack, actualStamina } = usePlayer();
     const attack = props.attack;
+    const inBattle = props.inBattle
     const color = getDamageColor(attack.damageType);
 
     function getAtribute() {
@@ -32,9 +37,19 @@ export function AttackItem(props: AttackItemProps) {
         }
     }
 
+    function Attack(){
+        if(inBattle && attack.costStamina <= actualStamina){
+            attackingEnemy(attack)
+            props.changeAction!()
+        }
+    }
+
     return (
-        <div className={styles.wraper}>
-            <div className={styles.card}>
+        <div 
+            className={styles.wraper}
+            id={attack.costStamina <= actualStamina?'':styles.desable}
+        >
+            <div className={styles.card} onClick={Attack} >
                 <Image
                     alt={attack.name}
                     src={attack.image}
