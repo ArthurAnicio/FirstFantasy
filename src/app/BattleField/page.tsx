@@ -39,8 +39,8 @@ export default function BattleField() {
         cash,
         addXp
     } = usePlayer()
-    const { playMusic } = useMusic()
-    const {} = useSound()
+    const { playMusic, changeMVolume } = useMusic()
+    const { play, changeSVolume } = useSound()
     const {
         enemyHealth, 
         enemyStamina, 
@@ -77,7 +77,15 @@ export default function BattleField() {
         if(enemyReady){setTimeout(()=>{
             if(winner==Challengers.player){
                 setWin(true)
+                play('Crowd.mp3', true)
+                playMusic('Victory.mp3',false)
+                changeSVolume(0.1)
+                changeMVolume(1)
             }else if(winner==Challengers.enemy){
+                play('Crowd.mp3')
+                playMusic('Lost.mp3',false)
+                changeSVolume(0.1)
+                changeMVolume(0.6)
                 setLost(true)
             }
         },2000)}
@@ -103,6 +111,7 @@ export default function BattleField() {
     }
 
     function heal(stamina=false){
+        play('Recover.mp3')
         if(stamina){
             if(quantSta>0){
                 recover!('',Math.floor(maxStamina/2))
@@ -130,6 +139,8 @@ export default function BattleField() {
             changeCash!(lCash)
         }
         resetBattle()
+        changeSVolume(0.5)
+        changeMVolume(0.1)
         router.push('/City')
     }
 
@@ -137,6 +148,8 @@ export default function BattleField() {
         addXp!(challenger.xp)
         changeCash!(cash!+(challenger.level*10))
         resetBattle()
+        changeSVolume(0.5)
+        changeMVolume(0.1)
         router.push('/City')
     }
 

@@ -72,9 +72,9 @@ export default function Coliseu() {
   function handleStartBattle() {
     if (!canClick) return;
     setCanClick(false);
-    const challengerData = getRandomChallenger();  // Pega o mesmo!
+    const challengerData = getRandomChallenger();
     setTimeout(() => startCountdown(), 500);
-    setTimeout(() => getBattleData(challengerData), 5500);  // Usa o MESMO!
+    setTimeout(() => getBattleData(challengerData), 5500);
   }
 
   return(

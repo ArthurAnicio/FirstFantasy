@@ -334,7 +334,7 @@
     align-items: center;
     justify-content: center;
     color: var(--red-p);
-    transition: 1s;
+    transition: 5s;
 }
 
 .lost h2{
@@ -380,7 +380,7 @@
     align-items: center;
     justify-content: center;
     color: var(--light-blue-t);
-    transition: 1s;
+    transition: 5s;
 }
 
 .win h2{

@@ -108,21 +108,8 @@ export default function CharacterCreation(){
     const [pImunites, setPImunites] = useState<DamageTypes[]>([])
 
     useEffect(()=>{
-        Cookies.set("carregado","")
-    },[])
-
-    useEffect(()=>{
-        setTimeout(()=>{
-            const creating = Cookies.get("criando")
-            
-            if(creating!="sim"){
-                console.log("Não tá criando")
-                router.push('/')
-            }else{
-                resetPlayer!()
-                setXp!(0)
-            }
-        },1000)
+        resetPlayer!()
+        setXp!(0)
     },[])
 
     useEffect(()=>{
@@ -431,8 +418,6 @@ export default function CharacterCreation(){
             changeActualHealth?.(pMaxHealth)
             changeActualStamina?.(pMaxStamina)
             Cookies.remove("lastLevelSeen")
-            Cookies.set("carregado","sim")
-            Cookies.set("criando","")
             router.push("/City")
         }, 0)
     }

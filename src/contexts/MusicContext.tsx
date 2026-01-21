@@ -3,7 +3,7 @@ import { createContext, useContext, useRef, ReactNode, useState, useEffect } fro
 import Cookies from 'js-cookie';
 
 interface MusicContextType {
-  playMusic: (musicFile: string) => void;
+  playMusic: (musicFile: string,loop?: boolean) => void;
   stopMusic: () => void;
   togglePause: () => void;
   isPlaying: boolean;
@@ -30,7 +30,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     Cookies.set('musicVolume', volume.toString());
   }, [volume]);
 
-  const playMusic = (musicFile: string) => {
+  const playMusic = (musicFile: string, loop=true) => {
     const src = `/music/${musicFile}`;
 
     if (audioRef.current && currentTrack === src) {
@@ -43,7 +43,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     }
 
     const audio = new Audio(src);
-    audio.loop = true;
+    audio.loop = loop;
     audio.volume = volume;
 
     audioRef.current = audio;

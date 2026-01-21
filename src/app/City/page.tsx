@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState, useRef, useCallback } from 'react'
 import styles from './City.module.css'
 import {PlayerCard} from '@/components/PlayerCard'
@@ -17,7 +16,6 @@ export default function Player() {
   const { playMusic } = useMusic()
   const { play, stopSound } = useSound()
   const { level } = usePlayer()
-  const router = useRouter()
   const [playerInfoOn,setPlayerInfoOn] = useState(false)
   const [levelUpModalOn,setLevelUpModalOn] = useState(false)
   const cityRef = useRef<HTMLDivElement>(null)
@@ -46,8 +44,6 @@ export default function Player() {
   useEffect(() => {
     stopSound("Crowd.mp3")
     playMusic('Yonder_Hill_and_Dale.mp3')
-    const auth = Cookies.get('carregado')
-    if (auth !== 'sim') router.push('/')
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])

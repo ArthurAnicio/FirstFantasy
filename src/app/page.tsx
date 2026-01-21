@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './page.module.css'
 import { ModalConfirm } from '@/components/ModalConfirm';
-import Cookies from 'js-cookie';
 import { useMusic } from '@/contexts/MusicContext';
 
 export default function Home() {
@@ -34,21 +33,14 @@ export default function Home() {
     stopMusic()
     if(name!=""){
       setCanContinue(true)
-      Cookies.set("carregado","sim")
     }else{
       setCanContinue(false)
-      Cookies.set("carregado","")
     }
   },[])
-
-  useEffect(()=>{
-    Cookies.set("criando","")
-  })
 
   function continueNavi(){
     if(canContinue){
       stopMusic()
-      Cookies.set("carregado","sim")
       router.push('/City')
     }
   }

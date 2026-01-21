@@ -10,6 +10,8 @@ import { DamageTypes } from '@/enums/damageTypes'
 import { defaultCharacter } from './PlayerContext'
 import { TestResult } from '@/interfaces/testResult'
 import { EffectTypes } from '@/enums/effectTypes'
+import { damageSound } from '@/functions/damageSound'
+import { useSound } from './SoundContext'
 
 export enum Challengers {
     enemy,
@@ -66,6 +68,9 @@ interface BattleContextType {
 const BattleContext = createContext<BattleContextType | null>(null)
 
 export function BattleProvider({ children }: { children: ReactNode }) {
+
+    const { play } = useSound()
+
     const {
         strength,
         dexterity,
@@ -88,6 +93,14 @@ export function BattleProvider({ children }: { children: ReactNode }) {
     const [whoseTurn, setWhoseTurn] = useState<Challengers>(Challengers.none)
     const [usedAttack, setUsedAttack] = useState<UsedAttack>(defaultAtk)
     const [winner, setWinner] = useState<Challengers>(Challengers.none)
+
+    function sfx(testResult:TestResult,atk:Attack){
+        if(testResult.failure){
+            play('Fail.mp3')
+        }else{
+            play(damageSound(atk.damageType))
+        }
+    }
 
     const resetBattle = () => {
         setEnemy(defaultCharacter)
@@ -181,6 +194,8 @@ export function BattleProvider({ children }: { children: ReactNode }) {
             const statNum = getAtribute(atk.atribute)
             const result = attackCall(statNum, enemy.bonusAttack, defense, atk)
 
+            sfx(result,atk)
+
             if (!result.failure) {
                 takeDamage!(result.damage!, atk.damageType)
             }
@@ -203,6 +218,7 @@ export function BattleProvider({ children }: { children: ReactNode }) {
             const result = attackCall(statNum, bonusAttack, enemy.defense, atk)
 
             useStamina!(atk.costStamina)
+            sfx(result,atk)
 
             if (!result.failure) {
                 setEnemyHealth(prev => {
