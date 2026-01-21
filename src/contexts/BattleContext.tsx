@@ -50,6 +50,7 @@ interface BattleContextType {
     enemyHealth: number
     enemyStamina: number
     enemyDefense: number
+    enemyReady: boolean
     whoseTurn: Challengers
     usedAttack: UsedAttack
     winner: Challengers
@@ -80,24 +81,27 @@ export function BattleProvider({ children }: { children: ReactNode }) {
     } = usePlayer()
 
     const [enemy, setEnemy] = useState<Character>(defaultCharacter)
-    const [enemyHealth, setEnemyHealth] = useState(0)
+    const [enemyHealth, setEnemyHealth] = useState(10)
     const [enemyStamina, setEnemyStamina] = useState(0)
     const [enemyDefense, setEnemyDefense] = useState(0)
+    const [enemyReady, setEnemyReady] = useState(false)
     const [whoseTurn, setWhoseTurn] = useState<Challengers>(Challengers.none)
     const [usedAttack, setUsedAttack] = useState<UsedAttack>(defaultAtk)
     const [winner, setWinner] = useState<Challengers>(Challengers.none)
 
     const resetBattle = () => {
         setEnemy(defaultCharacter)
-        setEnemyHealth(0)
+        setEnemyHealth(10)
         setEnemyStamina(0)
         setEnemyDefense(0)
+        setEnemyReady(false)
         setWhoseTurn(Challengers.none)
         setUsedAttack(defaultAtk)
         setWinner(Challengers.none)
     }
 
     useEffect(() => {
+        if (!enemyReady) return
         if (winner !== Challengers.none) return
         if (whoseTurn === Challengers.none) return
 
@@ -108,7 +112,8 @@ export function BattleProvider({ children }: { children: ReactNode }) {
             setWinner(Challengers.player)
             setWhoseTurn(Challengers.none)
         }
-    }, [actualHealth, enemyHealth, whoseTurn])
+    }, [actualHealth, enemyHealth, whoseTurn, enemyReady, winner])
+
 
     function changeTurn() {
         if (winner !== Challengers.none) return
@@ -140,9 +145,12 @@ export function BattleProvider({ children }: { children: ReactNode }) {
     }
 
     useEffect(() => {
+        if (!enemy || enemy.maxHealth === 0) return
+
         setEnemyHealth(enemy.maxHealth)
         setEnemyStamina(enemy.maxStamina)
         setEnemyDefense(enemy.defense)
+        setEnemyReady(true)
     }, [enemy])
 
     function choiceAttack(): Attack {
@@ -220,6 +228,7 @@ export function BattleProvider({ children }: { children: ReactNode }) {
                 enemyHealth,
                 enemyStamina,
                 enemyDefense,
+                enemyReady,
                 whoseTurn,
                 usedAttack,
                 winner,

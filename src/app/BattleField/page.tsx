@@ -52,6 +52,7 @@ export default function BattleField() {
         changeTurn,
         resetBattle,
         winner,
+        enemyReady
     } = useBattle()
     const [quantHp, setQuantHp] = useState(2)
     const [quantSta,setQuantSta] = useState(2)
@@ -66,22 +67,21 @@ export default function BattleField() {
     
 
     useEffect(()=>{
-        resetBattle()
         playMusic(track)
         getEnemy(challenger)
         setTimeout(()=>{startBattle()},3000)
     },[])
 
     useEffect(()=>{
-        console.log('Que que tá no winner: ',winner)
-        setTimeout(()=>{
+        console.log("Inimigo tá pronto? ",enemyReady)
+        if(enemyReady){setTimeout(()=>{
             if(winner==Challengers.player){
                 setWin(true)
             }else if(winner==Challengers.enemy){
                 setLost(true)
             }
-        },2000)
-    },[winner])
+        },2000)}
+    },[winner, enemyReady])
 
     useEffect(()=>{
         if(whoseTurn == Challengers.enemy){
@@ -105,14 +105,14 @@ export default function BattleField() {
     function heal(stamina=false){
         if(stamina){
             if(quantSta>0){
-                recover!('',maxStamina/2)
+                recover!('',Math.floor(maxStamina/2))
                 setQuantSta(quantSta-1)
                 setWichAction(Actions.none)
                 changeTurn()
             }
         }else{
             if(quantHp>0){
-                recover!('health',maxHealth/2)
+                recover!('health',Math.floor(maxHealth/2))
                 setQuantHp(quantHp-1)
                 setWichAction(Actions.none)
                 changeTurn()
@@ -129,12 +129,14 @@ export default function BattleField() {
         }else{
             changeCash!(lCash)
         }
+        resetBattle()
         router.push('/City')
     }
 
     function winned(){
         addXp!(challenger.xp)
         changeCash!(cash!+(challenger.level*10))
+        resetBattle()
         router.push('/City')
     }
 
